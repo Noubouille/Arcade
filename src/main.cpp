@@ -9,23 +9,23 @@
 #include <cstring>
 #include <iostream>
 
-void help()
+#include "../includes/Core.hpp"
+
+int help()
 {
     std::cerr << "USAGE: ./arcade ./lib/lib_arcade_example.so" << std::endl;
+    return 84;
 }
 
 int main(int ac, char **av)
 {
-    if (ac == 2 && !std::strcmp(av[1], "-h"))
-    {
-	    help();
-	    return (0);
+    if (ac == 2 && !std::strcmp(av[1], "-h")) {
+        return help();
     }
     if (ac < 2 || ac >= 3) {
-        help();
-        return 0;
+        return help();
     }
-
-
+    Core core(av[1]);
+    // core.gameMenu();
     return 0;
 }

@@ -16,6 +16,12 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	 $(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
 
+core:
+
+games:
+
+graphicals:
+
 clean:
 	$(RM) $(OBJS)
 
