@@ -6,7 +6,7 @@
 */
 
 #include "../includes/Core.hpp"
-#include <filesystem>
+// #include <filesystem>
 #include <experimental/filesystem>
 #include <regex>
 
@@ -47,7 +47,7 @@ Core::~Core()
 
 void Core::gameMenu()
 {
-    sf::RenderWindow window(sf::VideoMode(1080, 1080), "Arcade Menu ");
+    sf::RenderWindow window(sf::VideoMode(1080, 1080), "Arcade");
     window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
 
     sf::Texture bg;
