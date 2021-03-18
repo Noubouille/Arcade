@@ -24,10 +24,7 @@ public:
     void startWindow();
 
 
-    void getEvent()
-    {
-        //get event en sfml
-    }
+    _Input getEvent();
 
     void drawMenu();
 

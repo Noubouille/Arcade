@@ -115,6 +115,12 @@ void SFML::drawMenu()
     }
 }
 
+_Input SFML::getEvent()
+{
+
+}
+
+
 std::string SFML::getLibName()
 {
     return "SFML";

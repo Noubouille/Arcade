@@ -23,16 +23,15 @@ Core::Core(const std::string &lib_name)
     std::cout << "lib name :" << lib_name << std::endl;
 
 
-	std::cout << "le libpath :" << libpath << std::endl;
+	// std::cout << "le libpath :" << libpath << std::endl;
 
     this->_currentLib = _LibLoad->loadlibrary(libpath); //dlopen()
-    std::cout << "la current lib :" << this->_currentLib << std::endl;
+    // std::cout << "la current lib :" << this->_currentLib << std::endl;
     auto createLibraryFunction = (IGraphic* (*)())_LibLoad->exec_function(this->_currentLib, "createLibrary");
-    IGraphic *lol = (*createLibraryFunction)();
-    lol->drawMenu();
-
+    this->_IGraphicLib = (*createLibraryFunction)();
 
     this->getGraphicLib(libpath);
+    this->loopMenu();
 }
 
 void Core::getGraphicLib(const std::string &lib_name)
@@ -53,12 +52,22 @@ void Core::getGraphicLib(const std::string &lib_name)
         std::cout << "les libs : " << str << std::endl;
 }
 
+
+void Core::loopMenu()
+{
+    for (;1;) { //ou !exit
+
+        // auto input = _IGraphicLib->getEvent();
+
+        if (this->_stateMenu == true) {
+            this->_IGraphicLib->drawMenu();
+        } else {
+
+        }
+    }
+}
+
 Core::~Core()
 {
     // std::cout << "je suis le destructor" << std::endl;
-}
-
-void Core::gameMenu()
-{
-
 }
