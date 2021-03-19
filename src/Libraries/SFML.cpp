@@ -31,7 +31,7 @@ void SFML::drawMenu()
 {
     // sf::RenderWindow window(sf::VideoMode(1080, 1080), "Arcade");
     // window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
-    std::cout << "la window" << std::endl;
+    // std::cout << "la window" << std::endl;
     sf::Texture bg;
     sf::Texture active;
     sf::Font font;
@@ -44,8 +44,8 @@ void SFML::drawMenu()
 
     if (!font.loadFromFile("./assets/Arcade.ttf"))
         return;
-    int pos_bar_y = 320;
-    int bar_nb = 1;
+    // int pos_bar_y = 320;
+    // int bar_nb = 1;
 
     sf::Sprite bg_sprite(bg);
     sf::Sprite bouton_sprite(active);
@@ -68,41 +68,44 @@ void SFML::drawMenu()
 
     // while (window.isOpen())
     // {
-        sf::Event event;
-        while (this->_window.pollEvent(event))
-        {
-          std::cout << "le pollevent" << std::endl;
+        // sf::Event event;
+        // while (this->_window.pollEvent(event))
+        // {
+        //   std::cout << "le pollevent" << std::endl;
 
-            if (event.type == sf::Event::Closed || event.key.code == sf::Keyboard::Escape)
-                this->_window.close();
-            if(event.type == sf::Event::KeyPressed) {
-                if (event.key.code == sf::Keyboard::Up) {
-                    if (bar_nb > 1) {
-                        pos_bar_y -= 60;
-                        bar_nb--;
-                    }
-                    printf("key up\n");
-                }
-                if (event.key.code == sf::Keyboard::Down) {
-                    if (bar_nb < 2) {
-                        pos_bar_y += 60;
-                        bar_nb++;
-                    }
-                    printf("key down\n");
-                }
-                if (event.key.code == sf::Keyboard::Enter) {
-                    printf("key enter\n");
-                }
+        //     if (event.type == sf::Event::Closed || event.key.code == sf::Keyboard::Escape)
+        //         this->_window.close();
+        //     if(event.type == sf::Event::KeyPressed) {
+        //         if (event.key.code == sf::Keyboard::Up) {
+        //             if (this->bar_nb > 1) {
+        //                 this->pos_bar_y -= 60;
+        //                 this->bar_nb--;
+        //             }
+        //             printf("key up\n");
+        //             std::cout << "le bar nb" << this->bar_nb << std::endl;
+        //         }
+        //         if (event.key.code == sf::Keyboard::Down) {
+        //             if (this->bar_nb < 2) {
+        //                 this->pos_bar_y += 60;
+        //                 this->bar_nb++;
+        //             }
+        //             std::cout << "le bar nb" << this->bar_nb << std::endl;
 
-                sf::Vector2i position = sf::Mouse::getPosition();
+        //             printf("key down\n");
+        //         }
+        //         if (event.key.code == sf::Keyboard::Enter) {
+        //             printf("key enter\n");
+        //         }
 
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-                {
-                    //if (position == ())
-                }
-            }
+        //         sf::Vector2i position = sf::Mouse::getPosition();
 
-        }
+        //         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        //         {
+        //             //if (position == ())
+        //         }
+        //     }
+
+        // }
 
         this->_window.clear(sf::Color(0, 0, 0));
         this->_window.draw(this->_bgSprite);
@@ -120,70 +123,141 @@ void SFML::drawMenu()
     // }
 }
 
+void SFML::drawGame()
+{
+
+}
+
 MonEnum SFML::getEvent()
 {
 	sf::Event event;
-        // std::cout << "je passe event" << std::endl;
-    // if (!this->_window.pollEvent(event))
-    //         return "NO_INPUT poll";
 
     while (_window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
+        if (event.type == sf::Event::Closed || event.key.code == sf::Keyboard::Escape) {
             std::cout << "sf::Event::CLOSE" << std::endl;
             _window.close();
             exit(0);
-            return MonEnum::No_Input;
-            // return "Closed";
+            return MonEnum::CLOSE;
         }
         else if (event.type == sf::Event::KeyPressed) {
-            std::cout << "sf::Event::KeyPressed" << std::endl;
-            std::cout << "sf::Event::KeyPressed" << std::endl;
-            std::cout << "sf::Event::KeyPressed" << std::endl;
-            std::cout << "sf::Event::KeyPressed" << std::endl;
-            std::cout << "sf::Event::KeyPressed" << std::endl;
-            std::cout << "sf::Event::KeyPressed" << std::endl;
-            std::cout << "sf::Event::KeyPressed" << std::endl;
-            std::cout << "sf::Event::KeyPressed" << std::endl;
-            std::cout << "sf::Event::KeyPressed" << std::endl;
-            std::cout << "sf::Event::KeyPressed" << std::endl;
-            std::cout << "sf::Event::KeyPressed" << std::endl;
-            return MonEnum::Input;
-
-            // switch (event.key.code) {
-            //     case sf::Keyboard::Left :
-            //         return MonEnum::Input;
-            //     case sf::Keyboard::Right :
-            //         return MonEnum::Input;
-            //     default :
-            //         return MonEnum::No_Input;
-            //     }
+            switch (event.key.code) {
+            case sf::Keyboard::Left :
+                return MonEnum::LEFT_ARROW;
+            case sf::Keyboard::Right :
+                return MonEnum::RIGHT_ARROW;
+            case sf::Keyboard::Up :
+                if (this->bar_nb > 1) {
+                    this->pos_bar_y -= 60;
+                    this->bar_nb--;
+                }
+                return MonEnum::UP_ARROW;
+            case sf::Keyboard::Down :
+                if (this->bar_nb < 2) {
+                    this->pos_bar_y += 60;
+                    this->bar_nb++;
+                }
+                return MonEnum::DOWN_ARROW;
+            case sf::Keyboard::Space :
+                return MonEnum::SPACE;
+            case sf::Keyboard::BackSpace :
+                return MonEnum::BACKSPACE;
+            case sf::Keyboard::Return :
+                return MonEnum::ENTER;
+            case sf::Keyboard::Escape :
+                return MonEnum::ESCAPE;
+            case sf::Keyboard::A :
+                return MonEnum::A_KEY;
+            case sf::Keyboard::B :
+                return MonEnum::B_KEY;
+            case sf::Keyboard::C :
+                return MonEnum::C_KEY;
+            case sf::Keyboard::D :
+                return MonEnum::D_KEY;
+            case sf::Keyboard::E :
+                return MonEnum::E_KEY;
+            case sf::Keyboard::F :
+                return MonEnum::F_KEY;
+            case sf::Keyboard::G :
+                return MonEnum::G_KEY;
+            case sf::Keyboard::H :
+                return MonEnum::H_KEY;
+            case sf::Keyboard::I :
+                return MonEnum::I_KEY;
+            case sf::Keyboard::J :
+                return MonEnum::J_KEY;
+            case sf::Keyboard::K :
+                return MonEnum::K_KEY;
+            case sf::Keyboard::L :
+                return MonEnum::L_KEY;
+            case sf::Keyboard::M :
+                return MonEnum::M_KEY;
+            case sf::Keyboard::N :
+                return MonEnum::N_KEY;
+            case sf::Keyboard::O :
+                return MonEnum::O_KEY;
+            case sf::Keyboard::P :
+                return MonEnum::P_KEY;
+            case sf::Keyboard::Q :
+                return MonEnum::Q_KEY;
+            case sf::Keyboard::R :
+                return MonEnum::R_KEY;
+            case sf::Keyboard::S :
+                return MonEnum::S_KEY;
+            case sf::Keyboard::T :
+                return MonEnum::T_KEY;
+            case sf::Keyboard::U :
+                return MonEnum::U_KEY;
+            case sf::Keyboard::V :
+                return MonEnum::V_KEY;
+            case sf::Keyboard::W :
+                return MonEnum::W_KEY;
+            case sf::Keyboard::X :
+                return MonEnum::X_KEY;
+            case sf::Keyboard::Y :
+                return MonEnum::Y_KEY;
+            case sf::Keyboard::Z :
+                return MonEnum::Z_KEY;
+            case sf::Keyboard::F1 :
+                return MonEnum::F1;
+            case sf::Keyboard::F2 :
+                return MonEnum::F2;
+            case sf::Keyboard::F3 :
+                return MonEnum::F3;
+            case sf::Keyboard::F4 :
+                return MonEnum::F4;
+            case sf::Keyboard::F5 :
+                return MonEnum::F5;
+            case sf::Keyboard::F6 :
+                return MonEnum::F6;
+            case sf::Keyboard::F7 :
+                return MonEnum::F7;
+            case sf::Keyboard::F8 :
+                return MonEnum::F8;
+            case sf::Keyboard::F9 :
+                return MonEnum::F9;
+            case sf::Keyboard::F10 :
+                return MonEnum::F10;
+            case sf::Keyboard::F11 :
+                return MonEnum::F11;
+            case sf::Keyboard::F12 :
+                return MonEnum::F12;
+            default :
+                return MonEnum::NO_INPUT;
+            }
         }
     }
-
-
-    // std::map<std::string, sf::Keyboard::Key>::iterator it = Key_list.begin();
-    // if (event.type == sf::Event::KeyPressed) {
-    //     std::cout << "je suis présséééééé mais bof" << std::endl;
-
-
-    //     while (it != Key_list.end()) {
-    //         if (it->first == sf::Keyboard::isKeyPressed(it->first.c_str())) {
-
-    //         }
-    //         std::cout << it->first << " :: " << std::endl;
-    //         it++;
-
-    // }
-    // }
-    // for (auto &i : Key_list){
-    //     std::cout << "le key list" << i.second << std::endl;
-    //     if (sf::Keyboard::isKeyPressed(i.second)) {
-    //         return (i.first.c_str());
-
-    //    }
-    // }
-    return MonEnum::No_Input;
+    return MonEnum::NO_INPUT;
 }
+
+MonEnum SFML::getNameGame()
+{
+    // if () {
+
+    // } else {
+
+    // }
+}
+
 
 std::string SFML::getLibName()
 {

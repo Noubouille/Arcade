@@ -61,26 +61,25 @@ void Core::loopMenu()
 
         int i = this->_IGraphicLib->getEvent();
         // printf("le input pritnf :%s\n", input);
-        std::cout << "le input :" << i << std::endl;
-        // std::cout << "le apres :" << std::endl;
-        if (i == 2) {
-        std::cout << "le VAUT 2 P UTAIN DE MERDE :" << std::endl;
+        // std::cout << "le input : " << i << std::endl;
 
+        if (i == MonEnum::CLOSE) {
+            std::cout << "JE CLOSE !!!!!!!! " << std::endl;
+            // this->_stateMenu = false;
+            exit(0);
             break;
         }
-        // if (input == "Closed") {
-        // std::cout << "JE CLOSE :" << std::endl;
+        if (i == MonEnum::F10) {
+            std::cout << "MonEnum::F10" << std::endl;
+        }
 
-        //     break;
-        // }
+        if (this->_stateMenu == true) {
+            this->_IGraphicLib->drawMenu();
+                // std::cout << "this->_IGraphicLib->drawMenu();" << std::endl;
 
-        // if (this->_stateMenu == true) {
-        //     this->_IGraphicLib->drawMenu();
-        //         std::cout << "this->_IGraphicLib->drawMenu();" << std::endl;
+        } else {
 
-        // } else {
-
-        // }
+        }
     }
 }
 
