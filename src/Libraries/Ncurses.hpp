@@ -20,12 +20,12 @@ class Ncurses : public IGraphic
         ~Ncurses();
         void startWindow();
 
-        void getEvent();
+        MonEnum getEvent();
 
         void drawMenu();
 
         void drawGame();
-
+        MonEnum getNameGame();
         //etc
 };
 extern "C" IGraphic *createLibrary();
