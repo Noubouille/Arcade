@@ -19,21 +19,25 @@ SFML::~SFML()
 
 void SFML::startWindow()
 {
-    std::cout << "start window lib" << std::endl;
-
+    // std::cout << "start window lib" << std::endl;
+    this->_window.create(sf::VideoMode(1080, 1080), "Arcade");
+    this->_window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - _window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - _window.getSize().y * 0.5));
+    if (!this->_bgTexture.loadFromFile("./assets/bg.png"))
+        return;
+    this->_bgSprite.setTexture(this->_bgTexture);
 }
 
 void SFML::drawMenu()
 {
-    sf::RenderWindow window(sf::VideoMode(1080, 1080), "Arcade");
-    window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
-
+    // sf::RenderWindow window(sf::VideoMode(1080, 1080), "Arcade");
+    // window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
+    std::cout << "la window" << std::endl;
     sf::Texture bg;
     sf::Texture active;
     sf::Font font;
 
-    if (!bg.loadFromFile("./assets/bg.png"))
-        return;
+    // if (!bg.loadFromFile("./assets/bg.png"))
+    //     return;
 
     if (!active.loadFromFile("./assets/btn_green.png"))
         return;
@@ -62,13 +66,15 @@ void SFML::drawMenu()
     bg_sprite.setTexture(bg);
     bouton_sprite.setTexture(active);
 
-    while (window.isOpen())
-    {
+    // while (window.isOpen())
+    // {
         sf::Event event;
-        while (window.pollEvent(event))
+        while (this->_window.pollEvent(event))
         {
+          std::cout << "le pollevent" << std::endl;
+
             if (event.type == sf::Event::Closed || event.key.code == sf::Keyboard::Escape)
-                window.close();
+                this->_window.close();
             if(event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Up) {
                     if (bar_nb > 1) {
@@ -98,28 +104,86 @@ void SFML::drawMenu()
 
         }
 
-        window.clear(sf::Color(0, 0, 0));
-        window.draw(bg_sprite);
-        window.draw(Pacman_font);
-        window.draw(Nibbler_font);
-        window.draw(bar_font);
+        this->_window.clear(sf::Color(0, 0, 0));
+        this->_window.draw(this->_bgSprite);
+        this->_window.draw(Pacman_font);
+        this->_window.draw(Nibbler_font);
+        this->_window.draw(bar_font);
 
-        window.draw(Ncurses_font);
-        window.draw(Sfml_font);
-        window.draw(Sdl_font);
-
+        this->_window.draw(Ncurses_font);
+        this->_window.draw(Sfml_font);
+        this->_window.draw(Sdl_font);
 
         bar_font.setPosition(450, pos_bar_y);
 
-        window.display();
-    }
+        this->_window.display();
+    // }
 }
 
-_Input SFML::getEvent()
+MonEnum SFML::getEvent()
 {
+	sf::Event event;
+        // std::cout << "je passe event" << std::endl;
+    // if (!this->_window.pollEvent(event))
+    //         return "NO_INPUT poll";
 
+    while (_window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+            std::cout << "sf::Event::CLOSE" << std::endl;
+            _window.close();
+            exit(0);
+            return MonEnum::No_Input;
+            // return "Closed";
+        }
+        else if (event.type == sf::Event::KeyPressed) {
+            std::cout << "sf::Event::KeyPressed" << std::endl;
+            std::cout << "sf::Event::KeyPressed" << std::endl;
+            std::cout << "sf::Event::KeyPressed" << std::endl;
+            std::cout << "sf::Event::KeyPressed" << std::endl;
+            std::cout << "sf::Event::KeyPressed" << std::endl;
+            std::cout << "sf::Event::KeyPressed" << std::endl;
+            std::cout << "sf::Event::KeyPressed" << std::endl;
+            std::cout << "sf::Event::KeyPressed" << std::endl;
+            std::cout << "sf::Event::KeyPressed" << std::endl;
+            std::cout << "sf::Event::KeyPressed" << std::endl;
+            std::cout << "sf::Event::KeyPressed" << std::endl;
+            return MonEnum::Input;
+
+            // switch (event.key.code) {
+            //     case sf::Keyboard::Left :
+            //         return MonEnum::Input;
+            //     case sf::Keyboard::Right :
+            //         return MonEnum::Input;
+            //     default :
+            //         return MonEnum::No_Input;
+            //     }
+        }
+    }
+
+
+    // std::map<std::string, sf::Keyboard::Key>::iterator it = Key_list.begin();
+    // if (event.type == sf::Event::KeyPressed) {
+    //     std::cout << "je suis présséééééé mais bof" << std::endl;
+
+
+    //     while (it != Key_list.end()) {
+    //         if (it->first == sf::Keyboard::isKeyPressed(it->first.c_str())) {
+
+    //         }
+    //         std::cout << it->first << " :: " << std::endl;
+    //         it++;
+
+    // }
+    // }
+    // for (auto &i : Key_list){
+    //     std::cout << "le key list" << i.second << std::endl;
+    //     if (sf::Keyboard::isKeyPressed(i.second)) {
+    //         return (i.first.c_str());
+
+    //    }
+    // }
+    return MonEnum::No_Input;
 }
-
 
 std::string SFML::getLibName()
 {

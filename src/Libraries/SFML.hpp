@@ -23,8 +23,7 @@ public:
 
     void startWindow();
 
-
-    _Input getEvent();
+    MonEnum getEvent();
 
     void drawMenu();
 
@@ -40,6 +39,24 @@ public:
     sf::Texture _bgTexture;
     sf::Sprite _bgSprite;
     // std::string _gameName;
+
+    std::map<std::string, sf::Keyboard::Key> Key_list = {
+		{"A", sf::Keyboard::A},
+		{"Z", sf::Keyboard::Z},
+		{"L", sf::Keyboard::L},
+		{"Q", sf::Keyboard::Q},
+		{"S", sf::Keyboard::S},
+		{"D", sf::Keyboard::D},
+		{"F", sf::Keyboard::F},
+		{"M", sf::Keyboard::M},
+		{"E", sf::Keyboard::E},
+		{"Left", sf::Keyboard::Left},
+		{"Right", sf::Keyboard::Right},
+		{"Up", sf::Keyboard::Up},
+		{"Down", sf::Keyboard::Down},
+	};
+
+
 };
 
 // extern "C" SFML *createLibrary();

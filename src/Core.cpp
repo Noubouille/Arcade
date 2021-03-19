@@ -55,15 +55,32 @@ void Core::getGraphicLib(const std::string &lib_name)
 
 void Core::loopMenu()
 {
+
+    this->_IGraphicLib->startWindow();
     for (;1;) { //ou !exit
 
-        // auto input = _IGraphicLib->getEvent();
+        int i = this->_IGraphicLib->getEvent();
+        // printf("le input pritnf :%s\n", input);
+        std::cout << "le input :" << i << std::endl;
+        // std::cout << "le apres :" << std::endl;
+        if (i == 2) {
+        std::cout << "le VAUT 2 P UTAIN DE MERDE :" << std::endl;
 
-        if (this->_stateMenu == true) {
-            this->_IGraphicLib->drawMenu();
-        } else {
-
+            break;
         }
+        // if (input == "Closed") {
+        // std::cout << "JE CLOSE :" << std::endl;
+
+        //     break;
+        // }
+
+        // if (this->_stateMenu == true) {
+        //     this->_IGraphicLib->drawMenu();
+        //         std::cout << "this->_IGraphicLib->drawMenu();" << std::endl;
+
+        // } else {
+
+        // }
     }
 }
 
