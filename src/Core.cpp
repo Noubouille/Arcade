@@ -31,7 +31,7 @@ Core::Core(const std::string &lib_name)
     this->_IGraphicLib = (*createLibraryFunction)();
 
     this->getGraphicLib(libpath);
-    this->loopMenu();
+    this->mainLoop();
 }
 
 void Core::getGraphicLib(const std::string &lib_name)
@@ -53,35 +53,40 @@ void Core::getGraphicLib(const std::string &lib_name)
 }
 
 
-void Core::loopMenu()
+void Core::mainLoop()
 {
-
     this->_IGraphicLib->startWindow();
-    for (;1;) { //ou !exit
-
-        int i = this->_IGraphicLib->getEvent();
+    for (;1;) {
+        int Input = this->_IGraphicLib->getEvent();
         // printf("le input pritnf :%s\n", input);
         // std::cout << "le input : " << i << std::endl;
 
-        if (i == MonEnum::CLOSE) {
-            std::cout << "JE CLOSE !!!!!!!! " << std::endl;
-            // this->_stateMenu = false;
-            exit(0);
-            break;
+        if (Input == MonEnum::F1) {
+            std::cout << "MonEnum::F1 next lib" << std::endl;
         }
-        if (i == MonEnum::F10) {
-            std::cout << "MonEnum::F10" << std::endl;
+        if (Input == MonEnum::F2) {
+            std::cout << "MonEnum::F2 prev lib" << std::endl;
         }
-
         if (this->_stateMenu == true) {
-            this->_IGraphicLib->drawMenu();
-                // std::cout << "this->_IGraphicLib->drawMenu();" << std::endl;
-
+            loopMenu(Input);
         } else {
-
+            loopGame(Input);
         }
     }
+
 }
+
+void Core::loopMenu(int Input)
+{
+    this->_IGraphicLib->drawMenu();
+
+}
+
+void Core::loopGame(int Input)
+{
+
+}
+
 
 Core::~Core()
 {

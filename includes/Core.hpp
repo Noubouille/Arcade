@@ -21,7 +21,10 @@ class Core {
         LibLoad *_LibLoad;
         Core(const std::string &lib_name);
         ~Core();
-        void loopMenu();
+		void mainLoop();
+
+        void loopMenu(int Input);
+        void loopGame(int Input);
         void getGraphicLib(const std::string &lib_name);
         // struct Lib {
         // 	std::string _currentPath;
