@@ -72,6 +72,7 @@ void Core::nextLibrary()
         getGraphicLib();
 
     }
+    mainLoop();
 }
 
 void Core::mainLoop()
@@ -81,6 +82,14 @@ void Core::mainLoop()
         int Input = this->_IGraphicLib->getEvent();
         // printf("le input pritnf :%s\n", input);
         // std::cout << "le input : " << i << std::endl;
+        if (Input == MonEnum::F1) {
+            std::cout << "MonEnum::F1 next lib" << std::endl;
+            this->_IGraphicLib->destroyWindow();
+            nextLibrary();
+        }
+        if (Input == MonEnum::F2) {
+            std::cout << "MonEnum::F2 prev lib" << std::endl;
+        }
 
         if (this->_stateMenu == true) {
             loopMenu(Input);
@@ -93,14 +102,6 @@ void Core::mainLoop()
 
 void Core::loopMenu(int Input)
 {
-    if (Input == MonEnum::F1) {
-        std::cout << "MonEnum::F1 next lib" << std::endl;
-        this->_IGraphicLib->destroyWindow();
-        nextLibrary();
-    }
-    if (Input == MonEnum::F2) {
-        std::cout << "MonEnum::F2 prev lib" << std::endl;
-    }
     this->_IGraphicLib->drawMenu();
 
 }

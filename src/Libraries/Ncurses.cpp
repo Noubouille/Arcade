@@ -216,7 +216,7 @@ MonEnum Ncurses::getNameGame()
 
 void Ncurses::destroyWindow()
 {
-    
+    endwin();
 }
 
 

@@ -10,7 +10,7 @@
 SFML::SFML()
 {
     std::cout << "constructeur SFML inside" << std::endl;
-    
+
 }
 
 SFML::~SFML()
