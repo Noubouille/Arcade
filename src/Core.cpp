@@ -56,21 +56,34 @@ void Core::getAllGraphicLibs(const std::string &lib_name)
 
 void Core::nextLibrary()
 {
-    // std::cout << "la current lib :" << this->_currentLib << std::endl;
+    if (this->_listLib.size() <= 1) return; //si 1 seule lib dispo
 
     auto iterator = std::find(this->_listLib.begin(), this->_listLib.end(), this->_currentPath);
 
     // std::cout << "la next lib :" << iterator[0].c_str() << std::endl;
     if (iterator + 1 == this->_listLib.end()) {
-        std::cout << "this lib :" << std::endl;
         this->_currentPath = this->_listLib.front();
         getGraphicLib();
     } else {
-        std::cout << "this else lib :" << std::endl;
-
         this->_currentPath = *(iterator + 1);
         getGraphicLib();
+    }
+    mainLoop();
+}
 
+void Core::prevLibrary()
+{
+    if (this->_listLib.size() <= 1) return; //si 1 seule lib dispo
+
+    auto iterator = std::find(this->_listLib.begin(), this->_listLib.end(), this->_currentPath);
+
+    // std::cout << "la next lib :" << iterator[0].c_str() << std::endl;
+    if (iterator == this->_listLib.begin()) {
+        this->_currentPath = this->_listLib.back();
+        getGraphicLib();
+    } else {
+        this->_currentPath = *(iterator - 1);
+        getGraphicLib();
     }
     mainLoop();
 }
@@ -88,7 +101,10 @@ void Core::mainLoop()
             nextLibrary();
         }
         if (Input == MonEnum::F2) {
+            this->_IGraphicLib->destroyWindow();
             std::cout << "MonEnum::F2 prev lib" << std::endl;
+            prevLibrary();
+
         }
 
         if (this->_stateMenu == true) {
