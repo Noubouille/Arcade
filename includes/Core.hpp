@@ -28,6 +28,7 @@ class Core {
         void getAllGraphicLibs(const std::string &lib_name);
         void getGraphicLib();
         void nextLibrary();
+        void prevLibrary();
         // struct Lib {
         std::string _currentPath;
         // 	std::vector<std::string> _listLib;
