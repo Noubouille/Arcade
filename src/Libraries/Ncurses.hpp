@@ -25,8 +25,10 @@ class Ncurses : public IGraphic
         void drawMenu();
         void drawGame();
         MonEnum getNameGame();
-        void destroyWindow()
+        void destroyWindow();
 
+
+        WINDOW *window = initscr();
         //etc
 };
 extern "C" IGraphic *createLibrary();

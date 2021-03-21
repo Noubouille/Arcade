@@ -21,19 +21,14 @@ void Ncurses::startWindow()
 {
     initscr();
     curs_set(FALSE);
+    keypad(stdscr, TRUE);
+    noecho();
+    timeout(10);
 }
 
 void Ncurses::drawMenu()
 {
-    WINDOW *window = initscr();
-    curs_set(FALSE);
-    keypad(stdscr, TRUE);
-    //while(1)
-    //{
     wborder(window, 0, 0, 0, 0, 0, 0, 0, 0);
-    //initscr();
-    // wborder(window, 0, 0, 0, 0, 0, 0, 0, 0);
-
     int start_y, start_x;
     start_y = start_x = 10;
 
@@ -52,14 +47,13 @@ void Ncurses::drawMenu()
     mvprintw(10, 3, "Pacman");
     printw("\n");
 
-    mvprintw(8, 2, "-");
-    mvprintw(10, 2, "-");
+    //mvprintw(8, 2, "-");
+    //mvprintw(10, 2, "-");
 
     mvprintw(14, 3, "[F1] next graphical library");
     mvprintw(16, 3, "[F2] previous graphical library");
 
     refresh();
-    //}
 }
 
 MonEnum Ncurses::getEvent()
@@ -69,18 +63,16 @@ MonEnum Ncurses::getEvent()
     switch(ch)
     {
     case KEY_UP:
-        return MonEnum::UP_ARROW;
         mvprintw(10, 2, " ");
         mvprintw(8, 2, "-");
+        return MonEnum::UP_ARROW;
         break;
     case KEY_DOWN:   
-        return MonEnum::DOWN_ARROW;
         mvprintw(8, 2, " ");
         mvprintw(10, 2, "-");
-        //printw("\nDown Arrow");
+        return MonEnum::DOWN_ARROW;
         break;
-    case KEY_ENTER:
-        printw("\nenter");
+    case 10:
         return MonEnum::ENTER;
         break;
     case KEY_BACKSPACE:
@@ -92,15 +84,6 @@ MonEnum Ncurses::getEvent()
     case ' ':
         return MonEnum::SPACE;
         break;
-
-        // case sf::Keyboard::Space :
-        //         return MonEnum::SPACE;
-        //     case sf::Keyboard::BackSpace :
-        //         return MonEnum::BACKSPACE;
-        //     case sf::Keyboard::Return :
-        //         return MonEnum::ENTER;
-        //     case sf::Keyboard::Escape :
-        //         return MonEnum::ESCAPE;
 
     case KEY_F(1):
         return MonEnum::F1;
@@ -216,21 +199,6 @@ MonEnum Ncurses::getEvent()
     case 'z':
         return MonEnum::Z_KEY;
         break;
-
-    // case 'n':
-    //     mvprintw(14, 2, " ");
-    //     mvprintw(12, 2, " ");
-    //     mvprintw(10, 2, "-");
-
-    // case 's':
-    //     mvprintw(10, 2, " ");
-    //     mvprintw(14, 2, " ");
-    //     mvprintw(12, 2, "-");
-
-    // case 'c':
-    //     mvprintw(10, 2, " ");
-    //     mvprintw(12, 2, " ");
-    //     mvprintw(14, 2, "-");
     default:    
         return MonEnum::NO_INPUT;
 
