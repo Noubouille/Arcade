@@ -56,12 +56,10 @@ void SFML::drawMenu()
     Nibbler_font.setPosition(450, 300);
     Pacman_font.setPosition(450, 360);
 
-    sf::Text Ncurses_font("ncurses", font, 35);
-    sf::Text Sfml_font("SFML", font, 35);
-    sf::Text Sdl_font("SDL", font, 35);
-    Ncurses_font.setPosition(450, 560);
-    Sfml_font.setPosition(450, 620);
-    Sdl_font.setPosition(450, 680);
+    sf::Text next_font("[F1] next graphical library", font, 35);
+    sf::Text prev_font("[F2] previous graphical library", font, 35);
+    next_font.setPosition(450, 560);
+    prev_font.setPosition(450, 620);
 
     bg_sprite.setTexture(bg);
     bouton_sprite.setTexture(active);
@@ -113,9 +111,8 @@ void SFML::drawMenu()
         this->_window.draw(Nibbler_font);
         this->_window.draw(bar_font);
 
-        this->_window.draw(Ncurses_font);
-        this->_window.draw(Sfml_font);
-        this->_window.draw(Sdl_font);
+        this->_window.draw(next_font);
+        this->_window.draw(prev_font);
 
         bar_font.setPosition(450, pos_bar_y);
 

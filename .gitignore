@@ -1,0 +1,9 @@
+arcade
+lib/arcade_ncurses.so
+lib/arcade_sfml.so
+src/Core.o
+src/LibLoad.o
+src/Libraries/IGraphic.o
+src/Libraries/Ncurses.o
+src/Libraries/SFML.o
+src/main.o
