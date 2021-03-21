@@ -58,8 +58,8 @@ void SFML::drawMenu()
 
     sf::Text next_font("[F1] next graphical library", font, 35);
     sf::Text prev_font("[F2] previous graphical library", font, 35);
-    next_font.setPosition(450, 560);
-    prev_font.setPosition(450, 620);
+    next_font.setPosition(50, 560);
+    prev_font.setPosition(50, 620);
 
     bg_sprite.setTexture(bg);
     bouton_sprite.setTexture(active);
