@@ -138,7 +138,6 @@ MonEnum Ncurses::getEvent()
     case KEY_F(12):
         return MonEnum::F12;
         break;
-
     case 'a':
         return MonEnum::A_KEY;
         break;
@@ -246,6 +245,12 @@ void Ncurses::drawGame()
 MonEnum Ncurses::getNameGame()
 {
 }
+
+void Ncurses::destroyWindow()
+{
+    
+}
+
 
 extern "C" IGraphic *createLibrary()
 {

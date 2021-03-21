@@ -25,9 +25,11 @@ class Core {
 
         void loopMenu(int Input);
         void loopGame(int Input);
-        void getGraphicLib(const std::string &lib_name);
+        void getAllGraphicLibs(const std::string &lib_name);
+        void getGraphicLib();
+        void nextLibrary();
         // struct Lib {
-        // 	std::string _currentPath;
+        std::string _currentPath;
         // 	std::vector<std::string> _listLib;
         void *_currentLib;
         // 	// void *_currentObject;

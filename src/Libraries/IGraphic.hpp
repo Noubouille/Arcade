@@ -72,6 +72,7 @@ class IGraphic
         virtual void startWindow() = 0;
         virtual void drawMenu() = 0;
         virtual void drawGame() = 0;
+		virtual void destroyWindow() = 0;
         virtual MonEnum getNameGame() = 0;
 
     // struct X {

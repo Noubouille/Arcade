@@ -14,27 +14,29 @@ namespace fs = std::experimental::filesystem;
 
 Core::Core(const std::string &lib_name)
 {
-    const auto libpath = realpath(lib_name.c_str(), nullptr);
+    this->_currentPath = realpath(lib_name.c_str(), nullptr);
 
-    if (libpath == nullptr) {
+    if (this->_currentPath.empty()) {
         perror(lib_name.c_str());
         exit(84);
     }
     std::cout << "lib name :" << lib_name << std::endl;
+    this->getGraphicLib();
 
+    this->getAllGraphicLibs(this->_currentPath);
+    this->mainLoop();
+}
 
-	// std::cout << "le libpath :" << libpath << std::endl;
-
-    this->_currentLib = _LibLoad->loadlibrary(libpath); //dlopen()
+void Core::getGraphicLib()
+{
+    this->_currentLib = _LibLoad->loadlibrary(this->_currentPath); //dlopen()
     // std::cout << "la current lib :" << this->_currentLib << std::endl;
     auto createLibraryFunction = (IGraphic* (*)())_LibLoad->exec_function(this->_currentLib, "createLibrary");
     this->_IGraphicLib = (*createLibraryFunction)();
 
-    this->getGraphicLib(libpath);
-    this->mainLoop();
 }
 
-void Core::getGraphicLib(const std::string &lib_name)
+void Core::getAllGraphicLibs(const std::string &lib_name)
 {
     // recuperer les libs dans ./lib
 	std::regex r("/arcade_(.+)\\.so$");
@@ -52,6 +54,25 @@ void Core::getGraphicLib(const std::string &lib_name)
         std::cout << "les libs : " << str << std::endl;
 }
 
+void Core::nextLibrary()
+{
+    // std::cout << "la current lib :" << this->_currentLib << std::endl;
+
+    auto iterator = std::find(this->_listLib.begin(), this->_listLib.end(), this->_currentPath);
+
+    // std::cout << "la next lib :" << iterator[0].c_str() << std::endl;
+    if (iterator + 1 == this->_listLib.end()) {
+        std::cout << "this lib :" << std::endl;
+        this->_currentPath = this->_listLib.front();
+        getGraphicLib();
+    } else {
+        std::cout << "this else lib :" << std::endl;
+
+        this->_currentPath = *(iterator + 1);
+        getGraphicLib();
+
+    }
+}
 
 void Core::mainLoop()
 {
@@ -61,12 +82,6 @@ void Core::mainLoop()
         // printf("le input pritnf :%s\n", input);
         // std::cout << "le input : " << i << std::endl;
 
-        if (Input == MonEnum::F1) {
-            std::cout << "MonEnum::F1 next lib" << std::endl;
-        }
-        if (Input == MonEnum::F2) {
-            std::cout << "MonEnum::F2 prev lib" << std::endl;
-        }
         if (this->_stateMenu == true) {
             loopMenu(Input);
         } else {
@@ -78,6 +93,14 @@ void Core::mainLoop()
 
 void Core::loopMenu(int Input)
 {
+    if (Input == MonEnum::F1) {
+        std::cout << "MonEnum::F1 next lib" << std::endl;
+        this->_IGraphicLib->destroyWindow();
+        nextLibrary();
+    }
+    if (Input == MonEnum::F2) {
+        std::cout << "MonEnum::F2 prev lib" << std::endl;
+    }
     this->_IGraphicLib->drawMenu();
 
 }

@@ -24,12 +24,10 @@ public:
     void startWindow();
 
     MonEnum getEvent();
-
     void drawMenu();
-
     void drawGame();
     MonEnum getNameGame();
-
+    void destroyWindow();
     std::string getLibName();
     // SFML *createLibrary();
 

@@ -258,6 +258,10 @@ MonEnum SFML::getNameGame()
     // }
 }
 
+void SFML::destroyWindow()
+{
+    this->_window.close();
+}
 
 std::string SFML::getLibName()
 {
