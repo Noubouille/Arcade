@@ -35,7 +35,7 @@ OBJ		=	$(SRC:.cpp=.o)
 NAME_SFML	=	lib/arcade_sfml.so
 
 SRC_SFML	=	$(SRC_DIR)Libraries/SFML.cpp \
-				$(SRC_DIR)Libraries/IGraphic.cpp
+				# $(SRC_DIR)Libraries/IGraphic.cpp
 
 OBJ_SFML	=	$(SRC_SFML:.cpp=.o)
 
@@ -56,7 +56,7 @@ LDFLAGS_SFML	=	-shared -fPIC -lsfml-graphics -lsfml-system -lsfml-window -lsfml-
 NAME_NCURSES	=	lib/arcade_ncurses.so
 
 SRC_NCURSES	=	$(SRC_DIR)Libraries/Ncurses.cpp	\
-				$(SRC_DIR)Libraries/IGraphic.cpp
+				# $(SRC_DIR)Libraries/IGraphic.cpp
 
 OBJ_NCURSES	=	$(SRC_NCURSES:.cpp=.o)
 

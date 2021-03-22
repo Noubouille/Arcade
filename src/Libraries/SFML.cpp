@@ -10,7 +10,7 @@
 SFML::SFML()
 {
     std::cout << "constructeur SFML inside" << std::endl;
-
+    this->_gameName = "NIBBLER";
 }
 
 SFML::~SFML()
@@ -64,60 +64,18 @@ void SFML::drawMenu()
     bg_sprite.setTexture(bg);
     bouton_sprite.setTexture(active);
 
-    // while (window.isOpen())
-    // {
-        // sf::Event event;
-        // while (this->_window.pollEvent(event))
-        // {
-        //   std::cout << "le pollevent" << std::endl;
+    this->_window.clear(sf::Color(0, 0, 0));
+    this->_window.draw(this->_bgSprite);
+    this->_window.draw(Pacman_font);
+    this->_window.draw(Nibbler_font);
+    this->_window.draw(bar_font);
 
-        //     if (event.type == sf::Event::Closed || event.key.code == sf::Keyboard::Escape)
-        //         this->_window.close();
-        //     if(event.type == sf::Event::KeyPressed) {
-        //         if (event.key.code == sf::Keyboard::Up) {
-        //             if (this->bar_nb > 1) {
-        //                 this->pos_bar_y -= 60;
-        //                 this->bar_nb--;
-        //             }
-        //             printf("key up\n");
-        //             std::cout << "le bar nb" << this->bar_nb << std::endl;
-        //         }
-        //         if (event.key.code == sf::Keyboard::Down) {
-        //             if (this->bar_nb < 2) {
-        //                 this->pos_bar_y += 60;
-        //                 this->bar_nb++;
-        //             }
-        //             std::cout << "le bar nb" << this->bar_nb << std::endl;
+    this->_window.draw(next_font);
+    this->_window.draw(prev_font);
 
-        //             printf("key down\n");
-        //         }
-        //         if (event.key.code == sf::Keyboard::Enter) {
-        //             printf("key enter\n");
-        //         }
+    bar_font.setPosition(450, pos_bar_y);
 
-        //         sf::Vector2i position = sf::Mouse::getPosition();
-
-        //         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-        //         {
-        //             //if (position == ())
-        //         }
-        //     }
-
-        // }
-
-        this->_window.clear(sf::Color(0, 0, 0));
-        this->_window.draw(this->_bgSprite);
-        this->_window.draw(Pacman_font);
-        this->_window.draw(Nibbler_font);
-        this->_window.draw(bar_font);
-
-        this->_window.draw(next_font);
-        this->_window.draw(prev_font);
-
-        bar_font.setPosition(450, pos_bar_y);
-
-        this->_window.display();
-    // }
+    this->_window.display();
 }
 
 void SFML::drawGame()
@@ -146,12 +104,15 @@ MonEnum SFML::getEvent()
                 if (this->bar_nb > 1) {
                     this->pos_bar_y -= 60;
                     this->bar_nb--;
+                    this->_gameName = "NIBBLER";
+
                 }
                 return MonEnum::UP_ARROW;
             case sf::Keyboard::Down :
                 if (this->bar_nb < 2) {
                     this->pos_bar_y += 60;
                     this->bar_nb++;
+                    this->_gameName = "PACMAN";
                 }
                 return MonEnum::DOWN_ARROW;
             case sf::Keyboard::Space :
@@ -246,13 +207,9 @@ MonEnum SFML::getEvent()
     return MonEnum::NO_INPUT;
 }
 
-MonEnum SFML::getNameGame()
+std::string SFML::getNameGame()
 {
-    // if () {
-
-    // } else {
-
-    // }
+    return _gameName;
 }
 
 void SFML::destroyWindow()

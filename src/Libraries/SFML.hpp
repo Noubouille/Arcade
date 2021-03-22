@@ -26,7 +26,7 @@ public:
     MonEnum getEvent();
     void drawMenu();
     void drawGame();
-    MonEnum getNameGame();
+    std::string getNameGame();
     void destroyWindow();
     std::string getLibName();
     // SFML *createLibrary();
@@ -35,7 +35,7 @@ public:
     sf::Font _font;
     sf::Texture _bgTexture;
     sf::Sprite _bgSprite;
-    // std::string _gameName;
+    std::string _gameName;
 
 private:
     int pos_bar_y = 320;

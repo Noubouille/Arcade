@@ -60,7 +60,6 @@ void Core::nextLibrary()
 
     auto iterator = std::find(this->_listLib.begin(), this->_listLib.end(), this->_currentPath);
 
-    // std::cout << "la next lib :" << iterator[0].c_str() << std::endl;
     if (iterator + 1 == this->_listLib.end()) {
         this->_currentPath = this->_listLib.front();
         getGraphicLib();
@@ -77,7 +76,6 @@ void Core::prevLibrary()
 
     auto iterator = std::find(this->_listLib.begin(), this->_listLib.end(), this->_currentPath);
 
-    // std::cout << "la next lib :" << iterator[0].c_str() << std::endl;
     if (iterator == this->_listLib.begin()) {
         this->_currentPath = this->_listLib.back();
         getGraphicLib();
@@ -93,8 +91,7 @@ void Core::mainLoop()
     this->_IGraphicLib->startWindow();
     for (;1;) {
         int Input = this->_IGraphicLib->getEvent();
-        // printf("le input pritnf :%s\n", input);
-        // std::cout << "le input : " << i << std::endl;
+
         if (Input == MonEnum::F1) {
             std::cout << "MonEnum::F1 next lib" << std::endl;
             this->_IGraphicLib->destroyWindow();
@@ -104,7 +101,10 @@ void Core::mainLoop()
             this->_IGraphicLib->destroyWindow();
             std::cout << "MonEnum::F2 prev lib" << std::endl;
             prevLibrary();
-
+        }
+        if (Input == MonEnum::ENTER) {
+            this->_stateMenu = false;
+            std::cout << "le jeu lancé :" << this->_IGraphicLib->getNameGame() << std::endl;
         }
 
         if (this->_stateMenu == true) {
@@ -124,7 +124,7 @@ void Core::loopMenu(int Input)
 
 void Core::loopGame(int Input)
 {
-
+    this->_IGraphicLib->drawGame();
 }
 
 

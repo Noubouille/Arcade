@@ -210,7 +210,7 @@ void Ncurses::drawGame()
 
 }
 
-MonEnum Ncurses::getNameGame()
+std::string Ncurses::getNameGame()
 {
 }
 

@@ -11,7 +11,7 @@
 #include "IGraphic.hpp"
 #include <ncurses.h>
 #include <iostream>
-
+#include <string>
 class Ncurses : public IGraphic
 {
     public:
@@ -24,7 +24,7 @@ class Ncurses : public IGraphic
 
         void drawMenu();
         void drawGame();
-        MonEnum getNameGame();
+        std::string getNameGame();
         void destroyWindow();
 
 
