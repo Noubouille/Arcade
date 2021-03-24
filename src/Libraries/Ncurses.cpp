@@ -214,6 +214,12 @@ std::string Ncurses::getNameGame()
 {
 }
 
+void Ncurses::drawBackground(const std::string &Background)
+{
+    
+}
+
+
 void Ncurses::destroyWindow()
 {
     endwin();

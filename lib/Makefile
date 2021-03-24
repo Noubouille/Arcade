@@ -6,7 +6,7 @@
 ##
 
 SOURCES_SFML		=	../src/Libraries/SFML.cpp \
-						../src/Libraries/IGraphic.cpp
+						# ../src/Libraries/IGraphic.cpp
 
 SOURCES_SDL			=	../src/Libraries/SDL.cpp
 

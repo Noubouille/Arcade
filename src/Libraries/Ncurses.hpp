@@ -26,6 +26,7 @@ class Ncurses : public IGraphic
         void drawGame();
         std::string getNameGame();
         void destroyWindow();
+        void drawBackground(const std::string &Background);
 
 
         WINDOW *window = initscr();
