@@ -95,11 +95,11 @@ LDFLAGS_NCURSES	=	-shared -fPIC -lncurses
 
 all:			core games graphicals
 
-core:			$(NAME)
+core:			$(NAME) ## Compile core
 
-games:			$(NAME_PACMAN)  $(NAME_SNAKE) $(NAME_SOLAR)
+games:			$(NAME_PACMAN)  $(NAME_SNAKE) $(NAME_SOLAR) ## Compile games
 
-graphicals:		$(NAME_SFML) $(NAME_SDL) $(NAME_NCURSES) $(NAME_ALLEGRO)
+graphicals:		$(NAME_SFML) $(NAME_SDL) $(NAME_NCURSES) $(NAME_ALLEGRO) ## Compile graphical libraries
 
 $(NAME_SFML):		$(OBJ_SFML)
 			$(CXX) $(OBJ_SFML) -o $(NAME_SFML) $(LDFLAGS_SFML)
@@ -124,16 +124,18 @@ $(NAME_NCURSES):		$(OBJ_NCURSES)
 # $(NAME_SOLAR):		$(OBJ_SOLAR)
 # 			$(CXX) $(OBJ_SOLAR) -o $(NAME_SOLAR) $(LDFLAGS_SOLAR)
 
-$(NAME):		$(OBJ)
+$(NAME):		$(OBJ) ## Compile program
 			$(CXX) $(OBJ) -o $(NAME) $(LDFLAGS) $(FLGS)
 			$(RM) $(OBJ)
 
-clean:
+clean: ## Clean directories
 			$(RM) $(OBJ_SFML) $(OBJ_SDL) $(OBJ_CACA) $(OBJ_PACMAN) $(OBJ_SNAKE) $(OBJ) $(OBJ_ALLEGRO) $(OBJ_SOLAR)
 
-fclean:			clean
+fclean:			clean ## Clean directories & binary(s)
 			$(RM) $(NAME_SFML) $(NAME_SDL) $(NAME_CACA) $(NAME_PACMAN) $(NAME_SNAKE) $(NAME) $(NAME_ALLEGRO) $(NAME_SOLAR)
-
-re:			fclean all
+re:			fclean all ## Recompile program
 
 .PHONY:			clean fclean re all
+
+help:
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
