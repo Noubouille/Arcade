@@ -47,9 +47,6 @@ void Ncurses::drawMenu()
     mvprintw(10, 3, "Pacman");
     printw("\n");
 
-    //mvprintw(8, 2, "-");
-    //mvprintw(10, 2, "-");
-
     mvprintw(14, 3, "[F1] next graphical library");
     mvprintw(16, 3, "[F2] previous graphical library");
 
@@ -78,7 +75,8 @@ MonEnum Ncurses::getEvent()
     case KEY_BACKSPACE:
         return MonEnum::BACKSPACE;
         break;
-    case KEY_EXIT:
+    case 27:
+        mvprintw(20, 3, "echap boi");
         return MonEnum::ESCAPE;
         break;
     case ' ':

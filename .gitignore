@@ -1,3 +1,5 @@
 arcade
 lib/*.so
 src/**/*.o
+nibbler/
+.vscode
