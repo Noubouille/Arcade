@@ -82,11 +82,11 @@ LDFLAGS_NIBBLER	=	-shared -fPIC
 
 all:			core games graphicals
 
-core:			$(NAME)
+core:			$(NAME) ## Compile core
 
-games:			$(NAME_PACMAN)  $(NAME_NIBBLER)
+games:			$(NAME_PACMAN)  $(NAME_SNAKE) ## Compile games
 
-graphicals:		$(NAME_SFML) $(NAME_SDL) $(NAME_NCURSES) $(NAME_ALLEGRO)
+graphicals:		$(NAME_SFML) $(NAME_SDL) $(NAME_NCURSES) $(NAME_ALLEGRO) ## Compile graphical libraries
 
 $(NAME_SFML):		$(OBJ_SFML)
 			$(CXX) $(OBJ_SFML) -o $(NAME_SFML) $(LDFLAGS_SFML)
@@ -109,16 +109,18 @@ $(NAME_NIBBLER):		$(OBJ_NIBBLER)
 			$(CXX) $(OBJ_NIBBLER) -o $(NAME_NIBBLER) $(LDFLAGS_NIBBLER)
 	 		$(RM) $(OBJ_NIBBLER)
 
-$(NAME):		$(OBJ)
+$(NAME):		$(OBJ) ## Compile program
 			$(CXX) $(OBJ) -o $(NAME) $(LDFLAGS) $(FLGS)
 			$(RM) $(OBJ)
 
-clean:
-			$(RM) $(OBJ_SFML) $(OBJ_SDL) $(OBJ_CACA) $(OBJ_PACMAN) $(OBJ_NIBBLER) $(OBJ) $(OBJ_ALLEGRO)
+clean: ## Clean directories
+			$(RM) $(OBJ_SFML) $(OBJ_SDL) $(OBJ_CACA) $(OBJ_PACMAN) $(OBJ_SNAKE) $(OBJ) $(OBJ_ALLEGRO)
 
-fclean:			clean
-			$(RM) $(NAME_SFML) $(NAME_SDL) $(NAME_CACA) $(NAME_PACMAN) $(NAME_NIBBLER) $(NAME) $(NAME_ALLEGRO)
-
-re:			fclean all
+fclean:			clean ## Clean directories & binary(s)
+			$(RM) $(NAME_SFML) $(NAME_SDL) $(NAME_CACA) $(NAME_PACMAN) $(NAME_SNAKE) $(NAME) $(NAME_ALLEGRO) $(NAME_SOLAR)
+re:			fclean all ## Recompile program
 
 .PHONY:			clean fclean re all
+
+help:
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
