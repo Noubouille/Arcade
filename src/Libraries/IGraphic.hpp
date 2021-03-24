@@ -66,7 +66,6 @@ enum MonEnum {
 class IGraphic
 {
     public:
-
         virtual MonEnum getEvent() = 0;
 
         virtual void startWindow() = 0;
@@ -74,6 +73,7 @@ class IGraphic
         virtual void drawGame() = 0;
 		virtual void destroyWindow() = 0;
         virtual std::string getNameGame() = 0;
+        virtual void drawBackground(std::string &Background);
 
 };
 

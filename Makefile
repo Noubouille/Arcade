@@ -24,7 +24,6 @@ SRC_DIR		=	src/
 SRC		=	$(SRC_DIR)main.cpp			\
 			$(SRC_DIR)Core.cpp		\
 			$(SRC_DIR)LibLoad.cpp		\
-			# $(SRC_DIR)Libraries/IGraphic.cpp			\
 			# $(SRC_DIR)Core/HighScoreManager.cpp	\
 			# $(SRC_DIR)LibraryLoader.cpp
 
@@ -35,7 +34,6 @@ OBJ		=	$(SRC:.cpp=.o)
 NAME_SFML	=	lib/arcade_sfml.so
 
 SRC_SFML	=	$(SRC_DIR)Libraries/SFML.cpp \
-				# $(SRC_DIR)Libraries/IGraphic.cpp
 
 OBJ_SFML	=	$(SRC_SFML:.cpp=.o)
 
@@ -56,7 +54,6 @@ LDFLAGS_SFML	=	-shared -fPIC -lsfml-graphics -lsfml-system -lsfml-window -lsfml-
 NAME_NCURSES	=	lib/arcade_ncurses.so
 
 SRC_NCURSES	=	$(SRC_DIR)Libraries/Ncurses.cpp	\
-				# $(SRC_DIR)Libraries/IGraphic.cpp
 
 OBJ_NCURSES	=	$(SRC_NCURSES:.cpp=.o)
 
@@ -73,31 +70,21 @@ LDFLAGS_NCURSES	=	-shared -fPIC -lncurses
 
 # LDFLAGS_PACMAN	=	-shared -fPIC
 
-## snake
+## nibbler
 
-# NAME_SNAKE	=	games/lib_arcade_nibbler.so
+NAME_NIBBLER	=	lib/arcade_nibbler.so
 
-# SRC_SNAKE	=	$(SRC_DIR)Games/Snake/Snake.cpp
+SRC_NIBBLER	=	$(SRC_DIR)Games/Nibbler.cpp
 
-# OBJ_SNAKE	=	$(SRC_SNAKE:.cpp=.o)
+OBJ_NIBBLER	=	$(SRC_NIBBLER:.cpp=.o)
 
-# LDFLAGS_SNAKE	=	-shared -fPIC
-
-# ## solarfox
-
-# NAME_SOLAR	=	games/lib_arcade_solarfox.so
-
-# SRC_SOLAR	=	$(SRC_DIR)Games/SolarFox/SolarFox.cpp
-
-# OBJ_SOLAR	=	$(SRC_SOLAR:.cpp=.o)
-
-# LDFLAGS_SOLAR	=	-shared -fPIC
+LDFLAGS_NIBBLER	=	-shared -fPIC
 
 all:			core games graphicals
 
 core:			$(NAME)
 
-games:			$(NAME_PACMAN)  $(NAME_SNAKE) $(NAME_SOLAR)
+games:			$(NAME_PACMAN)  $(NAME_NIBBLER)
 
 graphicals:		$(NAME_SFML) $(NAME_SDL) $(NAME_NCURSES) $(NAME_ALLEGRO)
 
@@ -118,21 +105,19 @@ $(NAME_NCURSES):		$(OBJ_NCURSES)
 # $(NAME_PACMAN):		$(OBJ_PACMAN)
 # 			$(CXX) $(OBJ_PACMAN) -o $(NAME_PACMAN) $(LDFLAGS_PACMAN)
 
-# $(NAME_SNAKE):		$(OBJ_SNAKE)
-# 			$(CXX) $(OBJ_SNAKE) -o $(NAME_SNAKE) $(LDFLAGS_SNAKE)
-
-# $(NAME_SOLAR):		$(OBJ_SOLAR)
-# 			$(CXX) $(OBJ_SOLAR) -o $(NAME_SOLAR) $(LDFLAGS_SOLAR)
+$(NAME_NIBBLER):		$(OBJ_NIBBLER)
+			$(CXX) $(OBJ_NIBBLER) -o $(NAME_NIBBLER) $(LDFLAGS_NIBBLER)
+	 		$(RM) $(OBJ_NIBBLER)
 
 $(NAME):		$(OBJ)
 			$(CXX) $(OBJ) -o $(NAME) $(LDFLAGS) $(FLGS)
 			$(RM) $(OBJ)
 
 clean:
-			$(RM) $(OBJ_SFML) $(OBJ_SDL) $(OBJ_CACA) $(OBJ_PACMAN) $(OBJ_SNAKE) $(OBJ) $(OBJ_ALLEGRO) $(OBJ_SOLAR)
+			$(RM) $(OBJ_SFML) $(OBJ_SDL) $(OBJ_CACA) $(OBJ_PACMAN) $(OBJ_NIBBLER) $(OBJ) $(OBJ_ALLEGRO)
 
 fclean:			clean
-			$(RM) $(NAME_SFML) $(NAME_SDL) $(NAME_CACA) $(NAME_PACMAN) $(NAME_SNAKE) $(NAME) $(NAME_ALLEGRO) $(NAME_SOLAR)
+			$(RM) $(NAME_SFML) $(NAME_SDL) $(NAME_CACA) $(NAME_PACMAN) $(NAME_NIBBLER) $(NAME) $(NAME_ALLEGRO)
 
 re:			fclean all
 

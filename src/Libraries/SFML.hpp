@@ -29,7 +29,7 @@ public:
     std::string getNameGame();
     void destroyWindow();
     std::string getLibName();
-    // SFML *createLibrary();
+    void drawBackground(const std::string &Background);
 
     sf::RenderWindow _window;
     sf::Font _font;
@@ -42,7 +42,6 @@ private:
     int bar_nb = 1;
 };
 
-// extern "C" SFML *createLibrary();
 extern "C" IGraphic *createLibrary();
 
 #endif /* !SFML_HPP_ */

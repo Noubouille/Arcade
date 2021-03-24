@@ -124,6 +124,7 @@ void Core::loopMenu(int Input)
 
 void Core::loopGame(int Input)
 {
+    // this->_IGraphicLib->drawBackground();
     this->_IGraphicLib->drawGame();
 }
 

@@ -222,6 +222,18 @@ std::string SFML::getLibName()
     return "SFML";
 }
 
+void SFML::drawBackground(const std::string &Background)
+{
+    if (Background.empty()) return;
+
+	sf::Texture texture;
+	texture.loadFromFile(Background);
+	sf::Sprite sprite;
+	sprite.setTexture(texture);
+	sprite.setPosition(sf::Vector2f(1080/5.0f,1080/5.0f));
+	_window.draw(sprite);
+}
+
 extern "C" IGraphic *createLibrary()
 {
     std::cout << "CREATE LIBRARY" << std::endl;
