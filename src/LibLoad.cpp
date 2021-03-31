@@ -34,8 +34,17 @@ void LibLoad::closeLibrary(void *handle)
 
 void *LibLoad::exec_function(void *handle, std::string functionName)
 {
-	// std::cout << "exec_function fdp functionName.c_str() :" << functionName.c_str() << std::endl;
-	// std::cout << "exec_function fdp handle :" << handle << std::endl;
+    // printf("dlsym(handle, functionName.c_str()) : %p\n", dlsym(handle, functionName.c_str()));
+    // printf("dlsym(handle, functionName.c_str()) fake : %p\n", dlsym(handle, "bonsoir"));
 
 	return dlsym(handle, functionName.c_str());
+}
+
+bool LibLoad::checkifGame(void *handle)
+{
+	if (exec_function(handle, "createGame") != NULL) {
+		return true;
+	} else {
+		return false;
+	}
 }

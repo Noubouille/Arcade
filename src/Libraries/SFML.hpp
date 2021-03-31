@@ -30,7 +30,10 @@ public:
     void destroyWindow();
     std::string getLibName();
     void drawBackground(const std::string &Background);
-
+    void clearWindow();
+    void updateWindow();
+    void drawMain(std::vector<Pixel>);
+    void drawSprite(std::vector<Pixel> sprite);
     sf::RenderWindow _window;
     sf::Font _font;
     sf::Texture _bgTexture;
@@ -38,6 +41,8 @@ public:
     std::string _gameName;
 
 private:
+    sf::Time m_elapsedTime;
+
     int pos_bar_y = 320;
     int bar_nb = 1;
 };

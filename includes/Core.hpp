@@ -13,30 +13,42 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "../src/Libraries/IGraphic.hpp"
+#include "../src/Games/IGames.hpp"
 #include "../src/LibLoad.hpp"
+#include "Pixel.hpp"
+
+// typedef struct {
+//     unsigned int x;
+//     unsigned int y;
+//     std::string pathSprite;
+// } Pixel;
 
 class Core {
     public:
+        IGames *_IGamesLib;
         IGraphic *_IGraphicLib;
         LibLoad *_LibLoad;
         Core(const std::string &lib_name);
         ~Core();
 		void mainLoop();
 
-        void loopMenu(int Input);
-        void loopGame(int Input);
-        void getAllGraphicLibs(const std::string &lib_name);
+        void loopMenu(MonEnum Input);
+        void loopGame(MonEnum Input);
+        void getAllLibs();
         void getGraphicLib();
+        void getGameLib();
         void nextLibrary();
         void prevLibrary();
         // struct Lib {
         std::string _currentPath;
         // 	std::vector<std::string> _listLib;
         void *_currentLib;
+        void *_currentGame;
         // 	// void *_currentObject;
         // };
         bool _stateMenu = true;
         std::vector<std::string> _listLib;
+        std::vector<std::string> _listGames;
 
 
     protected:

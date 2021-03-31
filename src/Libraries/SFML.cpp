@@ -7,7 +7,7 @@
 
 #include "SFML.hpp"
 
-SFML::SFML()
+SFML::SFML(): m_elapsedTime(sf::Time::Zero)
 {
     std::cout << "constructeur SFML inside" << std::endl;
     this->_gameName = "NIBBLER";
@@ -31,24 +31,18 @@ void SFML::drawMenu()
 {
     // sf::RenderWindow window(sf::VideoMode(1080, 1080), "Arcade");
     // window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
-    // std::cout << "la window" << std::endl;
     sf::Texture bg;
     sf::Texture active;
     sf::Font font;
 
-    // if (!bg.loadFromFile("./assets/bg.png"))
+    // if (!active.loadFromFile("./assets/btn_green.png"))
     //     return;
-
-    if (!active.loadFromFile("./assets/btn_green.png"))
-        return;
 
     if (!font.loadFromFile("./assets/Arcade.ttf"))
         return;
-    // int pos_bar_y = 320;
-    // int bar_nb = 1;
 
     sf::Sprite bg_sprite(bg);
-    sf::Sprite bouton_sprite(active);
+    // sf::Sprite bouton_sprite(active);
     sf::Text bar_font("-------", font, 35);
     sf::Text Nibbler_font("Nibbler", font, 35);
     sf::Text Pacman_font("Pacman", font, 35);
@@ -62,7 +56,7 @@ void SFML::drawMenu()
     prev_font.setPosition(50, 640);
 
     bg_sprite.setTexture(bg);
-    bouton_sprite.setTexture(active);
+    // bouton_sprite.setTexture(active);
 
     this->_window.clear(sf::Color(0, 0, 0));
     this->_window.draw(this->_bgSprite);
@@ -217,6 +211,16 @@ void SFML::destroyWindow()
     this->_window.close();
 }
 
+void SFML::clearWindow()
+{
+    this->_window.clear(sf::Color::Black);
+}
+
+void SFML::updateWindow()
+{
+    this->_window.display();
+}
+
 std::string SFML::getLibName()
 {
     return "SFML";
@@ -224,7 +228,9 @@ std::string SFML::getLibName()
 
 void SFML::drawBackground(const std::string &Background)
 {
-    if (Background.empty()) return;
+    if (Background.empty()) {
+        return;
+    }
 
 	sf::Texture texture;
 	texture.loadFromFile(Background);
@@ -232,6 +238,41 @@ void SFML::drawBackground(const std::string &Background)
 	sprite.setTexture(texture);
 	sprite.setPosition(sf::Vector2f(1080/5.0f,1080/5.0f));
 	_window.draw(sprite);
+
+}
+
+void SFML::drawMain(std::vector<Pixel> snake)
+{
+    // if (m_elapsedTime.asSeconds() > 0.1) {
+
+        for (auto it = std::next(snake.begin()); it != snake.end(); it++) {
+
+            sf::Texture texture;
+            if (!texture.loadFromFile(it->pathSprite)) {
+                return ;
+            }
+
+            sf::Sprite sprite;
+            sprite.setTexture(texture);
+            sprite.setPosition(sf::Vector2f(it->x, it->y));
+            _window.draw(sprite);
+            // std::cout << "le vector : " << it->y << std::endl;
+        }
+    //     m_elapsedTime = sf::Time::Zero;
+    // }
+}
+
+void SFML::drawSprite(std::vector<Pixel> sprite) {
+    for (auto it = std::next(sprite.begin()); it != sprite.end(); it++) {
+
+        sf::Texture texture;
+        texture.loadFromFile(it->pathSprite);
+        sf::Sprite sprite;
+        sprite.setTexture(texture);
+        sprite.setPosition(sf::Vector2f(it->x, it->y));
+        _window.draw(sprite);
+        // std::cout << "le vector : " << it->y << std::endl;
+    }
 }
 
 extern "C" IGraphic *createLibrary()

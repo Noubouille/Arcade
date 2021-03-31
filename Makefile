@@ -84,7 +84,7 @@ all:			core games graphicals
 
 core:			$(NAME) ## Compile core
 
-games:			$(NAME_PACMAN)  $(NAME_SNAKE) ## Compile games
+games:			$(NAME_PACMAN)  $(NAME_NIBBLER) ## Compile games
 
 graphicals:		$(NAME_SFML) $(NAME_SDL) $(NAME_NCURSES) $(NAME_ALLEGRO) ## Compile graphical libraries
 
@@ -107,17 +107,17 @@ $(NAME_NCURSES):		$(OBJ_NCURSES)
 
 $(NAME_NIBBLER):		$(OBJ_NIBBLER)
 			$(CXX) $(OBJ_NIBBLER) -o $(NAME_NIBBLER) $(LDFLAGS_NIBBLER)
-	 		$(RM) $(OBJ_NIBBLER)
+	 		# $(RM) $(OBJ_NIBBLER)
 
 $(NAME):		$(OBJ) ## Compile program
 			$(CXX) $(OBJ) -o $(NAME) $(LDFLAGS) $(FLGS)
 			$(RM) $(OBJ)
 
 clean: ## Clean directories
-			$(RM) $(OBJ_SFML) $(OBJ_SDL) $(OBJ_CACA) $(OBJ_PACMAN) $(OBJ_SNAKE) $(OBJ) $(OBJ_ALLEGRO)
+			$(RM) $(OBJ_SFML) $(OBJ_SDL) $(OBJ_CACA) $(OBJ_PACMAN) $(OBJ_NIBBLER) $(OBJ) $(OBJ_ALLEGRO)
 
 fclean:			clean ## Clean directories & binary(s)
-			$(RM) $(NAME_SFML) $(NAME_SDL) $(NAME_CACA) $(NAME_PACMAN) $(NAME_SNAKE) $(NAME) $(NAME_ALLEGRO) $(NAME_SOLAR)
+			$(RM) $(NAME_SFML) $(NAME_SDL) $(NAME_CACA) $(NAME_PACMAN) $(NAME_NIBBLER) $(NAME) $(NAME_ALLEGRO) $(NAME_SOLAR)
 re:			fclean all ## Recompile program
 
 .PHONY:			clean fclean re all

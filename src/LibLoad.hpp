@@ -19,6 +19,7 @@ class LibLoad {
         void *loadlibrary(std::string librarypath);
         void closeLibrary(void *handle);
         void *exec_function(void *handle, std::string functionName);
+        bool checkifGame(void *handle);
 
     protected:
     private:

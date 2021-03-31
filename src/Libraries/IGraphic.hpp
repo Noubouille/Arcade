@@ -10,6 +10,8 @@
 
 #include <string>
 
+#include "../../includes/Pixel.hpp"
+
 enum MonEnum {
 	NO_INPUT = -1,
 	ENTER,
@@ -66,9 +68,6 @@ enum MonEnum {
 class IGraphic
 {
     public:
-		// IGraphic() {}
-		// // virtual ~IGraphic();
-		// virtual ~IGraphic() {}
 
         virtual MonEnum getEvent() = 0;
 
@@ -76,9 +75,12 @@ class IGraphic
         virtual void drawMenu() = 0;
         virtual void drawGame() = 0;
 		virtual void destroyWindow() = 0;
+		virtual void clearWindow() = 0;
+		virtual void updateWindow() = 0;
         virtual std::string getNameGame() = 0;
         virtual void drawBackground(const std::string &Background) = 0;
-
+        virtual void drawMain(std::vector<Pixel> snake) = 0;
+        virtual void drawSprite(std::vector<Pixel> sprite) = 0;
 };
 
 #endif /* !IGRAPHIC_HPP_ */
