@@ -26,7 +26,11 @@ class Ncurses : public IGraphic
         void drawGame();
         std::string getNameGame();
         void destroyWindow();
-        void drawBackground(const std::string &Background);
+        void drawBackground(const std::string &Background) override;
+        void drawMain(std::vector<Pixel> snake) override;
+        void drawSprite(std::vector<Pixel> sprite) override;
+		void clearWindow() override;
+		void updateWindow() override;
 
 
         WINDOW *window = initscr();

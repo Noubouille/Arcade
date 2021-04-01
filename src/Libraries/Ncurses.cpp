@@ -224,6 +224,27 @@ void Ncurses::destroyWindow()
 }
 
 
+void Ncurses::clearWindow()
+{
+
+}
+
+void Ncurses::updateWindow()
+{
+
+}
+
+void Ncurses::drawSprite(std::vector<Pixel> sprite)
+{
+
+}
+
+void Ncurses::drawMain(std::vector<Pixel> snake)
+{
+
+}
+
+
 extern "C" IGraphic *createLibrary()
 {
     std::cout << "CREATE LIBRARY NCURSES" << std::endl;

@@ -30,6 +30,8 @@ public:
     void destroyWindow();
     std::string getLibName();
     void drawBackground(const std::string &Background);
+	std::pair<int, int> sendBgSize() override;
+
     void clearWindow();
     void updateWindow();
     void drawMain(std::vector<Pixel>);
@@ -42,6 +44,7 @@ public:
 
 private:
     sf::Time m_elapsedTime;
+    std::pair<int, int> _bgSize;
 
     int pos_bar_y = 320;
     int bar_nb = 1;

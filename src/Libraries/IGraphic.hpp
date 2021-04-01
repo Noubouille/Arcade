@@ -9,6 +9,7 @@
 #define IGRAPHIC_HPP_
 
 #include <string>
+#include <vector>
 
 #include "../../includes/Pixel.hpp"
 
@@ -79,8 +80,11 @@ class IGraphic
 		virtual void updateWindow() = 0;
         virtual std::string getNameGame() = 0;
         virtual void drawBackground(const std::string &Background) = 0;
+		virtual std::pair<int, int> sendBgSize() = 0;
         virtual void drawMain(std::vector<Pixel> snake) = 0;
         virtual void drawSprite(std::vector<Pixel> sprite) = 0;
+
+		std::pair<int, int> _bgSize;
 };
 
 #endif /* !IGRAPHIC_HPP_ */

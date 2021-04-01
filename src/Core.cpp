@@ -165,18 +165,18 @@ void Core::loopMenu(MonEnum Input)
 
 void Core::loopGame(MonEnum Input)
 {
-
+    this->_IGraphicLib->clearWindow();
     this->_IGraphicLib->drawBackground(this->_IGamesLib->getBg());
+    this->_IGamesLib->bgSize(this->_IGraphicLib->sendBgSize());
     this->_IGamesLib->getInput(Input);
-    // this->_IGraphicLib->drawSprite("assets/Nibbler/body.png", 500, 500);
     // this->_IGraphicLib->drawGame();
     this->_IGraphicLib->drawSprite(this->_IGamesLib->getSprite());
+
     this->_IGraphicLib->drawMain(this->_IGamesLib->getMain());
-    this->_IGamesLib->updateGame();
     this->_IGraphicLib->updateWindow();
+    this->_IGamesLib->updateGame();
 }
 
 Core::~Core()
 {
-    // std::cout << "je suis le destructor" << std::endl;
 }

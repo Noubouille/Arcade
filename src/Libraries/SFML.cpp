@@ -9,8 +9,8 @@
 
 SFML::SFML(): m_elapsedTime(sf::Time::Zero)
 {
-    std::cout << "constructeur SFML inside" << std::endl;
     this->_gameName = "NIBBLER";
+    this->_bgSize = std::make_pair(600, 600);
 }
 
 SFML::~SFML()
@@ -19,7 +19,6 @@ SFML::~SFML()
 
 void SFML::startWindow()
 {
-    // std::cout << "start window lib" << std::endl;
     this->_window.create(sf::VideoMode(1080, 1080), "Arcade");
     this->_window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - _window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - _window.getSize().y * 0.5));
     if (!this->_bgTexture.loadFromFile("./assets/bg.png"))
@@ -29,12 +28,9 @@ void SFML::startWindow()
 
 void SFML::drawMenu()
 {
-    // sf::RenderWindow window(sf::VideoMode(1080, 1080), "Arcade");
-    // window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
     sf::Texture bg;
     sf::Texture active;
     sf::Font font;
-
     // if (!active.loadFromFile("./assets/btn_green.png"))
     //     return;
 
@@ -74,7 +70,6 @@ void SFML::drawMenu()
 
 void SFML::drawGame()
 {
-
 }
 
 MonEnum SFML::getEvent()
@@ -236,9 +231,8 @@ void SFML::drawBackground(const std::string &Background)
 	texture.loadFromFile(Background);
 	sf::Sprite sprite;
 	sprite.setTexture(texture);
-	sprite.setPosition(sf::Vector2f(1080/5.0f,1080/5.0f));
+	sprite.setPosition(sf::Vector2f(0 ,0));
 	_window.draw(sprite);
-
 }
 
 void SFML::drawMain(std::vector<Pixel> snake)
@@ -256,7 +250,8 @@ void SFML::drawMain(std::vector<Pixel> snake)
             sprite.setTexture(texture);
             sprite.setPosition(sf::Vector2f(it->x, it->y));
             _window.draw(sprite);
-            // std::cout << "le vector : " << it->y << std::endl;
+            std::cout << "le snake pos x : " << it->x << std::endl;
+            std::cout << "le snake pos y : " << it->y << std::endl;
         }
     //     m_elapsedTime = sf::Time::Zero;
     // }
@@ -271,12 +266,16 @@ void SFML::drawSprite(std::vector<Pixel> sprite) {
         sprite.setTexture(texture);
         sprite.setPosition(sf::Vector2f(it->x, it->y));
         _window.draw(sprite);
-        // std::cout << "le vector : " << it->y << std::endl;
     }
 }
 
+std::pair<int, int> SFML::sendBgSize()
+{
+    return _bgSize;
+}
+
+
 extern "C" IGraphic *createLibrary()
 {
-    std::cout << "CREATE LIBRARY" << std::endl;
 	return new SFML();
 }

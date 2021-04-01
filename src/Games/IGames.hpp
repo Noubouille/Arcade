@@ -12,7 +12,7 @@
 #include <vector>
 #include "../../includes/Pixel.hpp"
 #include "../Libraries/IGraphic.hpp"
-
+#include <utility>
 
 class IGames {
     public:
@@ -26,6 +26,7 @@ class IGames {
         virtual std::vector<Pixel> getSprite() = 0;
         virtual void getInput(MonEnum) = 0;
         virtual void updateGame() = 0;
+        virtual void bgSize(std::pair<int, int>) = 0;
 
 
     protected:

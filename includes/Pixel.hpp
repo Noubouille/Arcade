@@ -10,10 +10,17 @@
 #include <string>
 
 typedef struct {
-    float x;
-    float y;
+    int x;
+    int y;
     std::string pathSprite;
 } Pixel;
+
+typedef struct {
+    unsigned int x;
+    unsigned int y;
+    std::string text;
+    // bool underline;
+} Text;
 
 // class Pixel {
 //     public:

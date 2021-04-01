@@ -10,6 +10,9 @@
 
 Nibbler::Nibbler()
 {
+    this->_bg_size = std::make_pair(0, 0);
+    this->_pos_fruit = std::make_pair(0, 0);
+
 	// std::vector<Pixel> player;
 	_nextMove = Orientation::UP;
 	// _pos_snake = std::make_pair(16.f, 16.f);
@@ -22,7 +25,7 @@ Nibbler::Nibbler()
 	// _players.emplace_back(pixel);
 	// pixel = {pos_x + 32.f, pos_y, "./assets/Nibbler/body.png"};
 	// _players.emplace_back(pixel);
-    this->setFruit();
+    // this->setFruit();
 }
 
 void Nibbler::getInput(MonEnum Input)
@@ -70,8 +73,8 @@ void Nibbler::setFruit()
     srand(time(NULL));
     this->_pos_fruit = std::make_pair(0, 0);
 	if (this->foodCheck() == false) {
-		this->_pos_fruit.first = rand()%(20) + 300;
-		this->_pos_fruit.second = rand()%(20) + 300;
+		this->_pos_fruit.first = rand()%(this->_bg_size.first) + 20;
+		this->_pos_fruit.second = rand()%(this->_bg_size.second) + 20;
 	}
 }
 
@@ -87,12 +90,19 @@ bool Nibbler::foodCheck()
 void Nibbler::updateGame()
 {
     if (foodCheck() == false) {
+        this->_fruit.clear();
         setFruit();
         std::cout << "je mets un new fruit" << std::endl;
     }
 
+
+
 }
 
+void Nibbler::bgSize(std::pair<int, int> size)
+{
+    this->_bg_size = size;
+}
 
 Nibbler::~Nibbler()
 {
@@ -118,30 +128,99 @@ int Nibbler::getScore()
 	return _score;
 }
 
-bool Nibbler::checkMoveSnake()
+bool Nibbler::checkMoveSnake_up(std::vector<Pixel>::iterator it)
 {
-
+    if ((it->x > this->_pos_fruit.first - 25 && it->x < this->_pos_fruit.first + 25) &&
+    (it->y > this->_pos_fruit.second - 25 && it->y < this->_pos_fruit.second + 25)) {
+        std::cout << "je suis mangé !" << std::endl;
+        this->_pos_fruit = std::make_pair(0, 0);
+        _score++;
+    }
+    if (it->y - 30 <= 0) {
+        std::cout << "je suis false it->y > bg!" << std::endl;
+        return false;
+    }
+    return true;
 }
 
+bool Nibbler::checkMoveSnake_down(std::vector<Pixel>::iterator it)
+{
+    if ((it->x > this->_pos_fruit.first - 25 && it->x < this->_pos_fruit.first + 25) &&
+    (it->y > this->_pos_fruit.second - 25 && it->y < this->_pos_fruit.second + 25)) {
+        std::cout << "je suis mangé !" << std::endl;
+        this->_pos_fruit = std::make_pair(0, 0);
+        _score++;
+    }
+    if (it->y >= _bg_size.second) {
+        std::cout << "je suis false  it y<0 !" << std::endl;
+        return false;
+    }
+    return true;
+}
 
+bool Nibbler::checkMoveSnake_right(std::vector<Pixel>::iterator it)
+{
+    if ((it->x > this->_pos_fruit.first - 25 && it->x < this->_pos_fruit.first + 25) &&
+    (it->y > this->_pos_fruit.second - 25 && it->y < this->_pos_fruit.second + 25)) {
+        std::cout << "je suis mangé !" << std::endl;
+        this->_pos_fruit = std::make_pair(0, 0);
+        _score++;
+    }
+    if (it->x >= _bg_size.first) {
+        std::cout << "je suis false  it->x > bg size!" << std::endl;
+        return false;
+    }
+    return true;
+}
+
+bool Nibbler::checkMoveSnake_left(std::vector<Pixel>::iterator it)
+{
+    if ((it->x > this->_pos_fruit.first - 25 && it->x < this->_pos_fruit.first + 25) &&
+    (it->y > this->_pos_fruit.second - 25 && it->y < this->_pos_fruit.second + 25)) {
+        std::cout << "je suis mangé !" << std::endl;
+        this->_pos_fruit = std::make_pair(0, 0);
+        _score++;
+    }
+    if (it->x - 30 <= 0) {
+        std::cout << "je suis false  it->x < 0!" << std::endl;
+        return false;
+    }
+    return true;
+}
 
 std::vector<Pixel> Nibbler::getMain()
 {
 	if (_nextMove == Orientation::UP) {
         for (auto it = std::next(_players.begin()); it != _players.end(); it++) {
-            it->y -= 3.f;
+            if (checkMoveSnake_up(it)) {
+                it->y -= 3;
+            } else {
+                // it->y -= 0;
+            }
         }
 	} else if (_nextMove == Orientation::DOWN) {
         for (auto it = std::next(_players.begin()); it != _players.end(); it++) {
-            it->y += 3.f;
+            if (checkMoveSnake_down(it)) {
+                it->y += 3;
+            } else {
+                // it->y += 0;
+            }
         }
 	} else if (_nextMove == Orientation::RIGHT) {
         for (auto it = std::next(_players.begin()); it != _players.end(); it++) {
-            it->x += 3.f;
+            if (checkMoveSnake_right(it)) {
+                it->x += 3;
+            } else {
+                // it->x += 0;
+            }
         }
     } else if (_nextMove == Orientation::LEFT) {
         for (auto it = std::next(_players.begin()); it != _players.end(); it++) {
-            it->x -= 3.f;
+            if (checkMoveSnake_left(it)) {
+                it->x -= 3;
+            } else {
+                // it->x -= 0;
+            }
         }
     }
     return this->_players;
