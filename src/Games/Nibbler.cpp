@@ -26,6 +26,7 @@ Nibbler::Nibbler()
 	// pixel = {pos_x + 32.f, pos_y, "./assets/Nibbler/body.png"};
 	// _players.emplace_back(pixel);
     // this->setFruit();
+    _score = 0;
 }
 
 void Nibbler::getInput(MonEnum Input)

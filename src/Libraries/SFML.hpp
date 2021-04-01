@@ -36,6 +36,10 @@ public:
     void updateWindow();
     void drawMain(std::vector<Pixel>);
     void drawSprite(std::vector<Pixel> sprite);
+
+    void putText(const Text &text) override;
+
+
     sf::RenderWindow _window;
     sf::Font _font;
     sf::Texture _bgTexture;

@@ -11,6 +11,8 @@ SFML::SFML(): m_elapsedTime(sf::Time::Zero)
 {
     this->_gameName = "NIBBLER";
     this->_bgSize = std::make_pair(600, 600);
+    if (!_font.loadFromFile("./assets/Arcade.ttf"))
+        return;
 }
 
 SFML::~SFML()
@@ -30,24 +32,24 @@ void SFML::drawMenu()
 {
     sf::Texture bg;
     sf::Texture active;
-    sf::Font font;
+    // sf::Font font;
     // if (!active.loadFromFile("./assets/btn_green.png"))
     //     return;
 
-    if (!font.loadFromFile("./assets/Arcade.ttf"))
-        return;
+    // if (!font.loadFromFile("./assets/Arcade.ttf"))
+    //     return;
 
     sf::Sprite bg_sprite(bg);
     // sf::Sprite bouton_sprite(active);
-    sf::Text bar_font("-------", font, 35);
-    sf::Text Nibbler_font("Nibbler", font, 35);
-    sf::Text Pacman_font("Pacman", font, 35);
+    sf::Text bar_font("-------", _font, 35);
+    sf::Text Nibbler_font("Nibbler", _font, 35);
+    sf::Text Pacman_font("Pacman", _font, 35);
     bar_font.setPosition(450, pos_bar_y);
     Nibbler_font.setPosition(450, 300);
     Pacman_font.setPosition(450, 360);
 
-    sf::Text next_font("[F1] next graphical library", font, 35);
-    sf::Text prev_font("[F2] previous graphical library", font, 35);
+    sf::Text next_font("[F1] next graphical library", _font, 35);
+    sf::Text prev_font("[F2] previous graphical library", _font, 35);
     next_font.setPosition(50, 580);
     prev_font.setPosition(50, 640);
 
@@ -250,8 +252,8 @@ void SFML::drawMain(std::vector<Pixel> snake)
             sprite.setTexture(texture);
             sprite.setPosition(sf::Vector2f(it->x, it->y));
             _window.draw(sprite);
-            std::cout << "le snake pos x : " << it->x << std::endl;
-            std::cout << "le snake pos y : " << it->y << std::endl;
+            // std::cout << "le snake pos x : " << it->x << std::endl;
+            // std::cout << "le snake pos y : " << it->y << std::endl;
         }
     //     m_elapsedTime = sf::Time::Zero;
     // }
@@ -272,6 +274,16 @@ void SFML::drawSprite(std::vector<Pixel> sprite) {
 std::pair<int, int> SFML::sendBgSize()
 {
     return _bgSize;
+}
+
+void SFML::putText(const Text &some_text)
+{
+    std::cout << "le text :" << some_text.text << std::endl;
+    sf::Text text(some_text.text, _font);
+	text.setPosition(some_text.x, some_text.y);
+	text.setCharacterSize(32);
+	text.setFillColor(sf::Color::White);
+	_window.draw(text);
 }
 
 
