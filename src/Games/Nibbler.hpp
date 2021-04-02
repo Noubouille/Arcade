@@ -10,8 +10,6 @@
 
 #include "IGames.hpp"
 
-
-
 class Nibbler : public IGames {
     public:
         Nibbler();
@@ -48,8 +46,9 @@ class Nibbler : public IGames {
         Orientation _nextMove;
         std::pair<int, int> _pos_fruit;
         std::pair<int, int> _bg_size;
-        int pos_x = 500;
-        int pos_y = 500;
+        int pos_x = 20;
+        int pos_y = 20;
+        unsigned int speed_snake = 3;
 
     protected:
     private:

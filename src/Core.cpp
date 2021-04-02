@@ -9,17 +9,25 @@
 #include <filesystem>
 #include <experimental/filesystem>
 #include <regex>
+#include <sys/stat.h>
 
 namespace fs = std::experimental::filesystem;
 
 Core::Core(const std::string &lib_name)
 {
+    struct stat st;
+    if(stat(lib_name.c_str(), &st) != 0) {
+        std::cout << "la lib n'existe pas" << std::endl;
+        exit(84);
+
+    }
     this->_currentPath = realpath(lib_name.c_str(), nullptr);
 
     if (this->_currentPath.empty()) {
         perror(lib_name.c_str());
         exit(84);
     }
+
     std::cout << "lib name :" << lib_name << std::endl;
     this->getGraphicLib();
 
@@ -171,6 +179,13 @@ void Core::loopGame(MonEnum Input)
     this->_IGraphicLib->putText({730, 20, std::string("Your score is : ") + std::to_string(this->_IGamesLib->getScore())});
     this->_IGamesLib->bgSize(this->_IGraphicLib->sendBgSize());
     this->_IGamesLib->getInput(Input);
+    if (Input == MonEnum::P_KEY) {
+        if (_pause == true)_pause = false;
+        else _pause = true;
+    }
+    if (_pause) {
+        this->_IGraphicLib->putText({500, 500, std::string("Pause !")});
+    }
     // this->_IGraphicLib->drawGame();
     this->_IGraphicLib->drawSprite(this->_IGamesLib->getSprite());
 

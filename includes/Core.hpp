@@ -47,6 +47,7 @@ class Core {
         // 	// void *_currentObject;
         // };
         bool _stateMenu = true;
+        bool _pause = false;
         std::vector<std::string> _listLib;
         std::vector<std::string> _listGames;
 
