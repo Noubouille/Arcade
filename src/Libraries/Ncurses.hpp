@@ -12,6 +12,9 @@
 #include <ncurses.h>
 #include <iostream>
 #include <string>
+#include <sys/stat.h>
+#include <fstream>
+#include <cstring>
 class Ncurses : public IGraphic
 {
     public:
@@ -31,9 +34,15 @@ class Ncurses : public IGraphic
         void drawSprite(std::vector<Pixel> sprite) override;
 		void clearWindow() override;
 		void updateWindow() override;
+        std::pair<int, int> sendBgSize() override;
+        std::string _gameName;
 
 
         WINDOW *window = initscr();
+
+        private:
+        char** _tab;
+        std::pair<int, int> _bgSize;
         //etc
 };
 extern "C" IGraphic *createLibrary();

@@ -9,7 +9,53 @@
 
 Ncurses::Ncurses()
 {
-    
+    _gameName = "NIBBLER";
+
+    struct stat buf;
+    stat("map.txt", &buf);
+
+    char *buffer = (char *)malloc(sizeof(char) * buf.st_size);
+
+    std::ifstream myfile;
+    myfile.open("./map.txt");
+    myfile.read(buffer,buf.st_size);
+    myfile.close();
+
+    int lines = 0;
+
+    for (int i = 0; buffer[i] != '\0'; i++)
+    {
+        if (buffer[i] == '\n') {
+            lines++;
+        }
+    }
+
+    char **tab = (char **)malloc(sizeof(char *) * lines + 1);
+
+    int thei = 0;
+
+    for (; thei <= lines; thei++)
+    {
+        tab[thei] = (char *)malloc(sizeof(char) * (strlen(buffer) / lines) + 1);
+    }
+    tab[thei] = NULL;
+
+    for (int i = 0, x = 0, y = 0; buffer[i] != '\0'; i++)
+    {
+        if (buffer[i] == '\n')
+        {
+            tab[y][x] = '\0';
+            i++;
+            y++;
+            x = 0;
+        }
+        tab[y][x] = buffer[i];
+        x++;
+    }
+
+    _tab = tab;
+
+    wborder(window, 0, 0, 0, 0, 0, 0, 0, 0);
 }
 
 Ncurses::~Ncurses()
@@ -210,11 +256,17 @@ void Ncurses::drawGame()
 
 std::string Ncurses::getNameGame()
 {
+    return _gameName;
 }
 
 void Ncurses::drawBackground(const std::string &Background)
 {
-    
+
+    for (int i = 0, y = 0, x = 0; _tab[y]; y++)
+    {
+        mvprintw(y, x, _tab[y]);
+    }
+    // map et bordure
 }
 
 
@@ -231,17 +283,26 @@ void Ncurses::clearWindow()
 
 void Ncurses::updateWindow()
 {
-
+    refresh();
 }
 
 void Ncurses::drawSprite(std::vector<Pixel> sprite)
 {
-
+    // le fruit
 }
 
 void Ncurses::drawMain(std::vector<Pixel> snake)
 {
+    for (auto it = std::next(snake.begin()); it != snake.end(); it++) {
+        mvprintw(20, 40, ">");
+    }
+    // le snake
+}
 
+std::pair<int, int> Ncurses::sendBgSize()
+{
+    
+    // taille de la fenetre de jeu
 }
 
 
