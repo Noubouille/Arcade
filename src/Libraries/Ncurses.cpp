@@ -294,7 +294,7 @@ void Ncurses::drawSprite(std::vector<Pixel> sprite)
 void Ncurses::drawMain(std::vector<Pixel> snake)
 {
     for (auto it = std::next(snake.begin()); it != snake.end(); it++) {
-        mvprintw(20, 40, ">");
+        mvprintw(it->x, it->y, ">");
     }
     // le snake
 }
@@ -303,6 +303,11 @@ std::pair<int, int> Ncurses::sendBgSize()
 {
     
     // taille de la fenetre de jeu
+}
+
+void Ncurses::putText(const Text &text)
+{
+
 }
 
 

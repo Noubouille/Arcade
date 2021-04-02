@@ -35,6 +35,7 @@ class Ncurses : public IGraphic
 		void clearWindow() override;
 		void updateWindow() override;
         std::pair<int, int> sendBgSize() override;
+        void putText(const Text &text) override;
         std::string _gameName;
 
 

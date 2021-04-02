@@ -147,7 +147,7 @@ bool Nibbler::checkMoveSnake_up(std::vector<Pixel>::iterator it)
         speed_snake++;
     }
     if (it->y - 30 <= 0) {
-        std::cout << "je suis false it->y > bg!" << std::endl;
+        //std::cout << "je suis false it->y > bg!" << std::endl;
         return false;
     }
     return true;
@@ -163,7 +163,7 @@ bool Nibbler::checkMoveSnake_down(std::vector<Pixel>::iterator it)
 
     }
     if (it->y >= _bg_size.second) {
-        std::cout << "je suis false  it y<0 !" << std::endl;
+        //std::cout << "je suis false  it y<0 !" << std::endl;
         return false;
     }
     return true;
@@ -179,7 +179,7 @@ bool Nibbler::checkMoveSnake_right(std::vector<Pixel>::iterator it)
 
     }
     if (it->x >= _bg_size.first) {
-        std::cout << "je suis false  it->x > bg size!" << std::endl;
+        //std::cout << "je suis false  it->x > bg size!" << std::endl;
         return false;
     }
     return true;
@@ -195,7 +195,7 @@ bool Nibbler::checkMoveSnake_left(std::vector<Pixel>::iterator it)
 
     }
     if (it->x - 30 <= 0) {
-        std::cout << "je suis false  it->x < 0!" << std::endl;
+        //std::cout << "je suis false  it->x < 0!" << std::endl;
         return false;
     }
     return true;
@@ -238,7 +238,7 @@ std::vector<Pixel> Nibbler::getMain()
             }
         }
     }
-    std::cout << "speed_snake :" << speed_snake << std::endl;
+    //std::cout << "speed_snake :" << speed_snake << std::endl;
     return this->_players;
 }
 

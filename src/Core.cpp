@@ -148,8 +148,8 @@ void Core::mainLoop()
             prevLibrary();
         }
         if (Input == MonEnum::ENTER) {
-            std::cout << "le jeu lancé grphic lib :" << this->_IGraphicLib->getNameGame() << std::endl;
-            std::cout << "le jeu lancé lib :" << this->_IGamesLib->getName() << std::endl;
+            // std::cout << "le jeu lancé grphic lib :" << this->_IGraphicLib->getNameGame() << std::endl;
+            // std::cout << "le jeu lancé lib :" << this->_IGamesLib->getName() << std::endl;
             if (this->_IGraphicLib->getNameGame() == this->_IGamesLib->getName()) {
                 this->_stateMenu = false;
 
@@ -173,25 +173,25 @@ void Core::loopMenu(MonEnum Input)
 
 void Core::loopGame(MonEnum Input)
 {
-    this->_IGraphicLib->clearWindow();
+    // this->_IGraphicLib->clearWindow();
     this->_IGraphicLib->drawBackground(this->_IGamesLib->getBg());
-    this->_IGraphicLib->putText({320, 800, std::string("You are playing at ") + this->_IGamesLib->getName()});
-    this->_IGraphicLib->putText({730, 20, std::string("Your score is : ") + std::to_string(this->_IGamesLib->getScore())});
-    this->_IGamesLib->bgSize(this->_IGraphicLib->sendBgSize());
+    // this->_IGraphicLib->putText({320, 800, std::string("You are playing at ") + this->_IGamesLib->getName()});
+    // this->_IGraphicLib->putText({730, 20, std::string("Your score is : ") + std::to_string(this->_IGamesLib->getScore())});
+    // this->_IGamesLib->bgSize(this->_IGraphicLib->sendBgSize());
     this->_IGamesLib->getInput(Input);
-    if (Input == MonEnum::P_KEY) {
-        if (_pause == true)_pause = false;
-        else _pause = true;
-    }
-    if (_pause) {
-        this->_IGraphicLib->putText({500, 500, std::string("Pause !")});
-    }
-    // this->_IGraphicLib->drawGame();
-    this->_IGraphicLib->drawSprite(this->_IGamesLib->getSprite());
+    // if (Input == MonEnum::P_KEY) {
+    //     if (_pause == true)_pause = false;
+    //     else _pause = true;
+    // }
+    // if (_pause) {
+    //     this->_IGraphicLib->putText({500, 500, std::string("Pause !")});
+    // }
+    // // this->_IGraphicLib->drawGame();
+    // this->_IGraphicLib->drawSprite(this->_IGamesLib->getSprite());
 
     this->_IGraphicLib->drawMain(this->_IGamesLib->getMain());
     this->_IGraphicLib->updateWindow();
-    this->_IGamesLib->updateGame();
+    //this->_IGamesLib->updateGame();
 }
 
 Core::~Core()
