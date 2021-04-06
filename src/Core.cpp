@@ -177,7 +177,7 @@ void Core::loopGame(MonEnum Input)
     this->_IGraphicLib->drawBackground(this->_IGamesLib->getBg());
     // this->_IGraphicLib->putText({320, 800, std::string("You are playing at ") + this->_IGamesLib->getName()});
     // this->_IGraphicLib->putText({730, 20, std::string("Your score is : ") + std::to_string(this->_IGamesLib->getScore())});
-    // this->_IGamesLib->bgSize(this->_IGraphicLib->sendBgSize());
+    this->_IGamesLib->bgSize(this->_IGraphicLib->sendBgSize());
     this->_IGamesLib->getInput(Input);
     // if (Input == MonEnum::P_KEY) {
     //     if (_pause == true)_pause = false;
