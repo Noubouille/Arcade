@@ -48,8 +48,8 @@ class Nibbler : public IGames {
         Orientation _nextMove;
         std::pair<int, int> _pos_fruit;
         std::pair<int, int> _bg_size;
-        int pos_x = 20;
-        int pos_y = 20;
+        int pos_x = 0;
+        int pos_y = 0;
         unsigned int speed_snake = 3;
 
     protected:

@@ -29,12 +29,13 @@ Nibbler::Nibbler()
     _score = 0;
 }
 
-Nibbler::Nibbler(std::pair<int, int> _bgSize)
+Nibbler::Nibbler(std::pair<int, int> bgSize)
 {
     std::cout << "je suis dans l'autre constructeur ! bb" <<std::endl;
-    this->_bg_size = _bg_size;
+    this->_bg_size = bgSize;
     this->_pos_fruit = std::make_pair(0, 0);
-
+    this->pos_x = _bg_size.first / 2;
+    this->pos_y = _bg_size.second / 2;
 	// std::vector<Pixel> player;
 	_nextMove = Orientation::UP;
 	// _pos_snake = std::make_pair(16.f, 16.f);
