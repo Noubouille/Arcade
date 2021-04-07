@@ -78,17 +78,18 @@ void Nibbler::getInput(MonEnum Input)
 		default:
             return;
 	}
-    if (_nextMove == Orientation::UP && tmp_orientation == Orientation::DOWN) {
-        _nextMove = _nextMove;
-    } else if (_nextMove == Orientation::DOWN && tmp_orientation == Orientation::UP) {
-        _nextMove = _nextMove;
-    } else if (_nextMove == Orientation::RIGHT && tmp_orientation == Orientation::LEFT) {
-        _nextMove = _nextMove;
-    } else if (_nextMove == Orientation::LEFT && tmp_orientation == Orientation::RIGHT) {
-        _nextMove = _nextMove;
-    } else {
-        _nextMove = tmp_orientation;
-    }
+    // if (_nextMove == Orientation::UP && tmp_orientation == Orientation::DOWN) {
+    //     _nextMove = _nextMove;
+    // } else if (_nextMove == Orientation::DOWN && tmp_orientation == Orientation::UP) {
+    //     _nextMove = _nextMove;
+    // } else if (_nextMove == Orientation::RIGHT && tmp_orientation == Orientation::LEFT) {
+    //     _nextMove = _nextMove;
+    // } else if (_nextMove == Orientation::LEFT && tmp_orientation == Orientation::RIGHT) {
+    //     _nextMove = _nextMove;
+    // } else {
+    //     _nextMove = tmp_orientation;
+    // }
+    _nextMove = tmp_orientation;
 }
 
 std::vector<Pixel> Nibbler::getSprite()
@@ -254,7 +255,8 @@ std::vector<Pixel> Nibbler::getMain()
                     if (_libname == "SFML") {
                         it->y -= speed_snake;
                     } else {
-                        it->x -= speed_snake;
+                        //printf("je passe ici couillon up\n");
+                        it->y -= speed_snake;
                     }
                 } else {
                     // it->y -= 0;
@@ -266,7 +268,8 @@ std::vector<Pixel> Nibbler::getMain()
                     if (_libname == "SFML") {
                         it->y += speed_snake;
                     } else {
-                        it->x += speed_snake;
+                        //printf("je passe ici couillon down\n");
+                        it->y += speed_snake;
                     }
 
                 } else {
@@ -279,7 +282,7 @@ std::vector<Pixel> Nibbler::getMain()
                     if (_libname == "SFML") {
                         it->x += speed_snake;
                     } else {
-                        it->y += speed_snake;
+                        it->x += speed_snake;
                     }
                 } else {
                     // it->x += 0;
@@ -291,7 +294,7 @@ std::vector<Pixel> Nibbler::getMain()
                     if (_libname == "SFML") {
                         it->x -= speed_snake;
                     } else {
-                        it->y -= speed_snake;
+                        it->x -= speed_snake;
                     }
                 } else {
                     // it->x -= 0;
