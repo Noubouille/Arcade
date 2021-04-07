@@ -34,7 +34,7 @@ class Nibbler : public IGames {
         bool checkMoveSnake_down(std::vector<Pixel>::iterator it);
         void bgSize(std::pair<int, int>) override;
         void getLibName(std::string libname) override;
-
+        void eatFruit(std::vector<Pixel>::iterator it);
         enum Orientation {
             UP,
             RIGHT,
@@ -45,15 +45,13 @@ class Nibbler : public IGames {
         std::vector<Pixel> _players;
         std::vector<Pixel> _fruit;
 
-        // std::vector <std::pair <std::string, std::pair<float, float> > > snake;
         Orientation _nextMove;
         std::pair<int, int> _pos_fruit;
         std::pair<int, int> _bg_size;
         int pos_x = 0;
         int pos_y = 0;
-        unsigned int speed_snake = 3;
+        unsigned int speed_snake = 2;
 
-    protected:
     private:
     std::string _libname;
     bool _game_over = false;

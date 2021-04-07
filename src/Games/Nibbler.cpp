@@ -165,18 +165,28 @@ int Nibbler::getScore()
 	return _score;
 }
 
-bool Nibbler::checkMoveSnake_up(std::vector<Pixel>::iterator it)
+void Nibbler::eatFruit(std::vector<Pixel>::iterator it)
 {
     if ((it->x > this->_pos_fruit.first - 25 && it->x < this->_pos_fruit.first + 25) &&
     (it->y > this->_pos_fruit.second - 25 && it->y < this->_pos_fruit.second + 25)) {
         this->_pos_fruit = std::make_pair(0, 0);
         _score++;
-        //speed_snake++;
+        speed_snake++;
     }
-    // if (it->y - 30 <= 0) {
-    //     //std::cout << "je suis false it->y > bg!" << std::endl;
-    //     //return false;
-    // }
+}
+
+
+bool Nibbler::checkMoveSnake_up(std::vector<Pixel>::iterator it)
+{
+    if (_libname == "SFML" || _libname == "SDL") {
+        eatFruit(it);
+
+        if (it->y - 30 <= 0) {
+            //std::cout << "je suis false it->y > bg!" << std::endl;
+            return false;
+        }
+    }
+
 
     if (it->y <= 0) {
         return false;
@@ -187,57 +197,37 @@ bool Nibbler::checkMoveSnake_up(std::vector<Pixel>::iterator it)
 
 bool Nibbler::checkMoveSnake_down(std::vector<Pixel>::iterator it)
 {
-    if ((it->x > this->_pos_fruit.first - 25 && it->x < this->_pos_fruit.first + 25) &&
-    (it->y > this->_pos_fruit.second - 25 && it->y < this->_pos_fruit.second + 25)) {
-        this->_pos_fruit = std::make_pair(0, 0);
-        _score++;
-        //speed_snake++;
+    if (_libname == "SFML" || _libname == "SDL") {
+        eatFruit(it);
 
     }
     if (it->y >= _bg_size.second) {
         return false;
     }
 
-    // if (it->y >= 34) {
-    //     //std::cout << "je suis false  it y<0 !" << std::endl;
-    //     return false;
-    // }
     return true;
 }
 
 bool Nibbler::checkMoveSnake_right(std::vector<Pixel>::iterator it)
 {
-    if ((it->x > this->_pos_fruit.first - 25 && it->x < this->_pos_fruit.first + 25) &&
-    (it->y > this->_pos_fruit.second - 25 && it->y < this->_pos_fruit.second + 25)) {
-        this->_pos_fruit = std::make_pair(0, 0);
-        _score++;
-        //speed_snake++;
-
+    if (_libname == "SFML" || _libname == "SDL") {
+        eatFruit(it);
     }
     if (it->x >= _bg_size.first) {
         return false;
     }
 
-    // if (it->x >= 99) {
-    //     //std::cout << "je suis false  it->x > bg size!" << std::endl;
-    //     return false;
-    // }
     return true;
 }
 
 bool Nibbler::checkMoveSnake_left(std::vector<Pixel>::iterator it)
 {
-    if ((it->x > this->_pos_fruit.first - 25 && it->x < this->_pos_fruit.first + 25) &&
-    (it->y > this->_pos_fruit.second - 25 && it->y < this->_pos_fruit.second + 25)) {
-        this->_pos_fruit = std::make_pair(0, 0);
-        _score++;
-        //speed_snake++;
-
+    if (_libname == "SFML" || _libname == "SDL") {
+        eatFruit(it);
+        if (it->x - 30 <= 0) {
+            return false;
+        }
     }
-    // if (it->x - 30 <= 0) {
-    //     //std::cout << "je suis false  it->x < 0!" << std::endl;
-    //     //return false;
-    // }
 
     if (it->x <= 5) {
         return false;

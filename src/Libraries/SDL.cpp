@@ -15,7 +15,7 @@ SDL::SDL()
     this->_bgSize = std::make_pair(600, 600);
     this->_font = TTF_OpenFont("./assets/Arcade.ttf", 35);
     if ( !_font ) {
-	    std::cout << "Failed to render text: " << TTF_GetError() << std::endl;
+	    std::cout << TTF_GetError() << std::endl;
     }
 }
 
@@ -31,51 +31,44 @@ void SDL::startWindow()
 
 void SDL::drawMenu()
 {
-    this->_texture = SDL_CreateTextureFromSurface(this->_renderer, this->_image);
-
-
     SDL_Color White = {255, 255, 255, 0};
-    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(_font, "Nibbler", White); // as TTF_RenderText_Solid could only be used on SDL_Surface then you have to create the surface first
-    SDL_Texture* Message = SDL_CreateTextureFromSurface(this->_renderer, surfaceMessage); //now you can convert it into a texture
 
-    SDL_Rect Text_rect1 = {0, 0, surfaceMessage->w, surfaceMessage->h};
+    SDL_Surface* surfaceCurrentlib_text = TTF_RenderText_Solid(_font, "Current lib : SDL", White);
+    SDL_Texture* Currentlib_text = SDL_CreateTextureFromSurface(this->_renderer, surfaceCurrentlib_text);
+    SDL_Rect Text_currentlib = {380, 50, surfaceCurrentlib_text->w, surfaceCurrentlib_text->h};
 
+
+    SDL_Surface* surfaceNibbler_text = TTF_RenderText_Solid(_font, "Nibbler", White);
+    SDL_Texture* Nibbler_text = SDL_CreateTextureFromSurface(this->_renderer, surfaceNibbler_text);
+    SDL_Rect Text_rect2_pacman = {450, 360, surfaceNibbler_text->w, surfaceNibbler_text->h};
+
+    SDL_Surface* surfacePacman_text = TTF_RenderText_Solid(_font, "Pacman", White);
+    SDL_Texture* Pacman_text = SDL_CreateTextureFromSurface(this->_renderer, surfacePacman_text);
+    SDL_Rect Text_rect1 = {450, 300, surfacePacman_text->w, surfacePacman_text->h};
+
+    SDL_Surface* surfaceTiret_text = TTF_RenderText_Solid(_font, "*-------*", White);
+    SDL_Texture* Tiret_text = SDL_CreateTextureFromSurface(this->_renderer, surfaceTiret_text);
+    SDL_Rect Text_tiret_rect = {435, pos_bar_y, surfaceTiret_text->w, surfaceTiret_text->h};
+
+    SDL_Surface* surfaceNextLib_text = TTF_RenderText_Solid(_font, "[F1] next graphical library", White);
+    SDL_Texture* NextLib_text = SDL_CreateTextureFromSurface(this->_renderer, surfaceNextLib_text);
+    SDL_Rect Text_NextLib_rect = {50, 580, surfaceNextLib_text->w, surfaceNextLib_text->h};
+
+    SDL_Surface* surfacePrevLib_text = TTF_RenderText_Solid(_font, "[F2] previous graphical library", White);
+    SDL_Texture* PrevLib_text = SDL_CreateTextureFromSurface(this->_renderer, surfacePrevLib_text);
+    SDL_Rect Text_PrevLib_rect = {50, 640, surfacePrevLib_text->w, surfacePrevLib_text->h};
 
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
 
-    SDL_RenderCopy(_renderer, _texture, NULL, NULL);
-    SDL_RenderCopy(this->_renderer, Message, NULL, &Text_rect1); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
+    SDL_RenderCopy(_renderer, _texture, NULL, NULL); //render bg
+    SDL_RenderCopy(this->_renderer, Nibbler_text, NULL, &Text_rect1);
+    SDL_RenderCopy(this->_renderer, Pacman_text, NULL, &Text_rect2_pacman);
+    SDL_RenderCopy(this->_renderer, Currentlib_text, NULL, &Text_currentlib); //current lib
+    SDL_RenderCopy(this->_renderer, Tiret_text, NULL, &Text_tiret_rect); // -----
+    SDL_RenderCopy(this->_renderer, NextLib_text, NULL, &Text_NextLib_rect); // F1
+    SDL_RenderCopy(this->_renderer, PrevLib_text, NULL, &Text_PrevLib_rect); // F2
 
     SDL_RenderPresent(_renderer);
-
-
-    // sf::Sprite bg_sprite(bg);
-    // sf::Text bar_font("-------", _font, 35);
-    // sf::Text Nibbler_font("Nibbler", _font, 35);
-    // sf::Text Pacman_font("Pacman", _font, 35);
-    // bar_font.setPosition(450, pos_bar_y);
-    // Nibbler_font.setPosition(450, 300);
-    // Pacman_font.setPosition(450, 360);
-
-    // sf::Text next_font("[F1] next graphical library", _font, 35);
-    // sf::Text prev_font("[F2] previous graphical library", _font, 35);
-    // next_font.setPosition(50, 580);
-    // prev_font.setPosition(50, 640);
-
-    // bg_sprite.setTexture(bg);
-
-    // this->_window.clear(sf::Color(0, 0, 0));
-    // this->_window.draw(this->_bgSprite);
-    // this->_window.draw(Pacman_font);
-    // this->_window.draw(Nibbler_font);
-    // this->_window.draw(bar_font);
-
-    // this->_window.draw(next_font);
-    // this->_window.draw(prev_font);
-
-    // bar_font.setPosition(450, pos_bar_y);
-
-    // this->_window.display();
 }
 
 void SDL::drawGame()
@@ -86,29 +79,46 @@ MonEnum SDL::getEvent()
 {
     SDL_Event event;
 	// sf::Event event;
-    SDL_WaitEvent(&event);
+
+    while (SDL_PollEvent(&event) != 0) {
+    // SDL_WaitEvent(&event);
 
         switch (event.type) {
             case SDL_QUIT:
                 std::cout << "sf::Event::CLOSE sdl" << std::endl;
-                // quit = true;
                 exit(0);
                 break;
-            case SDLK_ESCAPE:
+            default :
+                break;
+        }
+        switch (event.key.keysym.sym) {
+            case SDLK_q:
                 std::cout << "sf::Event::CLOSE sdl" << std::endl;
-                // quit = true;
                 exit(0);
                 break;
             case SDLK_LEFT:
+                std::cout << "left arrow" << std::endl;
                 return MonEnum::LEFT_ARROW;
                 break;
             case SDLK_RIGHT:
+                std::cout << "right arrow" << std::endl;
                 return MonEnum::RIGHT_ARROW;
                 break;
             case SDLK_UP:
+                if (this->bar_nb > 1) {
+                    this->pos_bar_y -= 60;
+                    this->bar_nb--;
+                    this->_gameName = "NIBBLER";
+
+                }
                 return MonEnum::UP_ARROW;
                 break;
             case SDLK_DOWN:
+                if (this->bar_nb < 2) {
+                    this->pos_bar_y += 60;
+                    this->bar_nb++;
+                    this->_gameName = "PACMAN";
+                }
                 return MonEnum::DOWN_ARROW;
                 break;
             case SDLK_F1:
@@ -117,128 +127,16 @@ MonEnum SDL::getEvent()
             case SDLK_F2:
                 return MonEnum::F2;
                 break;
+            case SDLK_RETURN:
+                return MonEnum::ENTER;
+                break;
+
             default :
                 return MonEnum::NO_INPUT;
         }
-
-    // while (_window.pollEvent(event)) {
-    //     if (event.type == sf::Event::Closed || event.key.code == sf::Keyboard::Escape) {
-    //         std::cout << "sf::Event::CLOSE" << std::endl;
-    //         _window.close();
-    //         exit(0);
-    //         return MonEnum::CLOSE;
-    //     }
-    //     else if (event.type == sf::Event::KeyPressed) {
-    //         switch (event.key.code) {
-    //         case sf::Keyboard::Left :
-    //             return MonEnum::LEFT_ARROW;
-    //         case sf::Keyboard::Right :
-    //             return MonEnum::RIGHT_ARROW;
-    //         case sf::Keyboard::Up :
-    //             if (this->bar_nb > 1) {
-    //                 this->pos_bar_y -= 60;
-    //                 this->bar_nb--;
-    //                 this->_gameName = "NIBBLER";
-
-    //             }
-    //             return MonEnum::UP_ARROW;
-    //         case sf::Keyboard::Down :
-    //             if (this->bar_nb < 2) {
-    //                 this->pos_bar_y += 60;
-    //                 this->bar_nb++;
-    //                 this->_gameName = "PACMAN";
-    //             }
-    //             return MonEnum::DOWN_ARROW;
-    //         case sf::Keyboard::Space :
-    //             return MonEnum::SPACE;
-    //         case sf::Keyboard::BackSpace :
-    //             return MonEnum::BACKSPACE;
-    //         case sf::Keyboard::Return :
-    //             return MonEnum::ENTER;
-    //         case sf::Keyboard::Escape :
-    //             return MonEnum::ESCAPE;
-    //         case sf::Keyboard::A :
-    //             return MonEnum::A_KEY;
-    //         case sf::Keyboard::B :
-    //             return MonEnum::B_KEY;
-    //         case sf::Keyboard::C :
-    //             return MonEnum::C_KEY;
-    //         case sf::Keyboard::D :
-    //             return MonEnum::D_KEY;
-    //         case sf::Keyboard::E :
-    //             return MonEnum::E_KEY;
-    //         case sf::Keyboard::F :
-    //             return MonEnum::F_KEY;
-    //         case sf::Keyboard::G :
-    //             return MonEnum::G_KEY;
-    //         case sf::Keyboard::H :
-    //             return MonEnum::H_KEY;
-    //         case sf::Keyboard::I :
-    //             return MonEnum::I_KEY;
-    //         case sf::Keyboard::J :
-    //             return MonEnum::J_KEY;
-    //         case sf::Keyboard::K :
-    //             return MonEnum::K_KEY;
-    //         case sf::Keyboard::L :
-    //             return MonEnum::L_KEY;
-    //         case sf::Keyboard::M :
-    //             return MonEnum::M_KEY;
-    //         case sf::Keyboard::N :
-    //             return MonEnum::N_KEY;
-    //         case sf::Keyboard::O :
-    //             return MonEnum::O_KEY;
-    //         case sf::Keyboard::P :
-    //             return MonEnum::P_KEY;
-    //         case sf::Keyboard::Q :
-    //             return MonEnum::Q_KEY;
-    //         case sf::Keyboard::R :
-    //             return MonEnum::R_KEY;
-    //         case sf::Keyboard::S :
-    //             return MonEnum::S_KEY;
-    //         case sf::Keyboard::T :
-    //             return MonEnum::T_KEY;
-    //         case sf::Keyboard::U :
-    //             return MonEnum::U_KEY;
-    //         case sf::Keyboard::V :
-    //             return MonEnum::V_KEY;
-    //         case sf::Keyboard::W :
-    //             return MonEnum::W_KEY;
-    //         case sf::Keyboard::X :
-    //             return MonEnum::X_KEY;
-    //         case sf::Keyboard::Y :
-    //             return MonEnum::Y_KEY;
-    //         case sf::Keyboard::Z :
-    //             return MonEnum::Z_KEY;
-    //         case sf::Keyboard::F1 :
-    //             return MonEnum::F1;
-    //         case sf::Keyboard::F2 :
-    //             return MonEnum::F2;
-    //         case sf::Keyboard::F3 :
-    //             return MonEnum::F3;
-    //         case sf::Keyboard::F4 :
-    //             return MonEnum::F4;
-    //         case sf::Keyboard::F5 :
-    //             return MonEnum::F5;
-    //         case sf::Keyboard::F6 :
-    //             return MonEnum::F6;
-    //         case sf::Keyboard::F7 :
-    //             return MonEnum::F7;
-    //         case sf::Keyboard::F8 :
-    //             return MonEnum::F8;
-    //         case sf::Keyboard::F9 :
-    //             return MonEnum::F9;
-    //         case sf::Keyboard::F10 :
-    //             return MonEnum::F10;
-    //         case sf::Keyboard::F11 :
-    //             return MonEnum::F11;
-    //         case sf::Keyboard::F12 :
-    //             return MonEnum::F12;
-    //         default :
-    //             return MonEnum::NO_INPUT;
-    //         }
-    //     }
-    // }
+    }
     return MonEnum::NO_INPUT;
+
 }
 
 std::string SDL::getNameGame()
