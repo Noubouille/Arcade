@@ -3,3 +3,4 @@ lib/*.so
 src/**/*.o
 nibbler/
 .vscode
+.DS_Store

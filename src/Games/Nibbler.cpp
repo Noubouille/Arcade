@@ -134,6 +134,8 @@ void Nibbler::updateGame()
 void Nibbler::bgSize(std::pair<int, int> size)
 {
     this->_bg_size = size;
+    this->pos_x = size.first / 2;
+    this->pos_y = size.second / 2;
 }
 
 Nibbler::~Nibbler()
@@ -168,10 +170,15 @@ bool Nibbler::checkMoveSnake_up(std::vector<Pixel>::iterator it)
         _score++;
         speed_snake++;
     }
-    if (it->y - 30 <= 0) {
-        //std::cout << "je suis false it->y > bg!" << std::endl;
+    // if (it->y - 30 <= 0) {
+    //     //std::cout << "je suis false it->y > bg!" << std::endl;
+    //     //return false;
+    // }
+
+    if (it->y <= 0) {
         return false;
     }
+
     return true;
 }
 
@@ -184,7 +191,13 @@ bool Nibbler::checkMoveSnake_down(std::vector<Pixel>::iterator it)
         speed_snake++;
 
     }
-    if (it->y >= _bg_size.second) {
+    // if (it->y >= _bg_size.second) {
+    //     //std::cout << "je suis false  it y<0 !" << std::endl;
+    //     return false;
+    // }
+    // return true;
+
+    if (it->y >= 34) {
         //std::cout << "je suis false  it y<0 !" << std::endl;
         return false;
     }
@@ -200,7 +213,12 @@ bool Nibbler::checkMoveSnake_right(std::vector<Pixel>::iterator it)
         speed_snake++;
 
     }
-    if (it->x >= _bg_size.first) {
+    // if (it->x >= _bg_size.first) {
+    //     //std::cout << "je suis false  it->x > bg size!" << std::endl;
+    //     return false;
+    // }
+
+    if (it->x >= 99) {
         //std::cout << "je suis false  it->x > bg size!" << std::endl;
         return false;
     }
@@ -216,8 +234,12 @@ bool Nibbler::checkMoveSnake_left(std::vector<Pixel>::iterator it)
         speed_snake++;
 
     }
-    if (it->x - 30 <= 0) {
-        //std::cout << "je suis false  it->x < 0!" << std::endl;
+    // if (it->x - 30 <= 0) {
+    //     //std::cout << "je suis false  it->x < 0!" << std::endl;
+    //     //return false;
+    // }
+
+    if (it->x <= 0) {
         return false;
     }
     return true;

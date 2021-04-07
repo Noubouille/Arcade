@@ -15,6 +15,7 @@
 #include <sys/stat.h>
 #include <fstream>
 #include <cstring>
+#include <unistd.h>
 class Ncurses : public IGraphic
 {
     public:
