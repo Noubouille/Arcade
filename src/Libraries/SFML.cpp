@@ -9,6 +9,7 @@
 
 SFML::SFML(): m_elapsedTime(sf::Time::Zero)
 {
+    std::cout << "je passe sfml constructeur !" << std::endl;
     this->_gameName = "NIBBLER";
     this->_bgSize = std::make_pair(600, 600);
     if (!_font.loadFromFile("./assets/Arcade.ttf"))

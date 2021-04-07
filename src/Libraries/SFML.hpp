@@ -44,10 +44,10 @@ public:
     sf::Texture _bgTexture;
     sf::Sprite _bgSprite;
     std::string _gameName;
+    std::pair<int, int> _bgSize = std::make_pair(600, 600);
 
 private:
     sf::Time m_elapsedTime;
-    std::pair<int, int> _bgSize;
 
     int pos_bar_y = 320;
     int bar_nb = 1;

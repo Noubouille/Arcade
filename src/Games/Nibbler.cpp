@@ -103,8 +103,8 @@ void Nibbler::setFruit()
     srand(time(NULL));
     this->_pos_fruit = std::make_pair(0, 0);
 	if (this->foodCheck() == false) {
-		this->_pos_fruit.first = rand()%(this->_bg_size.first) + 20;
-		this->_pos_fruit.second = rand()%(this->_bg_size.second) + 20;
+		this->_pos_fruit.first = rand()%(this->_bg_size.first);
+		this->_pos_fruit.second = rand()%(this->_bg_size.second);
 	}
 }
 
@@ -133,9 +133,9 @@ void Nibbler::updateGame()
 
 void Nibbler::bgSize(std::pair<int, int> size)
 {
-    this->_bg_size = size;
-    this->pos_x = size.first / 2;
-    this->pos_y = size.second / 2;
+    // this->_bg_size = size;
+    // this->pos_x = size.first / 2;
+    // this->pos_y = size.second / 2;
 }
 
 Nibbler::~Nibbler()
@@ -191,16 +191,15 @@ bool Nibbler::checkMoveSnake_down(std::vector<Pixel>::iterator it)
         speed_snake++;
 
     }
-    // if (it->y >= _bg_size.second) {
-    //     //std::cout << "je suis false  it y<0 !" << std::endl;
-    //     return false;
-    // }
-    // return true;
-
-    if (it->y >= 34) {
+    if (it->y >= _bg_size.second) {
         //std::cout << "je suis false  it y<0 !" << std::endl;
         return false;
     }
+
+    // if (it->y >= 34) {
+    //     //std::cout << "je suis false  it y<0 !" << std::endl;
+    //     return false;
+    // }
     return true;
 }
 
@@ -213,15 +212,15 @@ bool Nibbler::checkMoveSnake_right(std::vector<Pixel>::iterator it)
         speed_snake++;
 
     }
-    // if (it->x >= _bg_size.first) {
-    //     //std::cout << "je suis false  it->x > bg size!" << std::endl;
-    //     return false;
-    // }
-
-    if (it->x >= 99) {
+    if (it->x >= _bg_size.first) {
         //std::cout << "je suis false  it->x > bg size!" << std::endl;
         return false;
     }
+
+    // if (it->x >= 99) {
+    //     //std::cout << "je suis false  it->x > bg size!" << std::endl;
+    //     return false;
+    // }
     return true;
 }
 

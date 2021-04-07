@@ -36,23 +36,6 @@ Core::Core(const std::string &lib_name)
     this->mainLoop();
 }
 
-void Core::getGameLib()
-{
-    std::cout << "La premiere game :" << this->_listGames.front() << std::endl;
-
-    std::pair<int ,int> pair_ = std::make_pair(120, 120);
-
-    this->_currentGame = _LibLoad->loadlibrary(this->_listGames.front()); //dlopen()
-    if (_LibLoad->checkifGame(this->_currentGame) == true) {
-        auto createGameFunction = (IGames* (*)(std::pair<int, int>))_LibLoad->exec_function(this->_currentGame, "createGame");
-        this->_IGamesLib = (*createGameFunction)(pair_);
-
-    } else {
-        std::cout << "No lib games inside ./lib ?!" << std::endl;
-        exit(84);
-    }
-}
-
 void Core::getGraphicLib()
 {
     this->_currentLib = _LibLoad->loadlibrary(this->_currentPath); //dlopen()
@@ -65,6 +48,25 @@ void Core::getGraphicLib()
         exit(84);
     }
 }
+
+void Core::getGameLib()
+{
+    std::cout << "La premiere game :" << this->_listGames.front() << std::endl;
+
+    std::pair<int ,int> pair_ = this->_IGraphicLib->sendBgSize();
+    // std::cout << "le _bgSiz e pair :" << this->_IGraphicLib->sendBgSize().first << std::endl;
+
+    this->_currentGame = _LibLoad->loadlibrary(this->_listGames.front()); //dlopen()
+    if (_LibLoad->checkifGame(this->_currentGame) == true) {
+        auto createGameFunction = (IGames* (*)(std::pair<int, int>))_LibLoad->exec_function(this->_currentGame, "createGame");
+        this->_IGamesLib = (*createGameFunction)(pair_);
+
+    } else {
+        std::cout << "No lib games inside ./lib ?!" << std::endl;
+        exit(84);
+    }
+}
+
 
 void Core::getAllLibs()
 {
@@ -179,7 +181,7 @@ void Core::loopGame(MonEnum Input)
     this->_IGraphicLib->drawBackground(this->_IGamesLib->getBg());
     // this->_IGraphicLib->putText({320, 800, std::string("You are playing at ") + this->_IGamesLib->getName()});
     // this->_IGraphicLib->putText({730, 20, std::string("Your score is : ") + std::to_string(this->_IGamesLib->getScore())});
-    this->_IGamesLib->bgSize(this->_IGraphicLib->sendBgSize());
+    // this->_IGamesLib->bgSize(this->_IGraphicLib->sendBgSize());
     this->_IGamesLib->getInput(Input);
     if (Input == MonEnum::P_KEY) {
         if (_pause == true)_pause = false;
@@ -196,6 +198,4 @@ void Core::loopGame(MonEnum Input)
     this->_IGamesLib->updateGame();
 }
 
-Core::~Core()
-{
-}
+Core::~Core() {}
