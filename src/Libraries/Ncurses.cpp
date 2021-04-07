@@ -55,11 +55,11 @@ Ncurses::Ncurses()
 
     _tab = tab;
 
-    // this->_bgSize = std::make_pair(strlen(buffer) / lines, lines);
+    this->_bgSize = std::make_pair(lines, strlen(buffer) / lines);
 
     wborder(window, 0, 0, 0, 0, 0, 0, 0, 0);
 
-    this->_bgSize = std::make_pair(99, 34);
+    //this->_bgSize = std::make_pair(99, 34);
 }
 
 Ncurses::~Ncurses()
