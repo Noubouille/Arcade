@@ -119,6 +119,13 @@ MonEnum Ncurses::getEvent()
         mvprintw(10, 2, "-");
         return MonEnum::DOWN_ARROW;
         break;
+    case KEY_LEFT:
+        return MonEnum::LEFT_ARROW;
+        break;
+
+    case KEY_RIGHT:   
+        return MonEnum::RIGHT_ARROW;
+        break;
     case 10:
         return MonEnum::ENTER;
         break;
