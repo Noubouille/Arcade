@@ -34,9 +34,6 @@ void LibLoad::closeLibrary(void *handle)
 
 void *LibLoad::exec_function(void *handle, std::string functionName)
 {
-    // printf("dlsym(handle, functionName.c_str()) : %p\n", dlsym(handle, functionName.c_str()));
-    // printf("dlsym(handle, functionName.c_str()) fake : %p\n", dlsym(handle, "bonsoir"));
-
 	return dlsym(handle, functionName.c_str());
 }
 

@@ -9,7 +9,7 @@ CXX		=	g++ -g3
 
 INC		=	-I src/
 
-CXXFLAGS	+=	-Wall -Wextra -pedantic -std=c++17 -fPIC $(INC)
+CXXFLAGS	+=	-Wall -Wextra -pedantic -std=c++17 -fPIC $(shell sdl2-config --cflags --libs) $(INC)
 
 FLGS		=	-std=c++17 -lstdc++fs
 
@@ -41,13 +41,14 @@ LDFLAGS_SFML	=	-shared -fPIC -lsfml-graphics -lsfml-system -lsfml-window -lsfml-
 
 ## plugin sdl
 
-# NAME_SDL	=	lib/lib_arcade_sdl.so
+NAME_SDL	=	lib/arcade_sdl.so
 
-# SRC_SDL		=	$(SRC_DIR)Libraries/SDL.cpp
+SRC_SDL		=	$(SRC_DIR)Libraries/SDL.cpp
 
-# OBJ_SDL		=	$(SRC_SDL:.cpp=.o)
+OBJ_SDL		=	$(SRC_SDL:.cpp=.o)
 
-# LDFLAGS_SDL	=	-shared -fPIC -lSDL2 -lSDL2_ttf -lSDL2_image
+LDFLAGS_SDL	=	-shared -fPIC -lSDL2 -lSDL2_ttf -lSDL2_image
+# LDFLAGS_SDL	=	-shared -fPIC $(shell sdl2-config --cflags --libs) -lSDL2_ttf
 
 ## ncurses :
 
@@ -92,15 +93,12 @@ $(NAME_SFML):		$(OBJ_SFML)
 			$(CXX) $(OBJ_SFML) -o $(NAME_SFML) $(LDFLAGS_SFML)
 	 		# $(RM) $(OBJ_SFML)
 
-# $(NAME_SDL):		$(OBJ_SDL)
-# 			$(CXX) $(OBJ_SDL) -o $(NAME_SDL) $(LDFLAGS_SDL)
+$(NAME_SDL):		$(OBJ_SDL)
+			$(CXX) $(OBJ_SDL) -o $(NAME_SDL) $(LDFLAGS_SDL)
 
 $(NAME_NCURSES):		$(OBJ_NCURSES)
 			$(CXX) $(OBJ_NCURSES) -o $(NAME_NCURSES) $(LDFLAGS_NCURSES)
 	 		# $(RM) $(OBJ_NCURSES)
-
-# $(NAME_ALLEGRO):	$(OBJ_ALLEGRO)
-# 			$(CXX) $(OBJ_ALLEGRO) -o $(NAME_ALLEGRO) $(LDFLAGS_ALLEGRO)
 
 # $(NAME_PACMAN):		$(OBJ_PACMAN)
 # 			$(CXX) $(OBJ_PACMAN) -o $(NAME_PACMAN) $(LDFLAGS_PACMAN)

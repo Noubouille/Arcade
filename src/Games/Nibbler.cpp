@@ -29,6 +29,28 @@ Nibbler::Nibbler()
     _score = 0;
 }
 
+Nibbler::Nibbler(std::pair<int, int> _bgSize)
+{
+    std::cout << "je suis dans l'autre constructeur ! bb" <<std::endl;
+    this->_bg_size = _bg_size;
+    this->_pos_fruit = std::make_pair(0, 0);
+
+	// std::vector<Pixel> player;
+	_nextMove = Orientation::UP;
+	// _pos_snake = std::make_pair(16.f, 16.f);
+	Pixel pixel;
+
+	_players.emplace_back(pixel);
+	pixel = {pos_x, pos_y, "./assets/Nibbler/body.png"};
+	_players.emplace_back(pixel);
+	// pixel = {pos_x + 16.f, pos_y, "./assets/Nibbler/body.png"};
+	// _players.emplace_back(pixel);
+	// pixel = {pos_x + 32.f, pos_y, "./assets/Nibbler/body.png"};
+	// _players.emplace_back(pixel);
+    // this->setFruit();
+    _score = 0;
+}
+
 void Nibbler::getInput(MonEnum Input)
 {
     Orientation tmp_orientation;
@@ -252,7 +274,8 @@ std::string Nibbler::getBg()
     return "assets/Nibbler/background.png";
 }
 
-extern "C" IGames *createGame()
+extern "C" IGames *createGame(std::pair<int, int> jesuisjesus)
 {
-	return new Nibbler();
+    std::cout << "le pair :" << jesuisjesus.first << std::endl;
+	return new Nibbler(jesuisjesus);
 }

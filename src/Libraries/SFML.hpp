@@ -18,7 +18,6 @@ class SFML : public IGraphic
 {
 public:
     SFML();
-
     ~SFML();
 
     void startWindow();

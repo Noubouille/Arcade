@@ -13,6 +13,8 @@
 class Nibbler : public IGames {
     public:
         Nibbler();
+        Nibbler(std::pair<int, int> bgSize);
+
         ~Nibbler();
         bool isGameOver() override;
 		void reset() override;
@@ -58,7 +60,7 @@ class Nibbler : public IGames {
 
 };
 
-extern "C" IGames *createGame();
+extern "C" IGames *createGame(std::pair<int, int> jesuisjesus);
 
 
 #endif /* !NIBBLER_HPP_ */

@@ -286,7 +286,6 @@ void SFML::putText(const Text &some_text)
 	_window.draw(text);
 }
 
-
 extern "C" IGraphic *createLibrary()
 {
 	return new SFML();
