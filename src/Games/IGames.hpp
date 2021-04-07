@@ -25,6 +25,7 @@ class IGames {
         virtual std::vector<Pixel> getMain() = 0;
         virtual std::vector<Pixel> getSprite() = 0;
         virtual void getInput(MonEnum) = 0;
+        virtual void getLibName(std::string libname) = 0;
         virtual void updateGame() = 0;
         virtual void bgSize(std::pair<int, int>) = 0;
 

@@ -251,7 +251,11 @@ std::vector<Pixel> Nibbler::getMain()
         if (_nextMove == Orientation::UP) {
             for (auto it = std::next(_players.begin()); it != _players.end(); it++) {
                 if (checkMoveSnake_up(it)) {
-                    it->y -= speed_snake;
+                    if (_libname == "SFML") {
+                        it->y -= speed_snake;
+                    } else {
+                        it->x -= speed_snake;
+                    }
                 } else {
                     // it->y -= 0;
                 }
@@ -259,7 +263,12 @@ std::vector<Pixel> Nibbler::getMain()
         } else if (_nextMove == Orientation::DOWN) {
             for (auto it = std::next(_players.begin()); it != _players.end(); it++) {
                 if (checkMoveSnake_down(it)) {
-                    it->y += speed_snake;
+                    if (_libname == "SFML") {
+                        it->y += speed_snake;
+                    } else {
+                        it->x += speed_snake;
+                    }
+
                 } else {
                     // it->y += 0;
                 }
@@ -267,7 +276,11 @@ std::vector<Pixel> Nibbler::getMain()
         } else if (_nextMove == Orientation::RIGHT) {
             for (auto it = std::next(_players.begin()); it != _players.end(); it++) {
                 if (checkMoveSnake_right(it)) {
-                    it->x += speed_snake;
+                    if (_libname == "SFML") {
+                        it->x += speed_snake;
+                    } else {
+                        it->y += speed_snake;
+                    }
                 } else {
                     // it->x += 0;
                 }
@@ -275,7 +288,11 @@ std::vector<Pixel> Nibbler::getMain()
         } else if (_nextMove == Orientation::LEFT) {
             for (auto it = std::next(_players.begin()); it != _players.end(); it++) {
                 if (checkMoveSnake_left(it)) {
-                    it->x -= speed_snake;
+                    if (_libname == "SFML") {
+                        it->x -= speed_snake;
+                    } else {
+                        it->y -= speed_snake;
+                    }
                 } else {
                     // it->x -= 0;
                 }
@@ -295,6 +312,13 @@ std::string Nibbler::getBg()
 {
     return "assets/Nibbler/background.png";
 }
+
+void Nibbler::getLibName(std::string libname)
+{
+    // std::cout << "le libname :" << libname << std::endl;
+    this->_libname = libname;
+}
+
 
 extern "C" IGames *createGame(std::pair<int, int> jesuisjesus)
 {

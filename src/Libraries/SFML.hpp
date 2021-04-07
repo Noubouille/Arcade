@@ -27,7 +27,7 @@ public:
     void drawGame();
     std::string getNameGame();
     void destroyWindow();
-    std::string getLibName();
+    std::string getLibName() override;
     void drawBackground(const std::string &Background);
 	std::pair<int, int> sendBgSize() override;
 
