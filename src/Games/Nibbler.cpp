@@ -239,7 +239,7 @@ bool Nibbler::checkMoveSnake_left(std::vector<Pixel>::iterator it)
     //     //return false;
     // }
 
-    if (it->x <= 0) {
+    if (it->x <= 5) {
         return false;
     }
     return true;
