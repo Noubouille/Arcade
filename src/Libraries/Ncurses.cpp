@@ -55,7 +55,8 @@ Ncurses::Ncurses()
 
     _tab = tab;
 
-    this->_bgSize = std::make_pair(lines, strlen(buffer) / lines);
+    //this->_bgSize = std::make_pair(lines, strlen(buffer) / lines);
+    this->_bgSize = std::make_pair(strlen(buffer) / lines, lines);
 
     wborder(window, 0, 0, 0, 0, 0, 0, 0, 0);
 
@@ -122,7 +123,6 @@ MonEnum Ncurses::getEvent()
     case KEY_LEFT:
         return MonEnum::LEFT_ARROW;
         break;
-
     case KEY_RIGHT:   
         return MonEnum::RIGHT_ARROW;
         break;
@@ -275,7 +275,6 @@ void Ncurses::drawBackground(const std::string &Background)
     for (int i = 0, y = 0, x = 0; _tab[y]; y++)
     {
         mvprintw(y, x, _tab[y]);
-
     }
     // map et bordure
 }
@@ -308,7 +307,7 @@ void Ncurses::drawMain(std::vector<Pixel> snake)
     for (auto it = std::next(snake.begin()); it != snake.end(); it++) {
         // printf("x: %d", it->x);
         // printf("y: %d", it->y);
-        mvprintw(it->x, it->y, ">");
+        mvprintw(it->y, it->x, ">");
         //refresh();
     }
     // le snake
@@ -318,6 +317,11 @@ std::pair<int, int> Ncurses::sendBgSize()
 {
     return _bgSize;
     // taille de la fenetre de jeu
+}
+
+std::string Ncurses::getLibName()
+{
+    return "NCURSES";
 }
 
 void Ncurses::putText(const Text &text)
