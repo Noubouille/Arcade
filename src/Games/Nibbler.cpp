@@ -171,7 +171,7 @@ bool Nibbler::checkMoveSnake_up(std::vector<Pixel>::iterator it)
     (it->y > this->_pos_fruit.second - 25 && it->y < this->_pos_fruit.second + 25)) {
         this->_pos_fruit = std::make_pair(0, 0);
         _score++;
-        speed_snake++;
+        //speed_snake++;
     }
     // if (it->y - 30 <= 0) {
     //     //std::cout << "je suis false it->y > bg!" << std::endl;
@@ -191,7 +191,7 @@ bool Nibbler::checkMoveSnake_down(std::vector<Pixel>::iterator it)
     (it->y > this->_pos_fruit.second - 25 && it->y < this->_pos_fruit.second + 25)) {
         this->_pos_fruit = std::make_pair(0, 0);
         _score++;
-        speed_snake++;
+        //speed_snake++;
 
     }
     if (it->y >= _bg_size.second) {
@@ -211,7 +211,7 @@ bool Nibbler::checkMoveSnake_right(std::vector<Pixel>::iterator it)
     (it->y > this->_pos_fruit.second - 25 && it->y < this->_pos_fruit.second + 25)) {
         this->_pos_fruit = std::make_pair(0, 0);
         _score++;
-        speed_snake++;
+        //speed_snake++;
 
     }
     if (it->x >= _bg_size.first) {
@@ -231,7 +231,7 @@ bool Nibbler::checkMoveSnake_left(std::vector<Pixel>::iterator it)
     (it->y > this->_pos_fruit.second - 25 && it->y < this->_pos_fruit.second + 25)) {
         this->_pos_fruit = std::make_pair(0, 0);
         _score++;
-        speed_snake++;
+        //speed_snake++;
 
     }
     // if (it->x - 30 <= 0) {
