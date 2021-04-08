@@ -37,7 +37,6 @@ void SDL::drawMenu()
     SDL_Texture* Currentlib_text = SDL_CreateTextureFromSurface(this->_renderer, surfaceCurrentlib_text);
     SDL_Rect Text_currentlib = {380, 50, surfaceCurrentlib_text->w, surfaceCurrentlib_text->h};
 
-
     SDL_Surface* surfaceNibbler_text = TTF_RenderText_Solid(_font, "Nibbler", White);
     SDL_Texture* Nibbler_text = SDL_CreateTextureFromSurface(this->_renderer, surfaceNibbler_text);
     SDL_Rect Text_rect2_pacman = {450, 360, surfaceNibbler_text->w, surfaceNibbler_text->h};
@@ -171,13 +170,12 @@ void SDL::drawBackground(const std::string &Background)
     if (Background.empty()) {
         return;
     }
+    std::string tmp = Background + ".bmp";
 
-	// sf::Texture texture;
-	// texture.loadFromFile(Background);
-	// sf::Sprite sprite;
-	// sprite.setTexture(texture);
-	// sprite.setPosition(sf::Vector2f(0 ,0));
-	// _window.draw(sprite);
+    SDL_Surface *bg = SDL_LoadBMP(tmp.c_str());
+    SDL_Texture *bg_texture = SDL_CreateTextureFromSurface(this->_renderer, bg);
+    SDL_Rect Text_bg_rect = {0, 0, bg->w, bg->h};
+    SDL_RenderCopy(this->_renderer, bg_texture, NULL, &Text_bg_rect);
 }
 
 void SDL::drawMain(std::vector<Pixel> snake)
@@ -221,12 +219,19 @@ std::pair<int, int> SDL::sendBgSize()
 
 void SDL::putText(const Text &some_text)
 {
+    SDL_Color White = {255, 255, 255, 0};
+
     // std::cout << "le text :" << some_text.text << std::endl;
     // sf::Text text(some_text.text, _font);
 	// text.setPosition(some_text.x, some_text.y);
 	// text.setCharacterSize(32);
 	// text.setFillColor(sf::Color::White);
 	// _window.draw(text);
+    SDL_Surface* surface_text = TTF_RenderText_Solid(_font, some_text.text.c_str(), White);
+    SDL_Texture* _text = SDL_CreateTextureFromSurface(this->_renderer, surface_text);
+    SDL_Rect Text__rect = {50, 640, surface_text->w, surface_text->h};
+    SDL_RenderCopy(this->_renderer, _text, NULL, &Text__rect);
+
 }
 
 

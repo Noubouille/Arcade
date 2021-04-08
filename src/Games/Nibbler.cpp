@@ -33,7 +33,9 @@ Nibbler::Nibbler(std::pair<int, int> bgSize)
 {
     std::cout << "je suis dans l'autre constructeur ! bb" <<std::endl;
     this->_bg_size = bgSize;
-    this->_pos_fruit = std::make_pair(0, 0);
+    this->_pos_fruit.first = rand()%(this->_bg_size.first);
+    this->_pos_fruit.second = rand()%(this->_bg_size.second);
+    // this->_pos_fruit = std::make_pair(0, 0);
     this->pos_x = _bg_size.first / 2;
     this->pos_y = _bg_size.second / 2;
 	// std::vector<Pixel> player;
@@ -283,7 +285,7 @@ std::string Nibbler::getName()
 
 std::string Nibbler::getBg()
 {
-    return "assets/Nibbler/background.png";
+    return "assets/Nibbler/background";
 }
 
 void Nibbler::getLibName(std::string libname)
