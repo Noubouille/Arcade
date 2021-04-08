@@ -33,6 +33,7 @@ Nibbler::Nibbler(std::pair<int, int> bgSize)
 {
     std::cout << "je suis dans l'autre constructeur ! bb" <<std::endl;
     this->_bg_size = bgSize;
+    srand(time(NULL));
     this->_pos_fruit.first = rand()%(this->_bg_size.first);
     this->_pos_fruit.second = rand()%(this->_bg_size.second);
     // this->_pos_fruit = std::make_pair(0, 0);

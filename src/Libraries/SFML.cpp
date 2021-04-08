@@ -230,8 +230,11 @@ void SFML::drawBackground(const std::string &Background)
         return;
     }
 
+    std::string tmp = Background + ".png";
+
+
 	sf::Texture texture;
-	texture.loadFromFile(Background);
+	texture.loadFromFile(tmp);
 	sf::Sprite sprite;
 	sprite.setTexture(texture);
 	sprite.setPosition(sf::Vector2f(0 ,0));
