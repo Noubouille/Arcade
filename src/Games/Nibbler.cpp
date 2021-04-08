@@ -184,7 +184,7 @@ void Nibbler::eatFruit(std::vector<Pixel>::iterator it)
             //printf("miam\n");
             _score++;
             if (speed_snake != 2) speed_snake++;
-            
+
     }
     }
 }
@@ -240,7 +240,7 @@ bool Nibbler::checkMoveSnake_left(std::vector<Pixel>::iterator it)
         }
     }
 
-    if (it->x <= 5) {
+    if (it->x <= 1) {
         return false;
     }
     return true;
