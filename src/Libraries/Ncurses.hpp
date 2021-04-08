@@ -27,7 +27,7 @@ class Ncurses : public IGraphic
         MonEnum getEvent();
 
         void drawMenu();
-        void drawGame();
+        void utilityGame();
         std::string getNameGame();
         void destroyWindow();
         void drawBackground(const std::string &Background) override;

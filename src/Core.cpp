@@ -193,7 +193,7 @@ void Core::loopGame(MonEnum Input)
     if (_pause) {
         this->_IGraphicLib->putText({500, 500, std::string("Pause !")});
     }
-    // // this->_IGraphicLib->drawGame();
+    // // this->_IGraphicLib->utilityGame();
     this->_IGraphicLib->drawSprite(this->_IGamesLib->getSprite());
 
     this->_IGraphicLib->drawMain(this->_IGamesLib->getMain());

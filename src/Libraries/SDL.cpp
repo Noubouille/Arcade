@@ -9,8 +9,11 @@
 
 SDL::SDL()
 {
-    SDL_Init(SDL_INIT_VIDEO);
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVERYTHING);
     TTF_Init();
+    if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 ) {
+        exit(84);
+    }
     this->_gameName = "NIBBLER";
     this->_bgSize = std::make_pair(600, 600);
     this->_font = TTF_OpenFont("./assets/Arcade.ttf", 35);
@@ -18,6 +21,12 @@ SDL::SDL()
 	    std::cout << TTF_GetError() << std::endl;
     }
 
+    // Mix_FreeMusic(_menuMusic);
+    // Mix_FreeMusic(_musicGame);
+    _menuMusic = Mix_LoadMUS("./assets/menu_music.ogg");
+    _musicGame = Mix_LoadMUS("./assets/menu_music.ogg");
+    Mix_PlayMusic(_menuMusic, -1); //Jouer infiniment la musique
+    Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
 }
 
 SDL::~SDL() {}
@@ -71,8 +80,14 @@ void SDL::drawMenu()
     SDL_RenderPresent(_renderer);
 }
 
-void SDL::drawGame()
+void SDL::utilityGame()
 {
+    if (music_on == false) {
+        Mix_HaltMusic();
+        music_on = true;
+        Mix_PlayMusic(_musicGame, -1); //Jouer infiniment la musique
+        Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
+    }
 }
 
 MonEnum SDL::getEvent()
@@ -144,6 +159,7 @@ std::string SDL::getNameGame()
 
 void SDL::destroyWindow()
 {
+    Mix_CloseAudio();
     SDL_Quit();
 }
 
@@ -162,7 +178,6 @@ void SDL::updateWindow()
     if (_delta < 16) {
         SDL_Delay(16 - _delta);
     }
-
     if (_delta > 16) {
         _fps = 1000 / _delta;
     }
@@ -255,7 +270,6 @@ void SDL::putText(const Text &some_text)
     SDL_RenderCopy(this->_renderer, _text, NULL, &Text__rect);
 
 }
-
 
 extern "C" IGraphic *createLibrary()
 {

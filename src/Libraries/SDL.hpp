@@ -13,6 +13,7 @@
 #include <iostream>
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 
 class SDL : public IGraphic {
     public:
@@ -24,7 +25,7 @@ class SDL : public IGraphic {
 
         MonEnum getEvent();
         void drawMenu();
-        void drawGame();
+        void utilityGame();
         std::string getNameGame();
         void destroyWindow();
         std::string getLibName();
@@ -52,10 +53,15 @@ class SDL : public IGraphic {
     short _fps = 0;
     Uint32 _delta = 0;
 
+    Mix_Music *_menuMusic;
+    Mix_Music *_musicGame;
+
     std::pair<int, int> _bgSize;
 
     int pos_bar_y = 320;
     int bar_nb = 1;
+    bool music_on = false;
+
 };
 
 extern "C" IGraphic *createLibrary();

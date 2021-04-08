@@ -262,7 +262,7 @@ MonEnum Ncurses::getEvent()
     return MonEnum::NO_INPUT;
 }
 
-void Ncurses::drawGame()
+void Ncurses::utilityGame()
 {
 
 }

@@ -14,6 +14,8 @@
 #include <string>
 #include <iostream>
 
+#include <SFML/Audio.hpp>
+
 class SFML : public IGraphic
 {
 public:
@@ -24,7 +26,7 @@ public:
 
     MonEnum getEvent();
     void drawMenu();
-    void drawGame();
+    void utilityGame();
     std::string getNameGame();
     void destroyWindow();
     std::string getLibName() override;
@@ -41,6 +43,8 @@ public:
 
     sf::RenderWindow _window;
     sf::Font _font;
+    sf::Music _musicMenu;
+    sf::Music _musicGame;
     sf::Texture _bgTexture;
     sf::Sprite _bgSprite;
     std::string _gameName;
@@ -51,6 +55,7 @@ private:
 
     int pos_bar_y = 320;
     int bar_nb = 1;
+    bool music_on = false;
 };
 
 extern "C" IGraphic *createLibrary();

@@ -14,6 +14,13 @@ SFML::SFML(): m_elapsedTime(sf::Time::Zero)
     this->_bgSize = std::make_pair(600, 600);
     if (!_font.loadFromFile("./assets/Arcade.ttf"))
         return;
+
+    if (!_musicMenu.openFromFile("./assets/menu_music.ogg"))
+        return;
+    if (!_musicGame.openFromFile("./assets/menu_music.ogg"))
+        return;
+    _musicMenu.play();
+    _musicMenu.setVolume(50);
 }
 
 SFML::~SFML()
@@ -33,15 +40,7 @@ void SFML::drawMenu()
 {
     sf::Texture bg;
     sf::Texture active;
-    // sf::Font font;
-    // if (!active.loadFromFile("./assets/btn_green.png"))
-    //     return;
-
-    // if (!font.loadFromFile("./assets/Arcade.ttf"))
-    //     return;
-
     sf::Sprite bg_sprite(bg);
-    // sf::Sprite bouton_sprite(active);
     sf::Text bar_font("-------", _font, 35);
     sf::Text Nibbler_font("Nibbler", _font, 35);
     sf::Text Pacman_font("Pacman", _font, 35);
@@ -49,20 +48,19 @@ void SFML::drawMenu()
     Nibbler_font.setPosition(450, 300);
     Pacman_font.setPosition(450, 360);
 
+
     sf::Text next_font("[F1] next graphical library", _font, 35);
     sf::Text prev_font("[F2] previous graphical library", _font, 35);
     next_font.setPosition(50, 580);
     prev_font.setPosition(50, 640);
 
     bg_sprite.setTexture(bg);
-    // bouton_sprite.setTexture(active);
 
     this->_window.clear(sf::Color(0, 0, 0));
     this->_window.draw(this->_bgSprite);
     this->_window.draw(Pacman_font);
     this->_window.draw(Nibbler_font);
     this->_window.draw(bar_font);
-
     this->_window.draw(next_font);
     this->_window.draw(prev_font);
 
@@ -71,8 +69,14 @@ void SFML::drawMenu()
     this->_window.display();
 }
 
-void SFML::drawGame()
+void SFML::utilityGame()
 {
+    _musicMenu.stop();
+    if (music_on == false) {
+        music_on = true;
+        _musicGame.play();
+        _musicGame.setVolume(40);
+    }
 }
 
 MonEnum SFML::getEvent()
@@ -82,7 +86,7 @@ MonEnum SFML::getEvent()
     while (_window.pollEvent(event)) {
         if (event.type == sf::Event::Closed || event.key.code == sf::Keyboard::Escape) {
             std::cout << "sf::Event::CLOSE" << std::endl;
-            _window.close();
+            destroyWindow();
             exit(0);
             return MonEnum::CLOSE;
         }
@@ -206,6 +210,8 @@ std::string SFML::getNameGame()
 
 void SFML::destroyWindow()
 {
+    this->_musicGame.stop();
+    this->_musicMenu.stop();
     this->_window.close();
 }
 
@@ -226,12 +232,12 @@ std::string SFML::getLibName()
 
 void SFML::drawBackground(const std::string &Background)
 {
+
     if (Background.empty()) {
         return;
     }
 
     std::string tmp = Background + ".png";
-
 
 	sf::Texture texture;
 	texture.loadFromFile(tmp);
@@ -239,6 +245,7 @@ void SFML::drawBackground(const std::string &Background)
 	sprite.setTexture(texture);
 	sprite.setPosition(sf::Vector2f(0 ,0));
 	_window.draw(sprite);
+
 }
 
 void SFML::drawMain(std::vector<Pixel> snake)
@@ -265,16 +272,17 @@ void SFML::drawMain(std::vector<Pixel> snake)
 }
 
 void SFML::drawSprite(std::vector<Pixel> sprite) {
-    for (auto it = std::next(sprite.begin()); it != sprite.end(); it++) {
-        std::string tmp = it->pathSprite + ".png";
+    auto it = sprite.front();
+    // for (auto it = std::next(sprite.begin()); it != sprite.end(); it++) {
+        std::string tmp = it.pathSprite + ".png";
 
         sf::Texture texture;
         texture.loadFromFile(tmp);
-        sf::Sprite sprite;
-        sprite.setTexture(texture);
-        sprite.setPosition(sf::Vector2f(it->x, it->y));
-        _window.draw(sprite);
-    }
+        sf::Sprite Sprite;
+        Sprite.setTexture(texture);
+        Sprite.setPosition(sf::Vector2f(it.x, it.y));
+        _window.draw(Sprite);
+    // }
 }
 
 std::pair<int, int> SFML::sendBgSize()
@@ -284,7 +292,6 @@ std::pair<int, int> SFML::sendBgSize()
 
 void SFML::putText(const Text &some_text)
 {
-    std::cout << "le text :" << some_text.text << std::endl;
     sf::Text text(some_text.text, _font);
 	text.setPosition(some_text.x, some_text.y);
 	text.setCharacterSize(32);

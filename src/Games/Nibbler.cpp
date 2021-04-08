@@ -191,9 +191,8 @@ void Nibbler::eatFruit(std::vector<Pixel>::iterator it)
 
 bool Nibbler::checkMoveSnake_up(std::vector<Pixel>::iterator it)
 {
-        eatFruit(it);
+    eatFruit(it);
     if (_libname == "SFML" || _libname == "SDL") {
-
         if (it->y - 30 <= 0) {
             //std::cout << "je suis false it->y > bg!" << std::endl;
             return false;
@@ -209,7 +208,7 @@ bool Nibbler::checkMoveSnake_up(std::vector<Pixel>::iterator it)
 
 bool Nibbler::checkMoveSnake_down(std::vector<Pixel>::iterator it)
 {
-        eatFruit(it);
+    eatFruit(it);
     if (_libname == "SFML" || _libname == "SDL") {
 
     }

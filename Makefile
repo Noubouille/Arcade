@@ -9,7 +9,7 @@ CXX		=	g++ -g3
 
 INC		=	-I src/
 
-CXXFLAGS	+=	-Wall -Wextra -pedantic -std=c++17 -fPIC $(shell sdl2-config --cflags --libs) $(INC)
+CXXFLAGS	+=	-Wall -Wextra -pedantic -std=c++17 -fPIC -lSDL2_mixer $(shell sdl2-config --cflags --libs) $(INC)
 
 FLGS		=	-std=c++17 -lstdc++fs
 
@@ -24,8 +24,7 @@ SRC_DIR		=	src/
 SRC		=	$(SRC_DIR)main.cpp			\
 			$(SRC_DIR)Core.cpp		\
 			$(SRC_DIR)LibLoad.cpp		\
-			# $(SRC_DIR)Core/HighScoreManager.cpp	\
-			# $(SRC_DIR)LibraryLoader.cpp
+
 
 OBJ		=	$(SRC:.cpp=.o)
 
@@ -94,7 +93,7 @@ $(NAME_SFML):		$(OBJ_SFML)
 	 		# $(RM) $(OBJ_SFML)
 
 $(NAME_SDL):		$(OBJ_SDL)
-			$(CXX) $(OBJ_SDL) -o $(NAME_SDL) $(LDFLAGS_SDL)
+			$(CXX) $(OBJ_SDL) -o $(NAME_SDL) -lSDL2_mixer $(LDFLAGS_SDL)
 
 $(NAME_NCURSES):		$(OBJ_NCURSES)
 			$(CXX) $(OBJ_NCURSES) -o $(NAME_NCURSES) $(LDFLAGS_NCURSES)
