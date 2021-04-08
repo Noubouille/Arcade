@@ -169,19 +169,27 @@ int Nibbler::getScore()
 
 void Nibbler::eatFruit(std::vector<Pixel>::iterator it)
 {
+    if (_libname == "SFML" || _libname == "SDL") {
     if ((it->x > this->_pos_fruit.first - 25 && it->x < this->_pos_fruit.first + 25) &&
     (it->y > this->_pos_fruit.second - 25 && it->y < this->_pos_fruit.second + 25)) {
         this->_pos_fruit = std::make_pair(0, 0);
         _score++;
         speed_snake++;
     }
+    } else if (_libname == "NCURSES") {
+        if ((it->x > this->_pos_fruit.first + 2 && it->x < this->_pos_fruit.first + 2) &&
+        (it->y > this->_pos_fruit.second + 2 && it->y < this->_pos_fruit.second + 2)) {
+        this->_pos_fruit = std::make_pair(0, 0);
+            _score++;
+            speed_snake++;
+    }
+    }
 }
-
 
 bool Nibbler::checkMoveSnake_up(std::vector<Pixel>::iterator it)
 {
-    if (_libname == "SFML" || _libname == "SDL") {
         eatFruit(it);
+    if (_libname == "SFML" || _libname == "SDL") {
 
         if (it->y - 30 <= 0) {
             //std::cout << "je suis false it->y > bg!" << std::endl;
@@ -198,8 +206,8 @@ bool Nibbler::checkMoveSnake_up(std::vector<Pixel>::iterator it)
 
 bool Nibbler::checkMoveSnake_down(std::vector<Pixel>::iterator it)
 {
-    if (_libname == "SFML" || _libname == "SDL") {
         eatFruit(it);
+    if (_libname == "SFML" || _libname == "SDL") {
 
     }
     if (it->y >= _bg_size.second) {
@@ -211,8 +219,8 @@ bool Nibbler::checkMoveSnake_down(std::vector<Pixel>::iterator it)
 
 bool Nibbler::checkMoveSnake_right(std::vector<Pixel>::iterator it)
 {
-    if (_libname == "SFML" || _libname == "SDL") {
         eatFruit(it);
+    if (_libname == "SFML" || _libname == "SDL") {
     }
     if (it->x >= _bg_size.first) {
         return false;
@@ -223,8 +231,8 @@ bool Nibbler::checkMoveSnake_right(std::vector<Pixel>::iterator it)
 
 bool Nibbler::checkMoveSnake_left(std::vector<Pixel>::iterator it)
 {
-    if (_libname == "SFML" || _libname == "SDL") {
         eatFruit(it);
+    if (_libname == "SFML" || _libname == "SDL") {
         if (it->x - 30 <= 0) {
             return false;
         }
