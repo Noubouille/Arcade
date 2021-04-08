@@ -50,7 +50,7 @@ class Nibbler : public IGames {
         std::pair<int, int> _bg_size;
         int pos_x = 0;
         int pos_y = 0;
-        unsigned int speed_snake = 2;
+        unsigned int speed_snake = 1;
 
     private:
     std::string _libname;

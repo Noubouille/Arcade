@@ -279,6 +279,7 @@ void Ncurses::drawBackground(const std::string &Background)
     {
         mvprintw(y, x, _tab[y]);
     }
+
     // map et bordure
 }
 
@@ -297,12 +298,14 @@ void Ncurses::clearWindow()
 void Ncurses::updateWindow()
 {
     refresh();
-    usleep(40000);
+    usleep(50000);
 }
 
 void Ncurses::drawSprite(std::vector<Pixel> sprite)
 {
     for (auto it = std::next(sprite.begin()); it != sprite.end(); it++) {
+        refresh();
+        mvprintw(it->y, it->x, " ");
         mvprintw(it->y, it->x, "o");
     }
     // le fruit
@@ -332,7 +335,7 @@ std::string Ncurses::getLibName()
 
 void Ncurses::putText(const Text &text)
 {
-
+    mvprintw(10, 100, text.text.c_str());
 }
 
 
