@@ -56,7 +56,7 @@ Ncurses::Ncurses()
     _tab = tab;
 
     //this->_bgSize = std::make_pair(lines, strlen(buffer) / lines);
-    this->_bgSize = std::make_pair((strlen(buffer) / lines) - 5, lines - 1);
+    this->_bgSize = std::make_pair((strlen(buffer) / lines) - 6, lines - 1);
 
     wborder(window, 0, 0, 0, 0, 0, 0, 0, 0);
 
@@ -337,7 +337,6 @@ void Ncurses::putText(const Text &text)
 {
     mvprintw(10, 100, text.text.c_str());
 }
-
 
 extern "C" IGraphic *createLibrary()
 {
