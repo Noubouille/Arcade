@@ -101,6 +101,8 @@ void Ncurses::drawMenu()
     mvprintw(14, 3, "[F1] next graphical library");
     mvprintw(16, 3, "[F2] previous graphical library");
 
+    mvprintw(20, 3, "Current library is Ncurses");
+
     refresh();
 }
 

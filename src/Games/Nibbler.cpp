@@ -187,7 +187,6 @@ bool Nibbler::checkMoveSnake_up(std::vector<Pixel>::iterator it)
         }
     }
 
-
     if (it->y <= 0) {
         return false;
     }
