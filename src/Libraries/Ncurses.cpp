@@ -56,7 +56,7 @@ Ncurses::Ncurses()
     _tab = tab;
 
     //this->_bgSize = std::make_pair(lines, strlen(buffer) / lines);
-    this->_bgSize = std::make_pair((strlen(buffer) / lines) - 5, lines - 2);
+    this->_bgSize = std::make_pair((strlen(buffer) / lines) - 5, lines - 1);
 
     wborder(window, 0, 0, 0, 0, 0, 0, 0, 0);
 
@@ -302,6 +302,9 @@ void Ncurses::updateWindow()
 
 void Ncurses::drawSprite(std::vector<Pixel> sprite)
 {
+    for (auto it = std::next(sprite.begin()); it != sprite.end(); it++) {
+        mvprintw(it->y, it->x, "o");
+    }
     // le fruit
 }
 
