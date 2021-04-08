@@ -130,7 +130,7 @@ void Nibbler::updateGame()
     if (foodCheck() == false) {
         this->_fruit.clear();
         setFruit();
-        std::cout << "je mets un new fruit" << std::endl;
+        //std::cout << "je mets un new fruit" << std::endl;
     }
     if (speed_snake > 10) {
         speed_snake = 10;
@@ -178,11 +178,13 @@ void Nibbler::eatFruit(std::vector<Pixel>::iterator it)
         speed_snake++;
     }
     } else if (_libname == "NCURSES") {
-        if ((it->x > this->_pos_fruit.first + 2 && it->x < this->_pos_fruit.first + 2) &&
-        (it->y > this->_pos_fruit.second + 2 && it->y < this->_pos_fruit.second + 2)) {
+        if ((it->x > this->_pos_fruit.first - 2 && it->x < this->_pos_fruit.first + 2) &&
+        (it->y > this->_pos_fruit.second - 2 && it->y < this->_pos_fruit.second + 2)) {
         this->_pos_fruit = std::make_pair(0, 0);
+            //printf("miam\n");
             _score++;
-            speed_snake++;
+            if (speed_snake != 2) speed_snake++;
+            
     }
     }
 }

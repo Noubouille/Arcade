@@ -180,8 +180,8 @@ void Core::loopGame(MonEnum Input)
     this->_IGraphicLib->clearWindow();
     this->_IGraphicLib->drawBackground(this->_IGamesLib->getBg());
 
-    // this->_IGraphicLib->putText({320, 800, std::string("You are playing at ") + this->_IGamesLib->getName()});
-    // this->_IGraphicLib->putText({730, 20, std::string("Your score is : ") + std::to_string(this->_IGamesLib->getScore())});
+    //this->_IGraphicLib->putText({320, 800, std::string("You are playing at ") + this->_IGamesLib->getName()});
+    this->_IGraphicLib->putText({730, 20, std::string("Your score is : ") + std::to_string(this->_IGamesLib->getScore())});
     //this->_IGamesLib->bgSize(this->_IGraphicLib->sendBgSize());
     this->_IGamesLib->getLibName(this->_IGraphicLib->getLibName());
     this->_IGamesLib->getInput(Input);
@@ -198,7 +198,7 @@ void Core::loopGame(MonEnum Input)
 
     this->_IGraphicLib->drawMain(this->_IGamesLib->getMain());
     this->_IGraphicLib->updateWindow();
-    //this->_IGamesLib->updateGame();
+    this->_IGamesLib->updateGame();
 }
 
 Core::~Core() {}
