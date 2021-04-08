@@ -17,6 +17,7 @@ SDL::SDL()
     if ( !_font ) {
 	    std::cout << TTF_GetError() << std::endl;
     }
+
 }
 
 SDL::~SDL() {}
@@ -77,11 +78,9 @@ void SDL::drawGame()
 MonEnum SDL::getEvent()
 {
     SDL_Event event;
-	// sf::Event event;
 
     while (SDL_PollEvent(&event) != 0) {
     // SDL_WaitEvent(&event);
-
         switch (event.type) {
             case SDL_QUIT:
                 std::cout << "sf::Event::CLOSE sdl" << std::endl;
@@ -96,11 +95,9 @@ MonEnum SDL::getEvent()
                 exit(0);
                 break;
             case SDLK_LEFT:
-                std::cout << "left arrow" << std::endl;
                 return MonEnum::LEFT_ARROW;
                 break;
             case SDLK_RIGHT:
-                std::cout << "right arrow" << std::endl;
                 return MonEnum::RIGHT_ARROW;
                 break;
             case SDLK_UP:
@@ -129,7 +126,9 @@ MonEnum SDL::getEvent()
             case SDLK_RETURN:
                 return MonEnum::ENTER;
                 break;
-
+            case SDLK_p:
+                return MonEnum::P_KEY;
+                break;
             default :
                 return MonEnum::NO_INPUT;
         }
@@ -145,19 +144,34 @@ std::string SDL::getNameGame()
 
 void SDL::destroyWindow()
 {
-    // this->_window.close();
     SDL_Quit();
 }
 
 void SDL::clearWindow()
 {
+    if (!_startTime) {
+        _startTime = SDL_GetTicks();
+    } else {
+        _delta = _endTime - _startTime;
+    }
     SDL_RenderClear(this->_renderer);
 }
 
 void SDL::updateWindow()
 {
+    if (_delta < 16) {
+        SDL_Delay(16 - _delta);
+    }
+
+    if (_delta > 16) {
+        _fps = 1000 / _delta;
+    }
+    // printf("FPS is: %i \n", _fps);
+
+    _startTime = _endTime;
+    _endTime = SDL_GetTicks();
+
     SDL_RenderPresent(this->_renderer);
-    // this->_window.display();
 }
 
 std::string SDL::getLibName()
@@ -176,6 +190,8 @@ void SDL::drawBackground(const std::string &Background)
     SDL_Texture *bg_texture = SDL_CreateTextureFromSurface(this->_renderer, bg);
     SDL_Rect Text_bg_rect = {0, 0, bg->w, bg->h};
     SDL_RenderCopy(this->_renderer, bg_texture, NULL, &Text_bg_rect);
+    SDL_FreeSurface(bg);
+
 }
 
 void SDL::drawMain(std::vector<Pixel> snake)
@@ -183,6 +199,17 @@ void SDL::drawMain(std::vector<Pixel> snake)
     // if (m_elapsedTime.asSeconds() > 0.1) {
 
         for (auto it = std::next(snake.begin()); it != snake.end(); it++) {
+            if (it->pathSprite.empty()) {
+                return;
+            }
+            std::string tmp = it->pathSprite + ".bmp";
+            // std::cout << "tmp : " << tmp << std::endl;
+            SDL_Surface *sprite_surf = SDL_LoadBMP(tmp.c_str());
+
+            SDL_Texture* Sprite_text = SDL_CreateTextureFromSurface(this->_renderer, sprite_surf);
+            SDL_Rect Sprite_rect = {it->x, it->y, sprite_surf->w, sprite_surf->h};
+            SDL_RenderCopy(this->_renderer, Sprite_text, NULL, &Sprite_rect);
+            SDL_FreeSurface(sprite_surf);
 
             // sf::Texture texture;
             // if (!texture.loadFromFile(it->pathSprite)) {
@@ -201,15 +228,16 @@ void SDL::drawMain(std::vector<Pixel> snake)
 }
 
 void SDL::drawSprite(std::vector<Pixel> sprite) {
-    for (auto it = std::next(sprite.begin()); it != sprite.end(); it++) {
 
-        // sf::Texture texture;
-        // texture.loadFromFile(it->pathSprite);
-        // sf::Sprite sprite;
-        // sprite.setTexture(texture);
-        // sprite.setPosition(sf::Vector2f(it->x, it->y));
-        // _window.draw(sprite);
-    }
+    std::string tmp = sprite.front().pathSprite + ".bmp";
+    // std::cout << "tmp : " << tmp << std::endl;
+    SDL_Surface *sprite_surf = SDL_LoadBMP(tmp.c_str());
+
+    SDL_Texture* Sprite_text = SDL_CreateTextureFromSurface(this->_renderer, sprite_surf);
+    SDL_Rect Sprite_rect = {sprite.front().x, sprite.front().y, sprite_surf->w, sprite_surf->h};
+    SDL_RenderCopy(this->_renderer, Sprite_text, NULL, &Sprite_rect);
+    SDL_FreeSurface(sprite_surf);
+
 }
 
 std::pair<int, int> SDL::sendBgSize()
@@ -221,15 +249,9 @@ void SDL::putText(const Text &some_text)
 {
     SDL_Color White = {255, 255, 255, 0};
 
-    // std::cout << "le text :" << some_text.text << std::endl;
-    // sf::Text text(some_text.text, _font);
-	// text.setPosition(some_text.x, some_text.y);
-	// text.setCharacterSize(32);
-	// text.setFillColor(sf::Color::White);
-	// _window.draw(text);
     SDL_Surface* surface_text = TTF_RenderText_Solid(_font, some_text.text.c_str(), White);
     SDL_Texture* _text = SDL_CreateTextureFromSurface(this->_renderer, surface_text);
-    SDL_Rect Text__rect = {50, 640, surface_text->w, surface_text->h};
+    SDL_Rect Text__rect = {some_text.x, some_text.x, surface_text->w, surface_text->h};
     SDL_RenderCopy(this->_renderer, _text, NULL, &Text__rect);
 
 }

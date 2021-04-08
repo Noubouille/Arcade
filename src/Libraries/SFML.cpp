@@ -246,9 +246,10 @@ void SFML::drawMain(std::vector<Pixel> snake)
     // if (m_elapsedTime.asSeconds() > 0.1) {
 
         for (auto it = std::next(snake.begin()); it != snake.end(); it++) {
+            std::string tmp = it->pathSprite + ".png";
 
             sf::Texture texture;
-            if (!texture.loadFromFile(it->pathSprite)) {
+            if (!texture.loadFromFile(tmp)) {
                 return ;
             }
 
@@ -265,9 +266,10 @@ void SFML::drawMain(std::vector<Pixel> snake)
 
 void SFML::drawSprite(std::vector<Pixel> sprite) {
     for (auto it = std::next(sprite.begin()); it != sprite.end(); it++) {
+        std::string tmp = it->pathSprite + ".png";
 
         sf::Texture texture;
-        texture.loadFromFile(it->pathSprite);
+        texture.loadFromFile(tmp);
         sf::Sprite sprite;
         sprite.setTexture(texture);
         sprite.setPosition(sf::Vector2f(it->x, it->y));

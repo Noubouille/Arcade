@@ -45,7 +45,7 @@ Nibbler::Nibbler(std::pair<int, int> bgSize)
 	Pixel pixel;
 
 	_players.emplace_back(pixel);
-	pixel = {pos_x, pos_y, "./assets/Nibbler/body.png"};
+	pixel = {pos_x, pos_y, "./assets/Nibbler/body"};
 	_players.emplace_back(pixel);
 	// pixel = {pos_x + 16.f, pos_y, "./assets/Nibbler/body.png"};
 	// _players.emplace_back(pixel);
@@ -101,7 +101,7 @@ void Nibbler::getInput(MonEnum Input)
 std::vector<Pixel> Nibbler::getSprite()
 {
     Pixel fruit;
-	fruit = {this->_pos_fruit.first, this->_pos_fruit.second, "./assets/Nibbler/fruit.png"};
+	fruit = {this->_pos_fruit.first, this->_pos_fruit.second, "./assets/Nibbler/fruit"};
 	_fruit.push_back(fruit);
     return _fruit;
 }

@@ -46,6 +46,11 @@ class SDL : public IGraphic {
     SDL_Window *_window;
     SDL_Renderer *_renderer;
     std::string _gameName;
+    Uint32 _time = SDL_GetTicks();
+    Uint32 _startTime = 0;
+    Uint32 _endTime = 0;
+    short _fps = 0;
+    Uint32 _delta = 0;
 
     std::pair<int, int> _bgSize;
 

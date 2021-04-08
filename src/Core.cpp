@@ -186,19 +186,19 @@ void Core::loopGame(MonEnum Input)
     this->_IGamesLib->getLibName(this->_IGraphicLib->getLibName());
     this->_IGamesLib->getInput(Input);
     // std::cout << "input :" << Input << std::endl;
-    // if (Input == MonEnum::P_KEY) {
-    //     if (_pause == true)_pause = false;
-    //     else _pause = true;
-    // }
-    // if (_pause) {
-    //     this->_IGraphicLib->putText({500, 500, std::string("Pause !")});
-    // }
+    if (Input == MonEnum::P_KEY) {
+        if (_pause == true)_pause = false;
+        else _pause = true;
+    }
+    if (_pause) {
+        this->_IGraphicLib->putText({500, 500, std::string("Pause !")});
+    }
     // // this->_IGraphicLib->drawGame();
     this->_IGraphicLib->drawSprite(this->_IGamesLib->getSprite());
 
     this->_IGraphicLib->drawMain(this->_IGamesLib->getMain());
     this->_IGraphicLib->updateWindow();
-    //this->_IGamesLib->updateGame();
+    this->_IGamesLib->updateGame();
 }
 
 Core::~Core() {}
