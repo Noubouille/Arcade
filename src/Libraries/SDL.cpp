@@ -33,7 +33,7 @@ SDL::~SDL() {}
 
 void SDL::startWindow()
 {
-    this->_window = SDL_CreateWindow("Arcade sdl", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1080, 1080, 0);
+    this->_window = SDL_CreateWindow("Arcade sdl", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1080, 1080, 0);
     this->_image = SDL_LoadBMP("./assets/bg.bmp");
     this->_renderer = SDL_CreateRenderer(this->_window, -1, 0);
     this->_texture = SDL_CreateTextureFromSurface(this->_renderer, this->_image);
@@ -94,7 +94,7 @@ MonEnum SDL::getEvent()
 {
     SDL_Event event;
 
-    while (SDL_PollEvent(&event) != 0) {
+    while (SDL_PollEvent(&event)) {
     // SDL_WaitEvent(&event);
         switch (event.type) {
             case SDL_QUIT:
@@ -142,6 +142,7 @@ MonEnum SDL::getEvent()
                 return MonEnum::ENTER;
                 break;
             case SDLK_p:
+            std::cout << "je suis p" << std::endl;
                 return MonEnum::P_KEY;
                 break;
             default :
@@ -266,7 +267,7 @@ void SDL::putText(const Text &some_text)
 
     SDL_Surface* surface_text = TTF_RenderText_Solid(_font, some_text.text.c_str(), White);
     SDL_Texture* _text = SDL_CreateTextureFromSurface(this->_renderer, surface_text);
-    SDL_Rect Text__rect = {some_text.x, some_text.x, surface_text->w, surface_text->h};
+    SDL_Rect Text__rect = {some_text.x, some_text.y, surface_text->w, surface_text->h};
     SDL_RenderCopy(this->_renderer, _text, NULL, &Text__rect);
 
 }

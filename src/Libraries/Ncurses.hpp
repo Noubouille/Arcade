@@ -42,7 +42,8 @@ class Ncurses : public IGraphic
 
 
         WINDOW *window = initscr();
-
+        int _win_y = 0;
+        int _win_x = 0;
         private:
         char** _tab;
         std::pair<int, int> _bgSize;

@@ -10,6 +10,7 @@
 #include <experimental/filesystem>
 #include <regex>
 #include <sys/stat.h>
+#include <unistd.h>
 
 namespace fs = std::experimental::filesystem;
 
@@ -161,6 +162,7 @@ void Core::mainLoop()
         }
 
         if (this->_stateMenu == true) {
+            // usleep(1000);
             loopMenu(Input);
         } else {
             loopGame(Input);
@@ -171,6 +173,7 @@ void Core::mainLoop()
 
 void Core::loopMenu(MonEnum Input)
 {
+    Input = Input;
     this->_IGraphicLib->drawMenu();
 
 }
@@ -180,12 +183,11 @@ void Core::loopGame(MonEnum Input)
     this->_IGraphicLib->clearWindow();
     this->_IGraphicLib->drawBackground(this->_IGamesLib->getBg());
 
-    //this->_IGraphicLib->putText({320, 800, std::string("You are playing at ") + this->_IGamesLib->getName()});
+    this->_IGraphicLib->putText({320, 800, std::string("You are playing at ") + this->_IGamesLib->getName()});
     this->_IGraphicLib->putText({730, 20, std::string("Your score is : ") + std::to_string(this->_IGamesLib->getScore())});
     //this->_IGamesLib->bgSize(this->_IGraphicLib->sendBgSize());
     this->_IGamesLib->getLibName(this->_IGraphicLib->getLibName());
     this->_IGamesLib->getInput(Input);
-    // std::cout << "input :" << Input << std::endl;
     if (Input == MonEnum::P_KEY) {
         if (_pause == true)_pause = false;
         else _pause = true;
@@ -193,7 +195,7 @@ void Core::loopGame(MonEnum Input)
     if (_pause) {
         this->_IGraphicLib->putText({500, 500, std::string("Pause !")});
     }
-    // // this->_IGraphicLib->utilityGame();
+    this->_IGraphicLib->utilityGame();
     this->_IGraphicLib->drawSprite(this->_IGamesLib->getSprite());
 
     this->_IGraphicLib->drawMain(this->_IGamesLib->getMain());

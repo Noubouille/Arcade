@@ -6,10 +6,15 @@
 */
 
 #include "Ncurses.hpp"
+#include <sys/ioctl.h>
 
 Ncurses::Ncurses()
 {
     _gameName = "NIBBLER";
+
+    getmaxyx(window, _win_y, _win_x);
+    printf ("lines x %d\n", _win_x);
+    printf ("columns y %d\n",_win_y);
 
     struct stat buf;
     stat("map.txt", &buf);
@@ -80,8 +85,6 @@ void Ncurses::startWindow()
 void Ncurses::drawMenu()
 {
     wborder(window, 0, 0, 0, 0, 0, 0, 0, 0);
-    int start_y, start_x;
-    start_y = start_x = 10;
 
     WINDOW *win = newwin(4, 15, 1, 1);
     refresh();
@@ -275,7 +278,7 @@ std::string Ncurses::getNameGame()
 void Ncurses::drawBackground(const std::string &Background)
 {
 
-    for (int i = 0, y = 0, x = 0; _tab[y]; y++)
+    for (int y = 0, x = 0; _tab[y]; y++)
     {
         mvprintw(y, x, _tab[y]);
     }
@@ -292,7 +295,7 @@ void Ncurses::destroyWindow()
 
 void Ncurses::clearWindow()
 {
-
+    erase();
 }
 
 void Ncurses::updateWindow()
@@ -335,11 +338,28 @@ std::string Ncurses::getLibName()
 
 void Ncurses::putText(const Text &text)
 {
-    mvprintw(10, 100, text.text.c_str());
+    int tmp_y = text.y;
+    int tmp_x = text.x;
+    getmaxyx(window, _win_y, _win_x);
+
+    for (; tmp_y >= _win_y; tmp_y = tmp_y / 2) {}
+    for (; tmp_x >= _win_x; tmp_x = tmp_x / 2) {}
+
+    // int tmp_y = text.y / 6;
+    // if (tmp_y > 50) {
+    //     tmp_y = text.y / 16;
+    // std::cout << "le y :" << tmp_y << std::endl;
+
+    // }
+    // std::cout << "le y :" << tmp_y << std::endl;
+    // std::cout << "le x :" << tmp_x << std::endl;
+
+    // mvprintw(tmp_y, text.x / 6, text.text.c_str());
+    mvprintw(tmp_y, tmp_x, text.text.c_str());
+    // clearWindow();
 }
 
 extern "C" IGraphic *createLibrary()
 {
-    std::cout << "CREATE LIBRARY NCURSES" << std::endl;
 	return new Ncurses();
 }

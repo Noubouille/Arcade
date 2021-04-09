@@ -16,8 +16,8 @@ typedef struct {
 } Pixel;
 
 typedef struct {
-    unsigned int x;
-    unsigned int y;
+    int x;
+    int y;
     std::string text;
     // bool underline;
 } Text;
