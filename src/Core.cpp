@@ -11,8 +11,11 @@
 #include <regex>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <bits/stdc++.h>
 
 namespace fs = std::experimental::filesystem;
+
+
 
 Core::Core(const std::string &lib_name)
 {
@@ -30,8 +33,9 @@ Core::Core(const std::string &lib_name)
     }
 
     std::cout << "lib name :" << lib_name << std::endl;
-    this->getGraphicLib();
+    _Timer = new Timer();
 
+    this->getGraphicLib();
     this->getAllLibs();
     this->getGameLib();
     this->mainLoop();
@@ -55,7 +59,6 @@ void Core::getGameLib()
     std::cout << "La premiere game :" << this->_listGames.front() << std::endl;
 
     std::pair<int ,int> pair_ = this->_IGraphicLib->sendBgSize();
-    // std::cout << "le _bgSiz e pair :" << this->_IGraphicLib->sendBgSize().first << std::endl;
 
     this->_currentGame = _LibLoad->loadlibrary(this->_listGames.front()); //dlopen()
     if (_LibLoad->checkifGame(this->_currentGame) == true) {
@@ -139,7 +142,7 @@ void Core::prevLibrary()
 void Core::mainLoop()
 {
     this->_IGraphicLib->startWindow();
-    for (;1;) {
+    for (;_EndGame;) {
         MonEnum Input = this->_IGraphicLib->getEvent();
         this->_IGraphicLib->clearWindow();
         if (Input == MonEnum::F1) {
@@ -162,12 +165,13 @@ void Core::mainLoop()
         }
 
         if (this->_stateMenu == true) {
-            // usleep(1000);
             loopMenu(Input);
         } else {
             loopGame(Input);
         }
     }
+    this->_IGraphicLib->destroyWindow();
+    exit(0);
 
 }
 
@@ -180,6 +184,21 @@ void Core::loopMenu(MonEnum Input)
 
 void Core::loopGame(MonEnum Input)
 {
+    if (m_bRunning == false ) {
+        m_bRunning = true;
+        _Timer->start();
+    }
+    if ( _Timer->elapsedSeconds() > 5 ) {
+        this->_IGamesLib->reset();
+        this->_stateMenu = true;
+        m_bRunning = false;
+
+        // _EndGame = false;
+    }
+
+
+    std::cout << "THE TIME : " <<  _Timer->elapsedSeconds() << std::endl;
+
     this->_IGraphicLib->clearWindow();
     this->_IGraphicLib->drawBackground(this->_IGamesLib->getBg());
 
@@ -195,7 +214,7 @@ void Core::loopGame(MonEnum Input)
     if (_pause) {
         this->_IGraphicLib->putText({500, 500, std::string("Pause !")});
     }
-    this->_IGraphicLib->utilityGame();
+    // this->_IGraphicLib->utilityGame(bool);
     this->_IGraphicLib->drawSprite(this->_IGamesLib->getSprite());
 
     this->_IGraphicLib->drawMain(this->_IGamesLib->getMain());

@@ -307,7 +307,7 @@ void Ncurses::updateWindow()
 void Ncurses::drawSprite(std::vector<Pixel> sprite)
 {
     for (auto it = std::next(sprite.begin()); it != sprite.end(); it++) {
-        refresh();
+        // refresh();
         mvprintw(it->y, it->x, " ");
         mvprintw(it->y, it->x, "o");
     }

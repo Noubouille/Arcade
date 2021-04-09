@@ -143,7 +143,13 @@ void Nibbler::initsnake()
 
 void Nibbler::reset()
 {
-
+    _score = 0;
+    speed_snake = 1;
+    for (auto it = std::next(_players.begin()); it != _players.end(); it++) {
+        it->x =_bg_size.first / 2;
+        it->y =_bg_size.second / 2;
+    }
+    this->_pos_fruit = std::make_pair(0, 0);
 }
 
 int Nibbler::getScore()
@@ -164,7 +170,6 @@ void Nibbler::eatFruit(std::vector<Pixel>::iterator it)
             if ((it->x > this->_pos_fruit.first - 2 && it->x < this->_pos_fruit.first + 2) &&
             (it->y > this->_pos_fruit.second - 2 && it->y < this->_pos_fruit.second + 2)) {
             this->_pos_fruit = std::make_pair(0, 0);
-                //printf("miam\n");
                 _score++;
                 if (speed_snake != 2) speed_snake++;
 
@@ -313,6 +318,5 @@ void Nibbler::getLibName(std::string libname)
 
 extern "C" IGames *createGame(std::pair<int, int> jesuisjesus)
 {
-    // std::cout << "le pair :" << jesuisjesus.first << std::endl;
 	return new Nibbler(jesuisjesus);
 }

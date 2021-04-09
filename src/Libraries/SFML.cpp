@@ -72,11 +72,11 @@ void SFML::drawMenu()
 void SFML::utilityGame()
 {
     _musicMenu.stop();
-    if (music_on == false) {
-        music_on = true;
-        _musicGame.play();
-        _musicGame.setVolume(40);
-    }
+    // if (music_on == false) {
+    //     music_on = true;
+    //     _musicGame.play();
+    //     _musicGame.setVolume(40);
+    // }
 }
 
 MonEnum SFML::getEvent()

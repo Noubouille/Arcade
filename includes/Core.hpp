@@ -15,17 +15,17 @@
 #include "../src/Libraries/IGraphic.hpp"
 #include "../src/Games/IGames.hpp"
 #include "../src/LibLoad.hpp"
+#include "Timer.hpp"
 #include "Pixel.hpp"
 #include <utility>
-
-// typedef struct {
-//     unsigned int x;
-//     unsigned int y;
-//     std::string pathSprite;
-// } Pixel;
+#include <ctime>
+#include <chrono>
+#include <time.h>
+using namespace std::chrono;
 
 class Core {
     public:
+        Timer *_Timer;
         IGames *_IGamesLib;
         IGraphic *_IGraphicLib;
         LibLoad *_LibLoad;
@@ -55,6 +55,8 @@ class Core {
 
     protected:
     private:
+    bool m_bRunning = false;
+    bool _EndGame = true;
 
 };
 
