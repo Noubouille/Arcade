@@ -319,16 +319,13 @@ void Ncurses::drawMain(std::vector<Pixel> snake)
     for (auto it = std::next(snake.begin()); it != snake.end(); it++) {
         // printf("x: %d", it->x);
         // printf("y: %d", it->y);
-        mvprintw(it->y, it->x, ">");
-        //refresh();
+        mvprintw(it->y, it->x, it->pathSprite.c_str());
     }
-    // le snake
 }
 
 std::pair<int, int> Ncurses::sendBgSize()
 {
     return _bgSize;
-    // taille de la fenetre de jeu
 }
 
 std::string Ncurses::getLibName()

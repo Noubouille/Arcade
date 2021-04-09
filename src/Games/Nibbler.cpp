@@ -10,23 +10,6 @@
 
 Nibbler::Nibbler()
 {
-    this->_bg_size = std::make_pair(0, 0);
-    this->_pos_fruit = std::make_pair(0, 0);
-
-	// std::vector<Pixel> player;
-	_nextMove = Orientation::UP;
-	// _pos_snake = std::make_pair(16.f, 16.f);
-	Pixel pixel;
-
-	_players.emplace_back(pixel);
-	pixel = {pos_x, pos_y, "./assets/Nibbler/body.png"};
-	_players.emplace_back(pixel);
-	// pixel = {pos_x + 16.f, pos_y, "./assets/Nibbler/body.png"};
-	// _players.emplace_back(pixel);
-	// pixel = {pos_x + 32.f, pos_y, "./assets/Nibbler/body.png"};
-	// _players.emplace_back(pixel);
-    // this->setFruit();
-    _score = 0;
 }
 
 Nibbler::Nibbler(std::pair<int, int> bgSize)
@@ -36,22 +19,22 @@ Nibbler::Nibbler(std::pair<int, int> bgSize)
     srand(time(NULL));
     this->_pos_fruit.first = rand()%(this->_bg_size.first);
     this->_pos_fruit.second = rand()%(this->_bg_size.second);
-    // this->_pos_fruit = std::make_pair(0, 0);
     this->pos_x = _bg_size.first / 2;
     this->pos_y = _bg_size.second / 2;
-	// std::vector<Pixel> player;
 	_nextMove = Orientation::UP;
-	// _pos_snake = std::make_pair(16.f, 16.f);
 	Pixel pixel;
 
 	_players.emplace_back(pixel);
-	pixel = {pos_x, pos_y, "./assets/Nibbler/body"};
+    if (_bg_size.first > 100) {
+	    pixel = {pos_x, pos_y, "./assets/Nibbler/head_up"};
+    } else {
+	    pixel = {pos_x, pos_y, "^"};
+    }
 	_players.emplace_back(pixel);
 	// pixel = {pos_x + 16.f, pos_y, "./assets/Nibbler/body.png"};
 	// _players.emplace_back(pixel);
 	// pixel = {pos_x + 32.f, pos_y, "./assets/Nibbler/body.png"};
 	// _players.emplace_back(pixel);
-    // this->setFruit();
     _score = 0;
 }
 
@@ -171,21 +154,21 @@ int Nibbler::getScore()
 void Nibbler::eatFruit(std::vector<Pixel>::iterator it)
 {
     if (_libname == "SFML" || _libname == "SDL") {
-    if ((it->x > this->_pos_fruit.first - 25 && it->x < this->_pos_fruit.first + 25) &&
-    (it->y > this->_pos_fruit.second - 25 && it->y < this->_pos_fruit.second + 25)) {
-        this->_pos_fruit = std::make_pair(0, 0);
-        _score++;
-        speed_snake++;
-    }
-    } else if (_libname == "NCURSES") {
-        if ((it->x > this->_pos_fruit.first - 2 && it->x < this->_pos_fruit.first + 2) &&
-        (it->y > this->_pos_fruit.second - 2 && it->y < this->_pos_fruit.second + 2)) {
-        this->_pos_fruit = std::make_pair(0, 0);
-            //printf("miam\n");
+        if ((it->x > this->_pos_fruit.first - 25 && it->x < this->_pos_fruit.first + 25) &&
+        (it->y > this->_pos_fruit.second - 25 && it->y < this->_pos_fruit.second + 25)) {
+            this->_pos_fruit = std::make_pair(0, 0);
             _score++;
-            if (speed_snake != 2) speed_snake++;
+            speed_snake++;
+        }
+        } else if (_libname == "NCURSES") {
+            if ((it->x > this->_pos_fruit.first - 2 && it->x < this->_pos_fruit.first + 2) &&
+            (it->y > this->_pos_fruit.second - 2 && it->y < this->_pos_fruit.second + 2)) {
+            this->_pos_fruit = std::make_pair(0, 0);
+                //printf("miam\n");
+                _score++;
+                if (speed_snake != 2) speed_snake++;
 
-    }
+        }
     }
 }
 
@@ -252,6 +235,12 @@ std::vector<Pixel> Nibbler::getMain()
         if (_nextMove == Orientation::UP) {
             for (auto it = std::next(_players.begin()); it != _players.end(); it++) {
                 if (checkMoveSnake_up(it)) {
+                    if (_libname == "SFML" || _libname == "SDL") {
+	                    it->pathSprite = "./assets/Nibbler/head_up";
+                    } else if (_libname == "NCURSES") {
+	                    it->pathSprite = "^";
+                    }
+
                     it->y -= speed_snake;
                 } else {
                     // it->y -= 0;
@@ -260,6 +249,12 @@ std::vector<Pixel> Nibbler::getMain()
         } else if (_nextMove == Orientation::DOWN) {
             for (auto it = std::next(_players.begin()); it != _players.end(); it++) {
                 if (checkMoveSnake_down(it)) {
+                    if (_libname == "SFML" || _libname == "SDL") {
+	                    it->pathSprite = "./assets/Nibbler/head_down";
+                    } else if (_libname == "NCURSES") {
+	                    it->pathSprite = "v";
+                    }
+
                     it->y += speed_snake;
                 } else {
                     // it->y += 0;
@@ -268,6 +263,12 @@ std::vector<Pixel> Nibbler::getMain()
         } else if (_nextMove == Orientation::RIGHT) {
             for (auto it = std::next(_players.begin()); it != _players.end(); it++) {
                 if (checkMoveSnake_right(it)) {
+                    if (_libname == "SFML" || _libname == "SDL") {
+	                    it->pathSprite = "./assets/Nibbler/head_right";
+                    } else if (_libname == "NCURSES") {
+	                    it->pathSprite = ">";
+                    }
+
                     it->x += speed_snake;
                 } else {
                     // it->x += 0;
@@ -276,6 +277,12 @@ std::vector<Pixel> Nibbler::getMain()
         } else if (_nextMove == Orientation::LEFT) {
             for (auto it = std::next(_players.begin()); it != _players.end(); it++) {
                 if (checkMoveSnake_left(it)) {
+                    if (_libname == "SFML" || _libname == "SDL") {
+	                    it->pathSprite = "./assets/Nibbler/head_left";
+                    } else if (_libname == "NCURSES") {
+	                    it->pathSprite = "<";
+                    }
+
                     it->x -= speed_snake;
 
                 } else {
