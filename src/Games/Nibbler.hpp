@@ -35,6 +35,9 @@ class Nibbler : public IGames {
         void bgSize(std::pair<int, int>) override;
         void getLibName(std::string libname) override;
         void eatFruit(std::vector<Pixel>::iterator it);
+        std::string sendMusic() override;
+        bool isGameStart() override;
+
         enum Orientation {
             UP,
             RIGHT,

@@ -24,7 +24,7 @@ SDL::SDL()
     // Mix_FreeMusic(_menuMusic);
     // Mix_FreeMusic(_musicGame);
     _menuMusic = Mix_LoadMUS("./assets/menu_music.ogg");
-    _musicGame = Mix_LoadMUS("./assets/menu_music.ogg");
+    // _musicGame = Mix_LoadMUS("./assets/menu_music.ogg");
     Mix_PlayMusic(_menuMusic, -1); //Jouer infiniment la musique
     Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
 }
@@ -82,12 +82,12 @@ void SDL::drawMenu()
 
 void SDL::utilityGame()
 {
-    if (music_on == false) {
-        Mix_HaltMusic();
-        music_on = true;
-        Mix_PlayMusic(_musicGame, -1); //Jouer infiniment la musique
-        Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
-    }
+    // if (music_on == false) {
+    //     Mix_HaltMusic();
+    //     music_on = true;
+        // Mix_PlayMusic(_musicGame, -1); //Jouer infiniment la musique
+        // Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
+    // }
 }
 
 MonEnum SDL::getEvent()
@@ -257,6 +257,24 @@ void SDL::putText(const Text &some_text)
     SDL_RenderCopy(this->_renderer, _text, NULL, &Text__rect);
 
 }
+
+void SDL::getMusic(const std::string &music)
+{
+    if (music_game_on == false) {
+        _musicGame = Mix_LoadMUS(music.c_str());
+        Mix_PlayMusic(_musicGame, -1); //Jouer infiniment la musique
+        Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
+        music_game_on = true;
+    }
+}
+
+void SDL::reset() {
+    music_game_on = false;
+    Mix_PlayMusic(_menuMusic, -1); //Jouer infiniment la musique
+    Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
+
+}
+
 
 extern "C" IGraphic *createLibrary()
 {

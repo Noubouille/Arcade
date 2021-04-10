@@ -26,7 +26,7 @@ class Pacman : public IGames {
         void getInput(MonEnum);
         std::vector<Pixel> getMain() override;
         Pixel getSprite() override;
-        bool foodCheck();
+        // bool foodCheck();
         void setFruit();
         void updateGame() override;
         bool checkMoveSnake_right(std::vector<Pixel>::iterator it);
@@ -38,6 +38,9 @@ class Pacman : public IGames {
         void eatFruit(std::vector<Pixel>::iterator it);
         void move_ghost();
         void moving_ghost(std::string, int);
+		std::string sendMusic() override;
+        bool isGameStart() override;
+
         enum Orientation {
             UP,
             RIGHT,

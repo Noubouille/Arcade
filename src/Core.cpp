@@ -194,8 +194,8 @@ void Core::mainLoop()
             } else {
                 // std::cout << "je suis dans le else " << std::endl;
                 getNextGameLib();
-                            // std::cout << "le getName apres" << this->_IGamesLib->getName() << std::endl;
-            // std::cout << "le this->_IGraphicLib->getNameGame() apres" << this->_IGraphicLib->getNameGame() << std::endl;
+                            std::cout << "le getName apres" << this->_IGamesLib->getName() << std::endl;
+            std::cout << "le this->_IGraphicLib->getNameGame() apres" << this->_IGraphicLib->getNameGame() << std::endl;
                 this->_stateMenu = false;
             }
         }
@@ -220,28 +220,19 @@ void Core::loopMenu(MonEnum Input)
 
 void Core::loopGame(MonEnum Input)
 {
-    if (m_bRunning == false ) {
+    if (m_bRunning == false && this->_IGamesLib->isGameStart()) {
         m_bRunning = true;
         _Timer->start();
     }
-    if ( _Timer->elapsedSeconds() > _time && this->_IGamesLib->getName() == "NIBBLER") {
-        this->_IGamesLib->reset();
-        this->_stateMenu = true;
-        m_bRunning = false;
-
-        // _EndGame = false;
-    }
-
-
-    // std::cout << "THE TIME : " <<  _Timer->elapsedSeconds() << std::endl;
 
     this->_IGraphicLib->clearWindow();
+    this->_IGraphicLib->getMusic(this->_IGamesLib->sendMusic());
     this->_IGraphicLib->drawBackground(this->_IGamesLib->getBg());
 
     this->_IGraphicLib->putText({320, 800, std::string("You are playing at ") + this->_IGamesLib->getName()});
     this->_IGraphicLib->putText({730, 20, std::string("Your score is : ") + std::to_string(this->_IGamesLib->getScore())});
     if (this->_IGamesLib->getName() == "NIBBLER") {
-        this->_IGraphicLib->putText({650, 50, std::string("Time left : ") + std::to_string(returnSecondsLeft(_Timer->elapsedSeconds()))+ " Seconds"});
+        this->_IGraphicLib->putText({660, 80, std::string("Time left : ") + std::to_string(returnSecondsLeft(_Timer->elapsedSeconds()))+ " Seconds"});
     }
 
     this->_IGamesLib->getLibName(this->_IGraphicLib->getLibName());
@@ -253,20 +244,33 @@ void Core::loopGame(MonEnum Input)
     if (_pause) {
         this->_IGraphicLib->putText({500, 500, std::string("Pause !")});
     }
-    // this->_IGraphicLib->utilityGame();
+    this->_IGraphicLib->utilityGame();
     this->_IGraphicLib->drawSprite(this->_IGamesLib->getSprite());
 
     this->_IGraphicLib->drawMain(this->_IGamesLib->getMain());
     this->_IGraphicLib->updateWindow();
+
+    if ( _Timer->elapsedSeconds() > _time && this->_IGamesLib->getName() == "NIBBLER") {
+        this->_IGamesLib->reset();
+        this->_IGraphicLib->reset();
+        this->_stateMenu = true;
+        m_bRunning = false;
+
+    }
+
+    if (this->_IGamesLib->isGameOver()) {
+        this->_IGamesLib->reset();
+        this->_IGraphicLib->reset();
+        this->_stateMenu = true;
+        m_bRunning = false;
+    }
     this->_IGamesLib->updateGame();
 }
 
 int Core::returnSecondsLeft(double time)
 {
     return _time - (int)round(time);
-    // int tmp = (int)round(time)
 }
-
 
 void Core::getScores()
 {

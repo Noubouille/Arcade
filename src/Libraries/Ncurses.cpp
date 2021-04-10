@@ -127,7 +127,7 @@ MonEnum Ncurses::getEvent()
         mvprintw(8, 2, "-");
         return MonEnum::UP_ARROW;
         break;
-    case KEY_DOWN:   
+    case KEY_DOWN:
         _gameName = "PACMAN";
 
         mvprintw(8, 2, " ");
@@ -137,7 +137,7 @@ MonEnum Ncurses::getEvent()
     case KEY_LEFT:
         return MonEnum::LEFT_ARROW;
         break;
-    case KEY_RIGHT:   
+    case KEY_RIGHT:
         return MonEnum::RIGHT_ARROW;
         break;
     case 10:
@@ -267,7 +267,7 @@ MonEnum Ncurses::getEvent()
     case 'z':
         return MonEnum::Z_KEY;
         break;
-    default:    
+    default:
         return MonEnum::NO_INPUT;
 
     }
@@ -279,6 +279,17 @@ void Ncurses::utilityGame()
 
 }
 
+void Ncurses::getMusic(const std::string &music)
+{
+    auto tmp = music;
+}
+
+void Ncurses::reset()
+{
+
+}
+
+
 std::string Ncurses::getNameGame()
 {
     return _gameName;
@@ -286,7 +297,7 @@ std::string Ncurses::getNameGame()
 
 void Ncurses::drawBackground(const std::string &Background)
 {
-
+    std::string tmp = Background;
     for (int y = 0, x = 0; _tab[y]; y++)
     {
         mvprintw(y, x, _tab[y]);

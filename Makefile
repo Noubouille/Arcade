@@ -9,7 +9,7 @@ CXX		=	g++ -g3
 
 INC		=	-I src/
 
-CXXFLAGS	+=	-Wall -Wextra -pedantic -std=c++17 -fPIC -lSDL2_mixer $(shell sdl2-config --cflags --libs) $(INC)
+CXXFLAGS	+=	-Wall -Wextra -std=c++17 -fPIC -lSDL2_mixer $(shell sdl2-config --cflags --libs) $(INC)
 
 FLGS		=	-std=c++17 -lstdc++fs
 
@@ -40,7 +40,7 @@ LDFLAGS_SFML	=	-shared -fPIC -lsfml-graphics -lsfml-system -lsfml-window -lsfml-
 
 ## plugin sdl
 
-NAME_SDL	=	lib/arcade_sdl.so
+NAME_SDL	=	lib/arcade_sdl2.so
 
 SRC_SDL		=	$(SRC_DIR)Libraries/SDL.cpp
 
@@ -90,21 +90,23 @@ graphicals:		$(NAME_SFML) $(NAME_SDL) $(NAME_NCURSES) $(NAME_ALLEGRO) ## Compile
 
 $(NAME_SFML):		$(OBJ_SFML)
 			$(CXX) $(OBJ_SFML) -o $(NAME_SFML) $(LDFLAGS_SFML)
-	 		# $(RM) $(OBJ_SFML)
+	 		$(RM) $(OBJ_SFML)
 
 $(NAME_SDL):		$(OBJ_SDL)
 			$(CXX) $(OBJ_SDL) -o $(NAME_SDL) -lSDL2_mixer $(LDFLAGS_SDL)
+	 		$(RM) $(OBJ_SDL)
 
 $(NAME_NCURSES):		$(OBJ_NCURSES)
 			$(CXX) $(OBJ_NCURSES) -o $(NAME_NCURSES) $(LDFLAGS_NCURSES)
-	 		# $(RM) $(OBJ_NCURSES)
+	 		$(RM) $(OBJ_NCURSES)
 
 $(NAME_PACMAN):		$(OBJ_PACMAN)
 			$(CXX) $(OBJ_PACMAN) -o $(NAME_PACMAN) $(LDFLAGS_PACMAN)
+	 		$(RM) $(OBJ_PACMAN)
 
 $(NAME_NIBBLER):		$(OBJ_NIBBLER)
 			$(CXX) $(OBJ_NIBBLER) -o $(NAME_NIBBLER) $(LDFLAGS_NIBBLER)
-	 		# $(RM) $(OBJ_NIBBLER)
+	 		$(RM) $(OBJ_NIBBLER)
 
 $(NAME):		$(OBJ) ## Compile program
 			$(CXX) $(OBJ) -o $(NAME) $(LDFLAGS) $(FLGS)
