@@ -50,6 +50,9 @@ class Ncurses : public IGraphic
         char** _tab;
         char* _input;
         std::pair<int, int> _bgSize;
+        bool _nibbler_selected = true;
+        bool _pacman_selected;
+        void selectedGame(bool _nibber_selected, bool _pacman_selected);
         //etc
 };
 extern "C" IGraphic *createLibrary();
