@@ -39,6 +39,7 @@ Pacman::Pacman(std::pair<int, int> bgSize)
 void Pacman::moving_ghost(std::string move, int i)
 {
 
+    i = i;
 	if (move.compare("Up") == 0)
 	{
         if (this->_pos_fruit.second <= 0) {
@@ -120,7 +121,7 @@ if ( i == 1)
 		this->moving_ghost("Left", 2);
 	else if (k == 4)
 		this->moving_ghost("Right", 2);
-	if ( l == 1)
+	if (l == 1)
 		this->moving_ghost("Up", 3);
 	else if (l == 2)
 		this->moving_ghost("Down", 3);
@@ -129,7 +130,6 @@ if ( i == 1)
 	else if (l == 4)
 		this->moving_ghost("Right", 3);
 }
-
 
 void Pacman::getInput(MonEnum Input)
 {
@@ -187,9 +187,9 @@ void Pacman::setFruit()
 {
 }
 
-bool Pacman::foodCheck()
-{
-}
+// bool Pacman::foodCheck()
+// {
+// }
 
 void Pacman::updateGame()
 {
@@ -205,13 +205,22 @@ void Pacman::updateGame()
 
 void Pacman::bgSize(std::pair<int, int> size)
 {
-    // this->_bg_size = size;
+    this->_bg_size = size;
 }
 
 bool Pacman::isGameOver()
 {
+    if (_game_over) {
+        return true;
+    }
     return false;
 }
+
+bool Pacman::isGameStart()
+{
+    return _start_game;
+}
+
 
 void Pacman::initsnake()
 {
@@ -226,6 +235,7 @@ void Pacman::reset()
         it->y =_bg_size.second / 2;
     }
     this->_pos_fruit = std::make_pair(0, 0);
+    this->_game_over = false;
 }
 
 int Pacman::getScore()
@@ -235,22 +245,19 @@ int Pacman::getScore()
 
 void Pacman::eatFruit(std::vector<Pixel>::iterator it)
 {
-    // if (_libname == "SFML" || _libname == "SDL") {
-    //     if ((it->x > this->_pos_fruit.first - 25 && it->x < this->_pos_fruit.first + 25) &&
-    //     (it->y > this->_pos_fruit.second - 25 && it->y < this->_pos_fruit.second + 25)) {
-    //         this->_pos_fruit = std::make_pair(0, 0);
-    //         _score++;
-    //         speed_snake++;
-    //     }
-    //     } else if (_libname == "NCURSES") {
-    //         if ((it->x > this->_pos_fruit.first - 2 && it->x < this->_pos_fruit.first + 2) &&
-    //         (it->y > this->_pos_fruit.second - 2 && it->y < this->_pos_fruit.second + 2)) {
-    //         this->_pos_fruit = std::make_pair(0, 0);
-    //             _score++;
-    //             if (speed_snake != 2) speed_snake++;
+    if (_libname == "SFML" || _libname == "SDL") {
+        if ((it->x > this->_pos_fruit.first - 25 && it->x < this->_pos_fruit.first + 25) &&
+        (it->y > this->_pos_fruit.second - 25 && it->y < this->_pos_fruit.second + 25)) {
+            _game_over = true;
+        }
+    } else if (_libname == "NCURSES") {
+            if ((it->x > this->_pos_fruit.first - 2 && it->x < this->_pos_fruit.first + 2) &&
+            (it->y > this->_pos_fruit.second - 2 && it->y < this->_pos_fruit.second + 2)) {
+            this->_pos_fruit = std::make_pair(0, 0);
+                _game_over = true;
 
-    //     }
-    // }
+        }
+    }
 }
 
 bool Pacman::checkMoveSnake_up(std::vector<Pixel>::iterator it)
@@ -378,6 +385,10 @@ std::vector<Pixel> Pacman::getMain()
 std::string Pacman::getName()
 {
     return "PACMAN";
+}
+
+std::string Pacman::sendMusic() {
+    return "assets/Pacman/pacman_song.ogg";
 }
 
 std::string Pacman::getBg()

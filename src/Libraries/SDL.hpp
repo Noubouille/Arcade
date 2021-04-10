@@ -36,6 +36,8 @@ class SDL : public IGraphic {
         void updateWindow();
         void drawMain(std::vector<Pixel>);
         void drawSprite(Pixel sprite);
+        void getMusic(const std::string &Background) override;
+        void reset() override;
 
         void putText(const Text &text) override;
 
@@ -61,6 +63,7 @@ class SDL : public IGraphic {
     int pos_bar_y = 320;
     int bar_nb = 1;
     bool music_on = false;
+    bool music_game_on = false;
 
 };
 

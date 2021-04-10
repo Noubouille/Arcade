@@ -124,7 +124,7 @@ void Nibbler::updateGame()
 
 void Nibbler::bgSize(std::pair<int, int> size)
 {
-    // this->_bg_size = size;
+    this->_bg_size = size;
 }
 
 Nibbler::~Nibbler()
@@ -300,6 +300,11 @@ std::vector<Pixel> Nibbler::getMain()
     return this->_players;
 }
 
+std::string Nibbler::sendMusic()
+{
+    return "assets/Nibbler/nibbler_song.ogg";
+}
+
 std::string Nibbler::getName()
 {
     return "NIBBLER";
@@ -313,6 +318,11 @@ std::string Nibbler::getBg()
 void Nibbler::getLibName(std::string libname)
 {
     this->_libname = libname;
+}
+
+bool Nibbler::isGameStart()
+{
+    return _start_game;
 }
 
 

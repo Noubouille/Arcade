@@ -39,6 +39,8 @@ class Ncurses : public IGraphic
         std::pair<int, int> sendBgSize() override;
         void putText(const Text &text) override;
         std::string _gameName = "NIBBLER";
+        void getMusic(const std::string &Background) override;
+        void reset() override;
 
 
         WINDOW *window = initscr();

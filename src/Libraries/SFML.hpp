@@ -37,8 +37,10 @@ public:
     void updateWindow();
     void drawMain(std::vector<Pixel>);
     void drawSprite(Pixel sprite);
+    void getMusic(const std::string &Background) override;
 
     void putText(const Text &text) override;
+    void reset() override;
 
 
     sf::RenderWindow _window;
@@ -56,6 +58,7 @@ private:
     int pos_bar_y = 320;
     int bar_nb = 1;
     bool music_on = false;
+    bool music_game_on = false;
 };
 
 extern "C" IGraphic *createLibrary();
