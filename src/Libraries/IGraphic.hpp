@@ -83,7 +83,7 @@ class IGraphic
         virtual void drawBackground(const std::string &Background) = 0;
 		virtual std::pair<int, int> sendBgSize() = 0;
         virtual void drawMain(std::vector<Pixel> snake) = 0;
-        virtual void drawSprite(std::vector<Pixel> sprite) = 0;
+        virtual void drawSprite(Pixel sprite) = 0;
 		virtual void putText(const Text &text) = 0;
 
 		std::pair<int, int> _bgSize;

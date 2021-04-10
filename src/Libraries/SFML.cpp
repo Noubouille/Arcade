@@ -19,8 +19,8 @@ SFML::SFML(): m_elapsedTime(sf::Time::Zero)
         return;
     if (!_musicGame.openFromFile("./assets/menu_music.ogg"))
         return;
-    _musicMenu.play();
-    _musicMenu.setVolume(50);
+    // _musicMenu.play();
+    // _musicMenu.setVolume(50);
 }
 
 SFML::~SFML()
@@ -271,8 +271,8 @@ void SFML::drawMain(std::vector<Pixel> snake)
     // }
 }
 
-void SFML::drawSprite(std::vector<Pixel> sprite) {
-    auto it = sprite.front();
+void SFML::drawSprite(Pixel sprite) {
+    auto it = sprite;
     // for (auto it = std::next(sprite.begin()); it != sprite.end(); it++) {
         std::string tmp = it.pathSprite + ".png";
 

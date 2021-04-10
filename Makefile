@@ -61,14 +61,14 @@ LDFLAGS_NCURSES	=	-shared -fPIC -lncurses
 
 ## pacman
 
-# NAME_PACMAN	=	games/lib_arcade_pacman.so
+NAME_PACMAN	=	lib/arcade_pacman.so
 
-# SRC_PACMAN	=	$(SRC_DIR)Games/Pacman/Pacman.cpp   \
-# 			$(SRC_DIR)Games/Pacman/AIGhost.cpp
+SRC_PACMAN	=	$(SRC_DIR)Games/Pacman.cpp   \
+			# $(SRC_DIR)Games/AIGhost.cpp
 
-# OBJ_PACMAN	=	$(SRC_PACMAN:.cpp=.o)
+OBJ_PACMAN	=	$(SRC_PACMAN:.cpp=.o)
 
-# LDFLAGS_PACMAN	=	-shared -fPIC
+LDFLAGS_PACMAN	=	-shared -fPIC
 
 ## nibbler
 
@@ -99,8 +99,8 @@ $(NAME_NCURSES):		$(OBJ_NCURSES)
 			$(CXX) $(OBJ_NCURSES) -o $(NAME_NCURSES) $(LDFLAGS_NCURSES)
 	 		# $(RM) $(OBJ_NCURSES)
 
-# $(NAME_PACMAN):		$(OBJ_PACMAN)
-# 			$(CXX) $(OBJ_PACMAN) -o $(NAME_PACMAN) $(LDFLAGS_PACMAN)
+$(NAME_PACMAN):		$(OBJ_PACMAN)
+			$(CXX) $(OBJ_PACMAN) -o $(NAME_PACMAN) $(LDFLAGS_PACMAN)
 
 $(NAME_NIBBLER):		$(OBJ_NIBBLER)
 			$(CXX) $(OBJ_NIBBLER) -o $(NAME_NIBBLER) $(LDFLAGS_NIBBLER)

@@ -36,7 +36,7 @@ public:
     void clearWindow();
     void updateWindow();
     void drawMain(std::vector<Pixel>);
-    void drawSprite(std::vector<Pixel> sprite);
+    void drawSprite(Pixel sprite);
 
     void putText(const Text &text) override;
 

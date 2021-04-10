@@ -32,13 +32,13 @@ class Ncurses : public IGraphic
         void destroyWindow();
         void drawBackground(const std::string &Background) override;
         void drawMain(std::vector<Pixel> snake) override;
-        void drawSprite(std::vector<Pixel> sprite) override;
+        void drawSprite(Pixel sprite) override;
         std::string getLibName() override;
 		void clearWindow() override;
 		void updateWindow() override;
         std::pair<int, int> sendBgSize() override;
         void putText(const Text &text) override;
-        std::string _gameName;
+        std::string _gameName = "NIBBLER";
 
 
         WINDOW *window = initscr();
@@ -46,6 +46,7 @@ class Ncurses : public IGraphic
         int _win_x = 0;
         private:
         char** _tab;
+        char* _input;
         std::pair<int, int> _bgSize;
         //etc
 };

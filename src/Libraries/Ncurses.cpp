@@ -10,7 +10,7 @@
 
 Ncurses::Ncurses()
 {
-    _gameName = "NIBBLER";
+    _input = (char *)malloc(32);
 
     getmaxyx(window, _win_y, _win_x);
     printf ("lines x %d\n", _win_x);
@@ -94,6 +94,12 @@ void Ncurses::drawMenu()
 
     mvprintw(3, 4, "ARCADE");
 
+    // mvprintw(5, 4, "Player name :");
+    // wgetnstr(stdscr, _input, sizeof(_input));
+    // refresh();
+    // mvprintw(5, 20, _input);
+    // printf("%s\n", _input);
+
     mvprintw(8, 3, "Nibbler");
     printw("\n");
 
@@ -116,11 +122,14 @@ MonEnum Ncurses::getEvent()
     switch(ch)
     {
     case KEY_UP:
+    _gameName = "NIBBLER";
         mvprintw(10, 2, " ");
         mvprintw(8, 2, "-");
         return MonEnum::UP_ARROW;
         break;
     case KEY_DOWN:   
+        _gameName = "PACMAN";
+
         mvprintw(8, 2, " ");
         mvprintw(10, 2, "-");
         return MonEnum::DOWN_ARROW;
@@ -304,13 +313,14 @@ void Ncurses::updateWindow()
     usleep(50000);
 }
 
-void Ncurses::drawSprite(std::vector<Pixel> sprite)
+void Ncurses::drawSprite(Pixel sprite)
 {
-    for (auto it = std::next(sprite.begin()); it != sprite.end(); it++) {
+    auto it = sprite;
+    // for (auto it = std::next(sprite.begin()); it != sprite.end(); it++) {
         // refresh();
-        mvprintw(it->y, it->x, " ");
-        mvprintw(it->y, it->x, "o");
-    }
+        mvprintw(it.y, it.x, " ");
+        mvprintw(it.y, it.x, "o");
+    // }
     // le fruit
 }
 

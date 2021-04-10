@@ -24,7 +24,7 @@ class Nibbler : public IGames {
         void initsnake();
         void getInput(MonEnum);
         std::vector<Pixel> getMain() override;
-        std::vector<Pixel> getSprite() override;
+        Pixel getSprite() override;
         bool foodCheck();
         void setFruit();
         void updateGame() override;

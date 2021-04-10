@@ -81,12 +81,12 @@ void Nibbler::getInput(MonEnum Input)
     }
 }
 
-std::vector<Pixel> Nibbler::getSprite()
+Pixel Nibbler::getSprite()
 {
     Pixel fruit;
 	fruit = {this->_pos_fruit.first, this->_pos_fruit.second, "./assets/Nibbler/fruit"};
-	_fruit.push_back(fruit);
-    return _fruit;
+	// _fruit.push_back(fruit);
+    return fruit;
 }
 
 void Nibbler::setFruit()

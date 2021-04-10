@@ -186,7 +186,6 @@ void SDL::updateWindow()
 
     _startTime = _endTime;
     _endTime = SDL_GetTicks();
-
     SDL_RenderPresent(this->_renderer);
 }
 
@@ -227,33 +226,20 @@ void SDL::drawMain(std::vector<Pixel> snake)
             SDL_RenderCopy(this->_renderer, Sprite_text, NULL, &Sprite_rect);
             SDL_FreeSurface(sprite_surf);
 
-            // sf::Texture texture;
-            // if (!texture.loadFromFile(it->pathSprite)) {
-            //     return ;
-            // }
-
-            // sf::Sprite sprite;
-            // sprite.setTexture(texture);
-            // sprite.setPosition(sf::Vector2f(it->x, it->y));
-            // _window.draw(sprite);
-            // std::cout << "le snake pos x : " << it->x << std::endl;
-            // std::cout << "le snake pos y : " << it->y << std::endl;
         }
     //     m_elapsedTime = sf::Time::Zero;
     // }
 }
 
-void SDL::drawSprite(std::vector<Pixel> sprite) {
+void SDL::drawSprite(Pixel sprite) {
 
-    std::string tmp = sprite.front().pathSprite + ".bmp";
-    // std::cout << "tmp : " << tmp << std::endl;
+    std::string tmp = sprite.pathSprite + ".bmp";
+
     SDL_Surface *sprite_surf = SDL_LoadBMP(tmp.c_str());
-
     SDL_Texture* Sprite_text = SDL_CreateTextureFromSurface(this->_renderer, sprite_surf);
-    SDL_Rect Sprite_rect = {sprite.front().x, sprite.front().y, sprite_surf->w, sprite_surf->h};
+    SDL_Rect Sprite_rect = {sprite.x, sprite.y, sprite_surf->w, sprite_surf->h};
     SDL_RenderCopy(this->_renderer, Sprite_text, NULL, &Sprite_rect);
     SDL_FreeSurface(sprite_surf);
-
 }
 
 std::pair<int, int> SDL::sendBgSize()
