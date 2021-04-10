@@ -78,7 +78,7 @@ void Ncurses::startWindow()
     initscr();
     curs_set(FALSE);
     keypad(stdscr, TRUE);
-    noecho();
+    //noecho();
     timeout(10);
 }
 
@@ -87,18 +87,21 @@ void Ncurses::drawMenu()
     wborder(window, 0, 0, 0, 0, 0, 0, 0, 0);
 
     WINDOW *win = newwin(4, 15, 1, 1);
-    refresh();
+    //refresh();
 
     box(win, 0, 0);
     wrefresh(win);
 
+    selectedGame(_pacman_selected, _nibbler_selected);
+
     mvprintw(3, 4, "ARCADE");
 
-    // mvprintw(5, 4, "Player name :");
-    // wgetnstr(stdscr, _input, sizeof(_input));
-    // refresh();
-    // mvprintw(5, 20, _input);
-    // printf("%s\n", _input);
+    mvprintw(5, 4, "Player name :");
+    getnstr(_input, 10);
+    wgetnstr(stdscr, _input, sizeof(_input));
+    //refresh();
+    mvprintw(5, 20, _input);
+    printf("%s\n", _input);
 
     mvprintw(8, 3, "Nibbler");
     printw("\n");
@@ -118,20 +121,21 @@ void Ncurses::drawMenu()
 MonEnum Ncurses::getEvent()
 {
     int ch = getch();
+    
+    mvprintw(8, 2, "-");
 
     switch(ch)
     {
     case KEY_UP:
     _gameName = "NIBBLER";
-        mvprintw(10, 2, " ");
-        mvprintw(8, 2, "-");
+    _nibbler_selected = true;
+    _pacman_selected = false;
         return MonEnum::UP_ARROW;
         break;
     case KEY_DOWN:   
         _gameName = "PACMAN";
-
-        mvprintw(8, 2, " ");
-        mvprintw(10, 2, "-");
+        _pacman_selected = true;
+        _nibbler_selected = false;
         return MonEnum::DOWN_ARROW;
         break;
     case KEY_LEFT:
@@ -272,6 +276,22 @@ MonEnum Ncurses::getEvent()
 
     }
     return MonEnum::NO_INPUT;
+}
+
+void Ncurses::selectedGame(bool pacman_selected, bool nibbler_selected)
+{
+
+    if (pacman_selected == true)
+    {
+        mvprintw(8, 2, " ");
+        mvprintw(10, 2, "-");
+    }
+
+    if (nibbler_selected == true)
+    {
+        mvprintw(10, 2, " ");
+        mvprintw(8, 2, "-");
+    }
 }
 
 void Ncurses::utilityGame()
