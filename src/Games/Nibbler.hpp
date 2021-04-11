@@ -28,6 +28,8 @@ class Nibbler : public IGames {
         std::vector<Pixel> getSprites() override;
 
         bool foodCheck();
+        bool foodCheck2();
+        bool foodCheck3();
         void setFruit();
         void updateGame() override;
         bool checkMoveSnake_right(std::vector<Pixel>::iterator it);
@@ -52,6 +54,8 @@ class Nibbler : public IGames {
 
         Orientation _nextMove;
         std::pair<int, int> _pos_fruit;
+        std::pair<int, int> _pos_fruit2;
+        std::pair<int, int> _pos_fruit3;
         std::pair<int, int> _bg_size;
         int pos_x = 0;
         int pos_y = 0;

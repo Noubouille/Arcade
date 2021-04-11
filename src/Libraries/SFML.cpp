@@ -256,7 +256,6 @@ void SFML::drawBackground(const std::string &Background)
 
 void SFML::drawMain(std::vector<Pixel> snake)
 {
-    // if (m_elapsedTime.asSeconds() > 0.1) {
 
         for (auto it = std::next(snake.begin()); it != snake.end(); it++) {
             std::string tmp = it->pathSprite + ".png";
@@ -273,8 +272,9 @@ void SFML::drawMain(std::vector<Pixel> snake)
             // std::cout << "le snake pos x : " << it->x << std::endl;
             // std::cout << "le snake pos y : " << it->y << std::endl;
         }
-    //     m_elapsedTime = sf::Time::Zero;
-    // }
+    if (m_elapsedTime.asSeconds() > 0.1) {
+        m_elapsedTime = sf::Time::Zero;
+    }
 }
 
 void SFML::drawSprite(Pixel sprite) {
@@ -291,7 +291,22 @@ void SFML::drawSprite(Pixel sprite) {
 
 void SFML::drawSprites(std::vector<Pixel> sprites)
 {
-    
+    for (auto it = std::next(sprites.begin()); it != sprites.end(); it++) {
+        if (it->pathSprite.empty()) return;
+        std::string tmp = it->pathSprite + ".png";
+        // std::cout << "it->pathSprite.png" << tmp << std::endl;
+        // std::cout << "it->x" << it->x << std::endl;
+        // std::cout << "it->y" << it->y << std::endl;
+        sf::Texture texture;
+        if (!texture.loadFromFile(tmp)) {
+            return ;
+        }
+
+        sf::Sprite sprite;
+        sprite.setTexture(texture);
+        sprite.setPosition(sf::Vector2f(it->x, it->y));
+        _window.draw(sprite);
+    }
 }
 
 void SFML::getMusic(const std::string &music)

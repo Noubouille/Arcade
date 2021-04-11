@@ -22,7 +22,6 @@ class Pacman : public IGames {
 		std::string getBg() override;
 		std::string getName() override;
         int getScore();
-        void initsnake();
         void getInput(MonEnum);
         std::vector<Pixel> getMain() override;
         Pixel getSprite() override;
@@ -38,7 +37,13 @@ class Pacman : public IGames {
         void getLibName(std::string libname) override;
         void eatFruit(std::vector<Pixel>::iterator it);
         void move_ghost();
-        void moving_ghost(std::string, int);
+        void move_ghost(std::string move, int nb);
+
+
+        void moving_ghost1(std::string);
+        void moving_ghost2(std::string);
+        void moving_ghost3(std::string);
+        void moving_ghost4(std::string);
 		std::string sendMusic() override;
         bool isGameStart() override;
 
@@ -64,6 +69,11 @@ class Pacman : public IGames {
     bool _game_over = false;
     bool _start_game = false;
     int _score;
+
+	std::pair <int, int> _ghost1_pos;
+	std::pair <int, int> _ghost2_pos;
+	std::pair <int, int> _ghost3_pos;
+	std::pair <int, int> _ghost4_pos;
 
 };
 
