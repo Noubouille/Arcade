@@ -135,7 +135,7 @@ test: ## Run tests
 	@printf "\033[0;32m==========[TESTS]==========\033[0m\n"
 	@./run_tests --list-test-names-only || true
 	@printf "\033[0;32m==========[TESTS]==========\033[0m\n"
-	./run_tests
+	./run_tests || true
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
