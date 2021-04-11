@@ -37,7 +37,7 @@ Core::Core(const std::string &lib_name)
 
     this->getGraphicLib();
     this->getAllLibs();
-    this->getGameLib();
+    this->getFristGameLib();
     this->mainLoop();
 }
 
@@ -54,10 +54,10 @@ void Core::getGraphicLib()
     }
 }
 
-void Core::getGameLib()
+void Core::getFristGameLib()
 {
     std::cout << "La premiere game :" << this->_listGames.front() << std::endl;
-
+    this->_currentPathGame = this->_listGames.front();
     std::pair<int ,int> pair_ = this->_IGraphicLib->sendBgSize();
 
     this->_currentGame = _LibLoad->loadlibrary(this->_listGames.front()); //dlopen()
@@ -71,6 +71,40 @@ void Core::getGameLib()
     }
 }
 
+void Core::getGameLib()
+{
+    std::pair<int ,int> pair_ = this->_IGraphicLib->sendBgSize();
+
+    this->_currentGame = _LibLoad->loadlibrary(this->_currentPathGame); //dlopen()
+    if (_LibLoad->checkifGame(this->_currentGame) == true) {
+        auto createGameFunction = (IGames* (*)(std::pair<int, int>))_LibLoad->exec_function(this->_currentGame, "createGame");
+        this->_IGamesLib = (*createGameFunction)(pair_);
+
+    } else {
+        std::cout << "No lib games inside ./lib ?!" << std::endl;
+        exit(84);
+    }
+}
+
+void Core::getNextGameLib()
+{
+    if (this->_listLib.size() <= 1) return; //si 1 seule lib dispo
+    std::cout << "je getNextGameLib" << std::endl;
+
+    auto iterator = std::find(this->_listGames.begin(), this->_listGames.end(), this->_currentPathGame);
+
+    if (iterator + 1 == this->_listGames.end()) {
+        this->_currentPathGame = this->_listGames.front();
+        getGameLib();
+    } else {
+        this->_currentPathGame = *(iterator + 1);
+        getGameLib();
+    }
+    std::cout << "je getNextGameLib la fin" << std::endl;
+
+    // mainLoop();
+}
+
 
 void Core::getAllLibs()
 {
@@ -82,9 +116,6 @@ void Core::getAllLibs()
         std::string path = entry.path().c_str();
 
         if (std::find(this->_listLib.begin(), this->_listLib.end(), path) == this->_listLib.end() && std::regex_search(path, m, r)) {
-            // std::string tmp = entry.path();
-            // std::size_t found = tmp.find_last_of("/\\");
-            // tmp = tmp.substr(found + 1);
             void *tmp = _LibLoad->loadlibrary(entry.path().c_str()); //dlopen()
             if (_LibLoad->checkifGame(tmp) == false) {
 
@@ -156,11 +187,16 @@ void Core::mainLoop()
             prevLibrary();
         }
         if (Input == MonEnum::ENTER) {
-            // std::cout << "le jeu lancé grphic lib :" << this->_IGraphicLib->getNameGame() << std::endl;
-            // std::cout << "le jeu lancé lib :" << this->_IGamesLib->getName() << std::endl;
+            // std::cout << "le getName" << this->_IGamesLib->getName() << std::endl;
+            // std::cout << "le this->_IGraphicLib->getNameGame()" << this->_IGraphicLib->getNameGame() << std::endl;
             if (this->_IGraphicLib->getNameGame() == this->_IGamesLib->getName()) {
                 this->_stateMenu = false;
-
+            } else {
+                // std::cout << "je suis dans le else " << std::endl;
+                getNextGameLib();
+                            std::cout << "le getName apres" << this->_IGamesLib->getName() << std::endl;
+            std::cout << "le this->_IGraphicLib->getNameGame() apres" << this->_IGraphicLib->getNameGame() << std::endl;
+                this->_stateMenu = false;
             }
         }
 
@@ -170,8 +206,8 @@ void Core::mainLoop()
             loopGame(Input);
         }
     }
-    this->_IGraphicLib->destroyWindow();
-    exit(0);
+    // this->_IGraphicLib->destroyWindow();
+    // exit(0);
 
 }
 
@@ -184,27 +220,21 @@ void Core::loopMenu(MonEnum Input)
 
 void Core::loopGame(MonEnum Input)
 {
-    if (m_bRunning == false ) {
+    if (m_bRunning == false && this->_IGamesLib->isGameStart()) {
         m_bRunning = true;
         _Timer->start();
     }
-    if ( _Timer->elapsedSeconds() > 5 ) {
-        this->_IGamesLib->reset();
-        this->_stateMenu = true;
-        m_bRunning = false;
-
-        // _EndGame = false;
-    }
-
-
-    std::cout << "THE TIME : " <<  _Timer->elapsedSeconds() << std::endl;
 
     this->_IGraphicLib->clearWindow();
+    this->_IGraphicLib->getMusic(this->_IGamesLib->sendMusic());
     this->_IGraphicLib->drawBackground(this->_IGamesLib->getBg());
 
     this->_IGraphicLib->putText({320, 800, std::string("You are playing at ") + this->_IGamesLib->getName()});
     this->_IGraphicLib->putText({730, 20, std::string("Your score is : ") + std::to_string(this->_IGamesLib->getScore())});
-    //this->_IGamesLib->bgSize(this->_IGraphicLib->sendBgSize());
+    if (this->_IGamesLib->getName() == "NIBBLER") {
+        this->_IGraphicLib->putText({660, 80, std::string("Time left : ") + std::to_string(returnSecondsLeft(_Timer->elapsedSeconds()))+ " Seconds"});
+    }
+
     this->_IGamesLib->getLibName(this->_IGraphicLib->getLibName());
     this->_IGamesLib->getInput(Input);
     if (Input == MonEnum::P_KEY) {
@@ -214,12 +244,59 @@ void Core::loopGame(MonEnum Input)
     if (_pause) {
         this->_IGraphicLib->putText({500, 500, std::string("Pause !")});
     }
-    // this->_IGraphicLib->utilityGame(bool);
+    this->_IGraphicLib->utilityGame();
     this->_IGraphicLib->drawSprite(this->_IGamesLib->getSprite());
 
     this->_IGraphicLib->drawMain(this->_IGamesLib->getMain());
     this->_IGraphicLib->updateWindow();
+
+    if ( _Timer->elapsedSeconds() > _time && this->_IGamesLib->getName() == "NIBBLER") {
+        this->_IGamesLib->reset();
+        this->_IGraphicLib->reset();
+        this->_stateMenu = true;
+        m_bRunning = false;
+
+    }
+
+    if (this->_IGamesLib->isGameOver()) {
+        this->_IGamesLib->reset();
+        this->_IGraphicLib->reset();
+        this->_stateMenu = true;
+        m_bRunning = false;
+    }
     this->_IGamesLib->updateGame();
+}
+
+int Core::returnSecondsLeft(double time)
+{
+    return _time - (int)round(time);
+}
+
+void Core::getScores()
+{
+    std::string score = std::to_string(this->_IGamesLib->getScore());
+    if (!score.empty()) {
+        score.insert(score.length() - 1, "\n");
+    }
+
+    std::fstream scores;
+    scores.open("scores.txt", std::fstream::app);
+
+    if (!scores) {
+        std::cout << "Scores file not found" << std::endl;
+    } else {
+        scores << score;
+        scores.close();
+    }
+
+	scores.open("scores.txt",std::ios::in);
+    if (scores.is_open()) {
+        std::string line;
+        while(getline(scores, line)){
+        std::cout << line << "\n";
+    }
+      scores.close();
+    }
 }
 
 Core::~Core() {}

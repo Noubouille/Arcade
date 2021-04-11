@@ -10,7 +10,7 @@
 
 Ncurses::Ncurses()
 {
-    _gameName = "NIBBLER";
+    _input = (char *)malloc(32);
 
     getmaxyx(window, _win_y, _win_x);
     printf ("lines x %d\n", _win_x);
@@ -78,7 +78,7 @@ void Ncurses::startWindow()
     initscr();
     curs_set(FALSE);
     keypad(stdscr, TRUE);
-    noecho();
+    //noecho();
     timeout(10);
 }
 
@@ -87,10 +87,21 @@ void Ncurses::drawMenu()
     wborder(window, 0, 0, 0, 0, 0, 0, 0, 0);
 
     WINDOW *win = newwin(4, 15, 1, 1);
+    //refresh();
+
+    mvprintw(5, 4, "Username : ");
+    //noecho();                               // suppress character echoing
+    wgetnstr(stdscr, _input, sizeof(_input));
+
+    //clear();
     refresh();
+    printf("je boucle\n");
+    getch();
 
     box(win, 0, 0);
     wrefresh(win);
+
+    selectedGame(_pacman_selected, _nibbler_selected);
 
     mvprintw(3, 4, "ARCADE");
 
@@ -112,23 +123,27 @@ void Ncurses::drawMenu()
 MonEnum Ncurses::getEvent()
 {
     int ch = getch();
+    
+    mvprintw(8, 2, "-");
 
     switch(ch)
     {
     case KEY_UP:
-        mvprintw(10, 2, " ");
-        mvprintw(8, 2, "-");
+    _gameName = "NIBBLER";
+    _nibbler_selected = true;
+    _pacman_selected = false;
         return MonEnum::UP_ARROW;
         break;
-    case KEY_DOWN:   
-        mvprintw(8, 2, " ");
-        mvprintw(10, 2, "-");
+    case KEY_DOWN:
+        _gameName = "PACMAN";
+        _pacman_selected = true;
+        _nibbler_selected = false;
         return MonEnum::DOWN_ARROW;
         break;
     case KEY_LEFT:
         return MonEnum::LEFT_ARROW;
         break;
-    case KEY_RIGHT:   
+    case KEY_RIGHT:
         return MonEnum::RIGHT_ARROW;
         break;
     case 10:
@@ -258,17 +273,44 @@ MonEnum Ncurses::getEvent()
     case 'z':
         return MonEnum::Z_KEY;
         break;
-    default:    
+    default:
         return MonEnum::NO_INPUT;
 
     }
     return MonEnum::NO_INPUT;
 }
 
+void Ncurses::selectedGame(bool pacman_selected, bool nibbler_selected)
+{
+
+    if (pacman_selected == true)
+    {
+        mvprintw(8, 2, " ");
+        mvprintw(10, 2, "-");
+    }
+
+    if (nibbler_selected == true)
+    {
+        mvprintw(10, 2, " ");
+        mvprintw(8, 2, "-");
+    }
+}
+
 void Ncurses::utilityGame()
 {
 
 }
+
+void Ncurses::getMusic(const std::string &music)
+{
+    auto tmp = music;
+}
+
+void Ncurses::reset()
+{
+
+}
+
 
 std::string Ncurses::getNameGame()
 {
@@ -277,7 +319,7 @@ std::string Ncurses::getNameGame()
 
 void Ncurses::drawBackground(const std::string &Background)
 {
-
+    std::string tmp = Background;
     for (int y = 0, x = 0; _tab[y]; y++)
     {
         mvprintw(y, x, _tab[y]);
@@ -295,7 +337,8 @@ void Ncurses::destroyWindow()
 
 void Ncurses::clearWindow()
 {
-    erase();
+    printf("zbi\n");
+    //erase();
 }
 
 void Ncurses::updateWindow()
@@ -304,13 +347,14 @@ void Ncurses::updateWindow()
     usleep(50000);
 }
 
-void Ncurses::drawSprite(std::vector<Pixel> sprite)
+void Ncurses::drawSprite(Pixel sprite)
 {
-    for (auto it = std::next(sprite.begin()); it != sprite.end(); it++) {
+    auto it = sprite;
+    // for (auto it = std::next(sprite.begin()); it != sprite.end(); it++) {
         // refresh();
-        mvprintw(it->y, it->x, " ");
-        mvprintw(it->y, it->x, "o");
-    }
+        mvprintw(it.y, it.x, " ");
+        mvprintw(it.y, it.x, "o");
+    // }
     // le fruit
 }
 

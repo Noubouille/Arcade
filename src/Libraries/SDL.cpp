@@ -24,7 +24,7 @@ SDL::SDL()
     // Mix_FreeMusic(_menuMusic);
     // Mix_FreeMusic(_musicGame);
     _menuMusic = Mix_LoadMUS("./assets/menu_music.ogg");
-    _musicGame = Mix_LoadMUS("./assets/menu_music.ogg");
+    // _musicGame = Mix_LoadMUS("./assets/menu_music.ogg");
     Mix_PlayMusic(_menuMusic, -1); //Jouer infiniment la musique
     Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
 }
@@ -82,12 +82,12 @@ void SDL::drawMenu()
 
 void SDL::utilityGame()
 {
-    if (music_on == false) {
-        Mix_HaltMusic();
-        music_on = true;
-        Mix_PlayMusic(_musicGame, -1); //Jouer infiniment la musique
-        Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
-    }
+    // if (music_on == false) {
+    //     Mix_HaltMusic();
+    //     music_on = true;
+        // Mix_PlayMusic(_musicGame, -1); //Jouer infiniment la musique
+        // Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
+    // }
 }
 
 MonEnum SDL::getEvent()
@@ -186,7 +186,6 @@ void SDL::updateWindow()
 
     _startTime = _endTime;
     _endTime = SDL_GetTicks();
-
     SDL_RenderPresent(this->_renderer);
 }
 
@@ -227,33 +226,20 @@ void SDL::drawMain(std::vector<Pixel> snake)
             SDL_RenderCopy(this->_renderer, Sprite_text, NULL, &Sprite_rect);
             SDL_FreeSurface(sprite_surf);
 
-            // sf::Texture texture;
-            // if (!texture.loadFromFile(it->pathSprite)) {
-            //     return ;
-            // }
-
-            // sf::Sprite sprite;
-            // sprite.setTexture(texture);
-            // sprite.setPosition(sf::Vector2f(it->x, it->y));
-            // _window.draw(sprite);
-            // std::cout << "le snake pos x : " << it->x << std::endl;
-            // std::cout << "le snake pos y : " << it->y << std::endl;
         }
     //     m_elapsedTime = sf::Time::Zero;
     // }
 }
 
-void SDL::drawSprite(std::vector<Pixel> sprite) {
+void SDL::drawSprite(Pixel sprite) {
 
-    std::string tmp = sprite.front().pathSprite + ".bmp";
-    // std::cout << "tmp : " << tmp << std::endl;
+    std::string tmp = sprite.pathSprite + ".bmp";
+
     SDL_Surface *sprite_surf = SDL_LoadBMP(tmp.c_str());
-
     SDL_Texture* Sprite_text = SDL_CreateTextureFromSurface(this->_renderer, sprite_surf);
-    SDL_Rect Sprite_rect = {sprite.front().x, sprite.front().y, sprite_surf->w, sprite_surf->h};
+    SDL_Rect Sprite_rect = {sprite.x, sprite.y, sprite_surf->w, sprite_surf->h};
     SDL_RenderCopy(this->_renderer, Sprite_text, NULL, &Sprite_rect);
     SDL_FreeSurface(sprite_surf);
-
 }
 
 std::pair<int, int> SDL::sendBgSize()
@@ -271,6 +257,24 @@ void SDL::putText(const Text &some_text)
     SDL_RenderCopy(this->_renderer, _text, NULL, &Text__rect);
 
 }
+
+void SDL::getMusic(const std::string &music)
+{
+    if (music_game_on == false) {
+        _musicGame = Mix_LoadMUS(music.c_str());
+        Mix_PlayMusic(_musicGame, -1); //Jouer infiniment la musique
+        Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
+        music_game_on = true;
+    }
+}
+
+void SDL::reset() {
+    music_game_on = false;
+    Mix_PlayMusic(_menuMusic, -1); //Jouer infiniment la musique
+    Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
+
+}
+
 
 extern "C" IGraphic *createLibrary()
 {

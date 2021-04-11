@@ -81,12 +81,12 @@ void Nibbler::getInput(MonEnum Input)
     }
 }
 
-std::vector<Pixel> Nibbler::getSprite()
+Pixel Nibbler::getSprite()
 {
     Pixel fruit;
 	fruit = {this->_pos_fruit.first, this->_pos_fruit.second, "./assets/Nibbler/fruit"};
-	_fruit.push_back(fruit);
-    return _fruit;
+	// _fruit.push_back(fruit);
+    return fruit;
 }
 
 void Nibbler::setFruit()
@@ -124,7 +124,7 @@ void Nibbler::updateGame()
 
 void Nibbler::bgSize(std::pair<int, int> size)
 {
-    // this->_bg_size = size;
+    this->_bg_size = size;
 }
 
 Nibbler::~Nibbler()
@@ -300,6 +300,11 @@ std::vector<Pixel> Nibbler::getMain()
     return this->_players;
 }
 
+std::string Nibbler::sendMusic()
+{
+    return "assets/Nibbler/nibbler_song.ogg";
+}
+
 std::string Nibbler::getName()
 {
     return "NIBBLER";
@@ -313,6 +318,11 @@ std::string Nibbler::getBg()
 void Nibbler::getLibName(std::string libname)
 {
     this->_libname = libname;
+}
+
+bool Nibbler::isGameStart()
+{
+    return _start_game;
 }
 
 

@@ -20,10 +20,12 @@ class IGames {
 		virtual void reset() = 0;
 		virtual std::string getName() = 0;
 		virtual std::string getBg() = 0;
+		virtual std::string sendMusic() = 0;
         virtual int getScore() = 0;
+        virtual bool isGameStart() = 0;
 
         virtual std::vector<Pixel> getMain() = 0;
-        virtual std::vector<Pixel> getSprite() = 0;
+        virtual Pixel getSprite() = 0;
         virtual void getInput(MonEnum) = 0;
         virtual void getLibName(std::string libname) = 0;
         virtual void updateGame() = 0;

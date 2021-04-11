@@ -78,12 +78,14 @@ class IGraphic
 		virtual void destroyWindow() = 0;
 		virtual void clearWindow() = 0;
 		virtual void updateWindow() = 0;
+		virtual void reset() = 0;
         virtual std::string getNameGame() = 0;
         virtual std::string getLibName() = 0;
         virtual void drawBackground(const std::string &Background) = 0;
+        virtual void getMusic(const std::string &Music) = 0;
 		virtual std::pair<int, int> sendBgSize() = 0;
         virtual void drawMain(std::vector<Pixel> snake) = 0;
-        virtual void drawSprite(std::vector<Pixel> sprite) = 0;
+        virtual void drawSprite(Pixel sprite) = 0;
 		virtual void putText(const Text &text) = 0;
 
 		std::pair<int, int> _bgSize;

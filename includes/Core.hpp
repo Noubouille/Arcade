@@ -36,17 +36,23 @@ class Core {
         void loopMenu(MonEnum Input);
         void loopGame(MonEnum Input);
         void getAllLibs();
+        void getScores();
         void getGraphicLib();
+        void getFristGameLib();
         void getGameLib();
         void nextLibrary();
         void prevLibrary();
+        void getNextGameLib();
+        void getPrevGameLib();
+        int returnSecondsLeft(double);
+
         // struct Lib {
         std::string _currentPath;
+        std::string _currentPathGame;
         // 	std::vector<std::string> _listLib;
         void *_currentLib;
         void *_currentGame;
-        // 	// void *_currentObject;
-        // };
+
         bool _stateMenu = true;
         bool _pause = false;
         std::vector<std::string> _listLib;
@@ -55,8 +61,9 @@ class Core {
 
     protected:
     private:
-    bool m_bRunning = false;
-    bool _EndGame = true;
+        bool m_bRunning = false;
+        bool _EndGame = true;
+        double _time = 5;
 
 };
 

@@ -24,7 +24,7 @@ class Nibbler : public IGames {
         void initsnake();
         void getInput(MonEnum);
         std::vector<Pixel> getMain() override;
-        std::vector<Pixel> getSprite() override;
+        Pixel getSprite() override;
         bool foodCheck();
         void setFruit();
         void updateGame() override;
@@ -35,6 +35,9 @@ class Nibbler : public IGames {
         void bgSize(std::pair<int, int>) override;
         void getLibName(std::string libname) override;
         void eatFruit(std::vector<Pixel>::iterator it);
+        std::string sendMusic() override;
+        bool isGameStart() override;
+
         enum Orientation {
             UP,
             RIGHT,

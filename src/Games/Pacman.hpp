@@ -25,8 +25,8 @@ class Pacman : public IGames {
         void initsnake();
         void getInput(MonEnum);
         std::vector<Pixel> getMain() override;
-        std::vector<Pixel> getSprite() override;
-        bool foodCheck();
+        Pixel getSprite() override;
+        // bool foodCheck();
         void setFruit();
         void updateGame() override;
         bool checkMoveSnake_right(std::vector<Pixel>::iterator it);
@@ -36,6 +36,11 @@ class Pacman : public IGames {
         void bgSize(std::pair<int, int>) override;
         void getLibName(std::string libname) override;
         void eatFruit(std::vector<Pixel>::iterator it);
+        void move_ghost();
+        void moving_ghost(std::string, int);
+		std::string sendMusic() override;
+        bool isGameStart() override;
+
         enum Orientation {
             UP,
             RIGHT,
@@ -51,7 +56,7 @@ class Pacman : public IGames {
         std::pair<int, int> _bg_size;
         int pos_x = 0;
         int pos_y = 0;
-        unsigned int speed_snake = 1;
+        unsigned int speed_snake = 2;
 
     private:
     std::string _libname;
