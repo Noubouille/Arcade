@@ -438,6 +438,15 @@ void Ncurses::drawMain(std::vector<Pixel> snake)
     }
 }
 
+bool Ncurses::getUsernameloop()
+{
+}
+
+void Ncurses::drawPause(const std::string &Background)
+{
+}
+
+
 std::pair<int, int> Ncurses::sendBgSize()
 {
     return _bgSize;

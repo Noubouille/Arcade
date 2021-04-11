@@ -117,10 +117,10 @@ void Core::getPrevGameLib()
 
     if (iterator == this->_listGames.begin()) {
         this->_currentPathGame = this->_listGames.back();
-        getGraphicLib();
+        getGameLib();
     } else {
         this->_currentPathGame = *(iterator - 1);
-        getGraphicLib();
+        getGameLib();
     }
 
         this->_stateMenu = false;
@@ -196,6 +196,7 @@ void Core::mainLoop()
     this->_IGraphicLib->startWindow();
     for (; _EndGame; ) {
         MonEnum Input = this->_IGraphicLib->getEvent();
+
         this->_IGraphicLib->clearWindow();
         if (Input == MonEnum::F1) {
             std::cout << "MonEnum::F1 next lib" << std::endl;
@@ -289,16 +290,17 @@ void Core::loopGame(MonEnum Input)
             _pause = true;
         }
     }
-    if (_pause) {
-        this->_IGraphicLib->putText({500, 500, std::string("Pause !")});
-
-        _Timer->start();
-    }
 
     this->_IGraphicLib->utilityGame();
     this->_IGraphicLib->drawSprites(this->_IGamesLib->getSprites());
 
     this->_IGraphicLib->drawMain(this->_IGamesLib->getMain());
+    if (_pause) {
+        this->_IGraphicLib->drawPause(this->_IGamesLib->sendPauseSprite());
+        this->_IGraphicLib->putText({485, 495, std::string("Pause !")});
+
+        _Timer->start();
+    }
     this->_IGraphicLib->updateWindow();
 
     if (Input == MonEnum::R_KEY) {

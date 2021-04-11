@@ -20,6 +20,7 @@ class IGames {
 		virtual void reset() = 0;
 		virtual std::string getName() = 0;
 		virtual std::string getBg() = 0;
+		virtual std::string sendPauseSprite() = 0;
 		virtual std::string sendMusic() = 0;
         virtual int getScore() = 0;
         virtual bool isGameStart() = 0;

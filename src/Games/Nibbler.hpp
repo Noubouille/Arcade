@@ -41,6 +41,7 @@ class Nibbler : public IGames {
         void eatFruit(std::vector<Pixel>::iterator it);
         std::string sendMusic() override;
         bool isGameStart() override;
+		std::string sendPauseSprite() override;
 
         enum Orientation {
             UP,

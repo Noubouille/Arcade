@@ -10,6 +10,7 @@
 SDL::SDL()
 {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVERYTHING);
+
     TTF_Init();
     if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 ) {
         exit(84);
@@ -18,6 +19,7 @@ SDL::SDL()
     _input = (char *)malloc(32);
     this->_bgSize = std::make_pair(600, 600);
     this->_font = TTF_OpenFont("./assets/Arcade.ttf", 35);
+    this->_font_smaller = TTF_OpenFont("./assets/Arcade.ttf", 25);
     if ( !_font ) {
 	    std::cout << TTF_GetError() << std::endl;
     }
@@ -40,9 +42,13 @@ void SDL::drawMenu()
 {
     SDL_Color White = {255, 255, 255, 0};
 
-    SDL_Surface* surfaceCurrentlib_text = TTF_RenderText_Solid(_font, "Current lib : SDL", White);
+    SDL_Surface* surfaceCurrentlib_text = TTF_RenderText_Solid(_font_smaller, "Current lib : SDL", White);
     SDL_Texture* Currentlib_text = SDL_CreateTextureFromSurface(this->_renderer, surfaceCurrentlib_text);
-    SDL_Rect Text_currentlib = {380, 50, surfaceCurrentlib_text->w, surfaceCurrentlib_text->h};
+    SDL_Rect Text_currentlib = {400, 20, surfaceCurrentlib_text->w, surfaceCurrentlib_text->h};
+
+    SDL_Surface* surfaceUsername_text = TTF_RenderText_Solid(_font_smaller, "Username :", White);
+    SDL_Texture* Username_text = SDL_CreateTextureFromSurface(this->_renderer, surfaceUsername_text);
+    SDL_Rect Text_Username = {350, 90, surfaceUsername_text->w, surfaceUsername_text->h};
 
     SDL_Surface* surfaceNibbler_text = TTF_RenderText_Solid(_font, "Nibbler", White);
     SDL_Texture* Nibbler_text = SDL_CreateTextureFromSurface(this->_renderer, surfaceNibbler_text);
@@ -56,11 +62,11 @@ void SDL::drawMenu()
     SDL_Texture* Tiret_text = SDL_CreateTextureFromSurface(this->_renderer, surfaceTiret_text);
     SDL_Rect Text_tiret_rect = {435, pos_bar_y, surfaceTiret_text->w, surfaceTiret_text->h};
 
-    SDL_Surface* surfaceNextLib_text = TTF_RenderText_Solid(_font, "[F1] next graphical library", White);
+    SDL_Surface* surfaceNextLib_text = TTF_RenderText_Solid(_font_smaller, "[F1] next graphical library", White);
     SDL_Texture* NextLib_text = SDL_CreateTextureFromSurface(this->_renderer, surfaceNextLib_text);
     SDL_Rect Text_NextLib_rect = {50, 580, surfaceNextLib_text->w, surfaceNextLib_text->h};
 
-    SDL_Surface* surfacePrevLib_text = TTF_RenderText_Solid(_font, "[F2] previous graphical library", White);
+    SDL_Surface* surfacePrevLib_text = TTF_RenderText_Solid(_font_smaller, "[F2] previous graphical library", White);
     SDL_Texture* PrevLib_text = SDL_CreateTextureFromSurface(this->_renderer, surfacePrevLib_text);
     SDL_Rect Text_PrevLib_rect = {50, 640, surfacePrevLib_text->w, surfacePrevLib_text->h};
 
@@ -70,12 +76,70 @@ void SDL::drawMenu()
     SDL_RenderCopy(this->_renderer, Nibbler_text, NULL, &Text_rect1);
     SDL_RenderCopy(this->_renderer, Pacman_text, NULL, &Text_rect2_pacman);
     SDL_RenderCopy(this->_renderer, Currentlib_text, NULL, &Text_currentlib); //current lib
+    SDL_RenderCopy(this->_renderer, Username_text, NULL, &Text_Username); //current lib
     SDL_RenderCopy(this->_renderer, Tiret_text, NULL, &Text_tiret_rect); // -----
     SDL_RenderCopy(this->_renderer, NextLib_text, NULL, &Text_NextLib_rect); // F1
     SDL_RenderCopy(this->_renderer, PrevLib_text, NULL, &Text_PrevLib_rect); // F2
 
     SDL_RenderPresent(_renderer);
+    if (_getInputUser) {
+        getUsernameloop();
+
+    }
+
 }
+
+bool SDL::getUsernameloop()
+{
+    int i = 0;
+    _input.clear();
+    SDL_Event event;
+    for (int i = 0; _getInputUser; i++) {
+
+            SDL_StartTextInput();
+            SDL_WaitEvent(&event);
+            switch (event.key.keysym.sym) {
+                case SDLK_RSHIFT: {
+                    std::cout << "lshift" << " Input :" << _input << std::endl;
+                    _getInputUser = false;
+                    return true;
+                    break;
+                }
+                default:
+                    break;
+            }
+            switch(event.type) {
+                case SDL_QUIT: {
+                    exit(0);
+                    break;
+                }
+                case SDL_TEXTINPUT: {
+                        _input = _input + event.text.text;
+                        std::cout << event.text.text << std::endl;
+                        break;
+                    }
+
+                default :
+                    break;
+            }
+    }
+    return false;
+}
+
+void SDL::drawPause(const std::string &Background)
+{
+    if (Background.empty()) {
+        return;
+    }
+    std::string tmp = Background + ".bmp";
+
+    SDL_Surface *bg = SDL_LoadBMP(tmp.c_str());
+    SDL_Texture *bg_texture = SDL_CreateTextureFromSurface(this->_renderer, bg);
+    SDL_Rect Text_bg_rect = {500, 500, bg->w, bg->h};
+    SDL_RenderCopy(this->_renderer, bg_texture, NULL, &Text_bg_rect);
+    SDL_FreeSurface(bg);
+}
+
 
 void SDL::utilityGame()
 {

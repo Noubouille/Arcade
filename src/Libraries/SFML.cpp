@@ -60,7 +60,6 @@ void SFML::drawMenu()
     _playerText.setPosition(510, 90);
     user_text.setPosition(350, 90);
 
-
     this->_window.clear(sf::Color(0, 0, 0));
     this->_window.draw(this->_bgSprite);
     this->_window.draw(Pacman_font);
@@ -77,9 +76,31 @@ void SFML::drawMenu()
     this->_window.display();
 }
 
+bool SFML::getUsernameloop()
+{
+    return false;
+}
+
+
 void SFML::utilityGame()
 {
     _musicMenu.stop();
+}
+
+void SFML::drawPause(const std::string &Background)
+{
+    if (Background.empty()) {
+        return;
+    }
+
+    std::string tmp = Background + ".png";
+
+	sf::Texture texture;
+	texture.loadFromFile(tmp);
+	sf::Sprite sprite;
+	sprite.setTexture(texture);
+	sprite.setPosition(340, 450);
+	_window.draw(sprite);
 }
 
 MonEnum SFML::getEvent()
