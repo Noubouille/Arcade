@@ -21,11 +21,7 @@ SDL::SDL()
     if ( !_font ) {
 	    std::cout << TTF_GetError() << std::endl;
     }
-
-    // Mix_FreeMusic(_menuMusic);
-    // Mix_FreeMusic(_musicGame);
     _menuMusic = Mix_LoadMUS("./assets/menu_music.ogg");
-    // _musicGame = Mix_LoadMUS("./assets/menu_music.ogg");
     Mix_PlayMusic(_menuMusic, -1); //Jouer infiniment la musique
     Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
 }
@@ -83,12 +79,7 @@ void SDL::drawMenu()
 
 void SDL::utilityGame()
 {
-    // if (music_on == false) {
-    //     Mix_HaltMusic();
-    //     music_on = true;
-        // Mix_PlayMusic(_musicGame, -1); //Jouer infiniment la musique
-        // Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
-    // }
+
 }
 
 MonEnum SDL::getEvent()
@@ -96,7 +87,7 @@ MonEnum SDL::getEvent()
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {
-    // SDL_WaitEvent(&event);
+
         switch (event.type) {
             case SDL_QUIT:
                 std::cout << "sf::Event::CLOSE sdl" << std::endl;
@@ -194,7 +185,7 @@ void SDL::updateWindow()
     if (_delta > 16) {
         _fps = 1000 / _delta;
     }
-    // printf("FPS is: %i \n", _fps);
+
 
     _startTime = _endTime;
     _endTime = SDL_GetTicks();
@@ -228,14 +219,11 @@ void SDL::drawBackground(const std::string &Background)
 
 void SDL::drawMain(std::vector<Pixel> snake)
 {
-    // if (m_elapsedTime.asSeconds() > 0.1) {
-
         for (auto it = std::next(snake.begin()); it != snake.end(); it++) {
             if (it->pathSprite.empty()) {
                 return;
             }
             std::string tmp = it->pathSprite + ".bmp";
-            // std::cout << "tmp : " << tmp << std::endl;
             SDL_Surface *sprite_surf = SDL_LoadBMP(tmp.c_str());
 
             SDL_Texture* Sprite_text = SDL_CreateTextureFromSurface(this->_renderer, sprite_surf);
@@ -244,8 +232,6 @@ void SDL::drawMain(std::vector<Pixel> snake)
             SDL_FreeSurface(sprite_surf);
 
         }
-    //     m_elapsedTime = sf::Time::Zero;
-    // }
 }
 
 void SDL::drawSprite(Pixel sprite) {

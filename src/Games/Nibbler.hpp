@@ -48,7 +48,7 @@ class Nibbler : public IGames {
             DOWN,
             LEFT,
         };
-    // std::vector<std::vector<Pixel>> _players;
+
         std::vector<Pixel> _players;
         std::vector<Pixel> _fruit;
 

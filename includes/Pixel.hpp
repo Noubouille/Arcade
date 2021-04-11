@@ -19,16 +19,6 @@ typedef struct {
     int x;
     int y;
     std::string text;
-    // bool underline;
 } Text;
-
-// class Pixel {
-//     public:
-//         Pixel();
-//         ~Pixel();
-
-//     protected:
-//     private:
-// };
 
 #endif /* !PIXEL_HPP_ */

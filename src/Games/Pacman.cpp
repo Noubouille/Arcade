@@ -291,7 +291,7 @@ Pixel Pacman::getSprite()
 {
     Pixel fruit;
 	fruit = {this->_pos_fruit.first, this->_pos_fruit.second, "./assets/Pacman/blinky"};
-    // std::cout << "pos du fruit x = " << this->_pos_fruit.first << std::endl;
+
     return fruit;
 }
 
@@ -315,10 +315,6 @@ std::vector<Pixel> Pacman::getSprites()
 void Pacman::setFruit()
 {
 }
-
-// bool Pacman::foodCheck()
-// {
-// }
 
 void Pacman::updateGame()
 {
@@ -473,8 +469,6 @@ std::vector<Pixel> Pacman::getMain()
                     }
 
                     it->y -= speed_snake;
-                } else {
-                    // it->y -= 0;
                 }
             }
         } else if (_nextMove == Orientation::DOWN) {
@@ -487,8 +481,6 @@ std::vector<Pixel> Pacman::getMain()
                     }
 
                     it->y += speed_snake;
-                } else {
-                    // it->y += 0;
                 }
             }
         } else if (_nextMove == Orientation::RIGHT) {
@@ -501,8 +493,6 @@ std::vector<Pixel> Pacman::getMain()
                     }
 
                     it->x += speed_snake;
-                } else {
-                    // it->x += 0;
                 }
             }
         } else if (_nextMove == Orientation::LEFT) {
@@ -516,8 +506,6 @@ std::vector<Pixel> Pacman::getMain()
 
                     it->x -= speed_snake;
 
-                } else {
-                    // it->x -= 0;
                 }
             }
         }

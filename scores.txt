@@ -1,2 +1,9 @@
-je suis dieu
-0
+test = 4
+test = 1
+Player = 1
+zefjnez = 2
+efzij = 10
+efzij = 0
+uhdbudf = 10
+uhdbudf = 0
+ocucidsc = 12
