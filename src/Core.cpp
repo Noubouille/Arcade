@@ -223,8 +223,6 @@ void Core::mainLoop()
 
             getPrevGameLib();
             std::cout << "MonEnum::F4 prev game" << std::endl;
-        // this->_IGraphicLib->clearWindow();
-
         }
 
         if (Input == MonEnum::ENTER) {
@@ -271,9 +269,9 @@ void Core::loopGame(MonEnum Input)
     this->_IGraphicLib->drawBackground(this->_IGamesLib->getBg());
 
     this->_IGraphicLib->putText({320, 800, std::string("You are playing at ") + this->_IGamesLib->getName()});
-    this->_IGraphicLib->putText({730, 20, std::string("Score : ") + std::to_string(this->_IGamesLib->getScore())});
+    this->_IGraphicLib->putText({800, 20, std::string("Score : ") + std::to_string(this->_IGamesLib->getScore())});
     if (this->_IGamesLib->getName() == "NIBBLER") {
-        this->_IGraphicLib->putText({660, 80, std::string("Time : ") + std::to_string(returnSecondsLeft(_Timer->elapsedSeconds()))+ " Seconds"});
+        this->_IGraphicLib->putText({705, 80, std::string("Time : ") + std::to_string(returnSecondsLeft(_Timer->elapsedSeconds()))+ " Seconds"});
     }
 
     this->_IGamesLib->getLibName(this->_IGraphicLib->getLibName());
@@ -304,8 +302,6 @@ void Core::loopGame(MonEnum Input)
     this->_IGraphicLib->updateWindow();
 
     if (Input == MonEnum::R_KEY) {
-        std::cout << "Je reset" << std::endl;
-
         this->_IGamesLib->reset();
         _Timer->start();
         _time = 25;
@@ -321,7 +317,7 @@ void Core::loopGame(MonEnum Input)
     }
 
     if (this->_IGamesLib->isGameOver() || Input == MonEnum::M_KEY) {
-        this->getScores();
+        if (Input != MonEnum::M_KEY) this->getScores();
         this->_IGamesLib->reset();
         this->_IGraphicLib->reset();
         this->_stateMenu = true;

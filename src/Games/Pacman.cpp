@@ -54,7 +54,6 @@ Pacman::Pacman(std::pair<int, int> bgSize)
 
 void Pacman::moving_ghost1(std::string move)
 {
-    std::cout << "je mouve ghot 1" << std::endl;
 	if (move.compare("Up") == 0) {
         if (this->_ghost1_pos.second <= 0) {
             this->_ghost1_pos.second = this->_ghost1_pos.second;

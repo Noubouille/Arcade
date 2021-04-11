@@ -9,7 +9,6 @@
 
 SFML::SFML(): m_elapsedTime(sf::Time::Zero)
 {
-    std::cout << "je passe sfml constructeur !" << std::endl;
     this->_gameName = "NIBBLER";
     this->_bgSize = std::make_pair(600, 600);
     if (!_font.loadFromFile("./assets/Arcade.ttf"))
@@ -20,6 +19,8 @@ SFML::SFML(): m_elapsedTime(sf::Time::Zero)
     _musicMenu.play();
     _musicMenu.setVolume(30);
     _input = (char *)malloc(32);
+    sf::Text oui("", _font, 25);
+    _playerText = oui;
 }
 
 SFML::~SFML()
@@ -44,28 +45,21 @@ void SFML::drawMenu()
     sf::Text Nibbler_font("Nibbler", _font, 35);
     sf::Text Pacman_font("Pacman", _font, 35);
     sf::Text Currentlib_font("Current lib : SFML", _font, 25);
-    Currentlib_font.setPosition(380, 50);
+    Currentlib_font.setPosition(400, 20);
     bar_font.setPosition(450, pos_bar_y);
     Nibbler_font.setPosition(450, 300);
     Pacman_font.setPosition(450, 360);
 
+    sf::Text user_text("Username :", _font, 25);
     sf::Text next_font("[F1] next graphical library", _font, 25);
     sf::Text prev_font("[F2] previous graphical library", _font, 25);
     next_font.setPosition(50, 580);
     prev_font.setPosition(50, 640);
 
     bg_sprite.setTexture(bg);
+    _playerText.setPosition(510, 90);
+    user_text.setPosition(350, 90);
 
-    // sf::String playerInput;
-    // sf::Text playerText;
-
-    // if (event.type == sf::Event::TextEntered)
-    // {
-    //     playerInput +=event.text.unicode;
-    //     playerText.setString(playerInput);
-    // }
-
-    // window.draw(playerText);
 
     this->_window.clear(sf::Color(0, 0, 0));
     this->_window.draw(this->_bgSprite);
@@ -75,6 +69,8 @@ void SFML::drawMenu()
     this->_window.draw(bar_font);
     this->_window.draw(next_font);
     this->_window.draw(prev_font);
+    this->_window.draw(_playerText);
+    this->_window.draw(user_text);
 
     bar_font.setPosition(450, pos_bar_y);
 
@@ -97,10 +93,16 @@ MonEnum SFML::getEvent()
 
     while (_window.pollEvent(event)) {
         if (event.type == sf::Event::Closed || event.key.code == sf::Keyboard::Escape) {
-            std::cout << "sf::Event::CLOSE" << std::endl;
             destroyWindow();
             exit(0);
             return MonEnum::CLOSE;
+        }
+        if (event.type == sf::Event::TextEntered) {
+            if(event.text.unicode < 128) {
+                _playerInput += event.text.unicode;
+                _playerText.setString(_playerInput);
+                _input = _playerInput;
+            }
         }
         else if (event.type == sf::Event::KeyPressed) {
             switch (event.key.code) {
@@ -244,6 +246,7 @@ std::string SFML::getLibName()
 
 std::string SFML::getUsername()
 {
+    // _input = _playerInput;
     return _input;
 }
 

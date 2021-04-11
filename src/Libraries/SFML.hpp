@@ -57,6 +57,9 @@ public:
     std::pair<int, int> _bgSize = std::make_pair(600, 600);
 
 private:
+    sf::String _playerInput;
+    sf::Text _playerText;
+
     sf::Time m_elapsedTime;
 
     int pos_bar_y = 320;

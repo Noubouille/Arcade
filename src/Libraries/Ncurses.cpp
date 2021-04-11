@@ -375,12 +375,7 @@ void Ncurses::updateWindow()
 void Ncurses::drawSprite(Pixel sprite)
 {
     auto it = sprite;
-    // for (auto it = std::next(sprite.begin()); it != sprite.end(); it++) {
-        // refresh();
-        mvprintw(it.y, it.x, " ");
         mvprintw(it.y, it.x, "o");
-    // }
-    // le fruit
 }
 
 void Ncurses::drawSprites(std::vector<Pixel> sprites)
@@ -394,8 +389,6 @@ void Ncurses::drawSprites(std::vector<Pixel> sprites)
 void Ncurses::drawMain(std::vector<Pixel> snake)
 {
     for (auto it = std::next(snake.begin()); it != snake.end(); it++) {
-        // printf("x: %d", it->x);
-        // printf("y: %d", it->y);
         mvprintw(it->y, it->x, it->pathSprite.c_str());
     }
 }
@@ -430,7 +423,6 @@ void Ncurses::putText(const Text &text)
 
     // mvprintw(tmp_y, text.x / 6, text.text.c_str());
     mvprintw(tmp_y, tmp_x, text.text.c_str());
-    // clearWindow();
 }
 
 extern "C" IGraphic *createLibrary()
