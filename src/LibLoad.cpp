@@ -21,7 +21,7 @@ void *LibLoad::loadlibrary(std::string librarypath)
     void *handle = dlopen(librarypath.c_str(), RTLD_NOW);
 	if (handle == nullptr) {
 		std::cerr << dlerror() << std::endl;
-        std::cout << "une erreur est survenu" << std::endl;
+        std::cout << "une erreur est survenue" << std::endl;
 		exit(84);
 	}
     return handle;

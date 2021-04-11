@@ -366,7 +366,6 @@ std::vector<Pixel> Nibbler::getMain()
             }
         }
     }
-    //std::cout << "speed_snake :" << speed_snake << std::endl;
     return this->_players;
 }
 
