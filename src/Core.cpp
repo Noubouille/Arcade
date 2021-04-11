@@ -299,7 +299,8 @@ void Core::loopGame(MonEnum Input)
     }
 
     this->_IGraphicLib->utilityGame();
-    this->_IGraphicLib->drawSprite(this->_IGamesLib->getSprite());
+    // this->_IGraphicLib->drawSprite(this->_IGamesLib->getSprite());
+    this->_IGraphicLib->drawSprites(this->_IGamesLib->getSprites());
 
     this->_IGraphicLib->drawMain(this->_IGamesLib->getMain());
     this->_IGraphicLib->updateWindow();

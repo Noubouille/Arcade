@@ -255,7 +255,15 @@ void SDL::drawSprite(Pixel sprite) {
 
 void SDL::drawSprites(std::vector<Pixel> sprites)
 {
-    
+    for (auto it = std::next(sprites.begin()); it != sprites.end(); it++) {
+        std::string tmp = it->pathSprite + ".bmp";
+
+        SDL_Surface *sprite_surf = SDL_LoadBMP(tmp.c_str());
+        SDL_Texture* Sprite_text = SDL_CreateTextureFromSurface(this->_renderer, sprite_surf);
+        SDL_Rect Sprite_rect = {it->x, it->y, sprite_surf->w, sprite_surf->h};
+        SDL_RenderCopy(this->_renderer, Sprite_text, NULL, &Sprite_rect);
+        SDL_FreeSurface(sprite_surf);
+    }
 }
 
 std::pair<int, int> SDL::sendBgSize()

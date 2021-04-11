@@ -34,53 +34,168 @@ Pacman::Pacman(std::pair<int, int> bgSize)
     }
 	_players.emplace_back(pixel);
     _score = 0;
+
+    _ghost1_pos = std::make_pair(rand()%(this->_bg_size.first), rand()%(this->_bg_size.second));
+    _ghost2_pos = std::make_pair(rand()%(this->_bg_size.first), rand()%(this->_bg_size.second));
+    _ghost3_pos = std::make_pair(rand()%(this->_bg_size.first), rand()%(this->_bg_size.second));
+    _ghost4_pos = std::make_pair(rand()%(this->_bg_size.first), rand()%(this->_bg_size.second));
+
+    Pixel mob;
+	_mobs.emplace_back(mob);
+	mob = {_ghost1_pos.first, _ghost1_pos.second, "./assets/Pacman/blinky"};
+	_mobs.emplace_back(mob);
+	mob = {_ghost2_pos.first, _ghost2_pos.second, "./assets/Pacman/clyde"};
+	_mobs.emplace_back(mob);
+	mob = {_ghost3_pos.first, _ghost3_pos.second, "./assets/Pacman/inky"};
+	_mobs.emplace_back(mob);
+	mob = {_ghost4_pos.first, _ghost4_pos.second, "./assets/Pacman/pinky"};
+	_mobs.emplace_back(mob);
 }
 
-void Pacman::moving_ghost(std::string move, int i)
+void Pacman::moving_ghost1(std::string move)
 {
-    i = i;
-	if (move.compare("Up") == 0)
-	{
-        if (this->_pos_fruit.second <= 0) {
-            this->_pos_fruit.second = this->_pos_fruit.second;
-
+    std::cout << "je mouve ghot 1" << std::endl;
+	if (move.compare("Up") == 0) {
+        if (this->_ghost1_pos.second <= 0) {
+            this->_ghost1_pos.second = this->_ghost1_pos.second;
         } else {
-            this->_pos_fruit.second--;
-
+            this->_ghost1_pos.second--;
         }
 
-	}
-	else if (move.compare("Down") == 0) {
-
-        if (this->_pos_fruit.second >= this->_bg_size.second) {
-            this->_pos_fruit.second = this->_pos_fruit.second;
+	} else if (move.compare("Down") == 0) {
+        if (this->_ghost1_pos.second >= this->_bg_size.second) {
+            this->_ghost1_pos.second = this->_ghost1_pos.second;
 
         } else {
-            this->_pos_fruit.second++;
+            this->_ghost1_pos.second++;
 
         }
+	} else if (move.compare("Left") == 0) {
+        if (this->_ghost1_pos.first <= 0) {
+            this->_ghost1_pos.first = 0;
+        } else {
+            this->_ghost1_pos.first--;
+        }
+
+	} else if (move.compare("Right") == 0) {
+        if (this->_ghost1_pos.first >= this->_bg_size.first) {
+            this->_ghost1_pos.first = this->_ghost1_pos.first;
+        } else {
+            this->_ghost1_pos.first++;
+        }
 	}
-	else if (move.compare("Left") == 0) {
-        if (this->_pos_fruit.first <= 0) {
-            this->_pos_fruit.first = 0;
-            // std::cout << "this->_pos_fruit.first <= 0 left" << this->_pos_fruit.first << std::endl;
+}
+
+void Pacman::moving_ghost2(std::string move)
+{
+	if (move.compare("Up") == 0) {
+        if (this->_ghost2_pos.second <= 0) {
+            this->_ghost2_pos.second = this->_ghost2_pos.second;
+        } else {
+            this->_ghost2_pos.second--;
+        }
+
+	} else if (move.compare("Down") == 0) {
+        if (this->_ghost2_pos.second >= this->_bg_size.second) {
+            this->_ghost2_pos.second = this->_ghost2_pos.second;
 
         } else {
+            this->_ghost2_pos.second++;
 
-            this->_pos_fruit.first--;
+        }
+	} else if (move.compare("Left") == 0) {
+        if (this->_ghost2_pos.first <= 0) {
+            this->_ghost2_pos.first = 0;
+        } else {
+            this->_ghost2_pos.first--;
         }
 
+	} else if (move.compare("Right") == 0) {
+        if (this->_ghost2_pos.first >= this->_bg_size.first) {
+            this->_ghost2_pos.first = this->_ghost2_pos.first;
+        } else {
+            this->_ghost2_pos.first++;
+        }
 	}
-	else if (move.compare("Right") == 0) {
-        if (this->_pos_fruit.first >= this->_bg_size.first) {
-            // std::cout << "this->_pos_fruit.first > = bg right" << this->_pos_fruit.first << std::endl;
-            this->_pos_fruit.first = this->_pos_fruit.first;
+}
+
+void Pacman::moving_ghost3(std::string move)
+{
+	if (move.compare("Up") == 0) {
+        if (this->_ghost3_pos.second <= 0) {
+            this->_ghost3_pos.second = this->_ghost3_pos.second;
+        } else {
+            this->_ghost3_pos.second--;
+        }
+
+	} else if (move.compare("Down") == 0) {
+        if (this->_ghost3_pos.second >= this->_bg_size.second) {
+            this->_ghost3_pos.second = this->_ghost3_pos.second;
 
         } else {
+            this->_ghost3_pos.second++;
 
-            this->_pos_fruit.first++;
+        }
+	} else if (move.compare("Left") == 0) {
+        if (this->_ghost3_pos.first <= 0) {
+            this->_ghost3_pos.first = 0;
+        } else {
+            this->_ghost3_pos.first--;
+        }
+
+	} else if (move.compare("Right") == 0) {
+        if (this->_ghost3_pos.first >= this->_bg_size.first) {
+            this->_ghost3_pos.first = this->_ghost3_pos.first;
+        } else {
+            this->_ghost3_pos.first++;
         }
 	}
+}
+
+void Pacman::moving_ghost4(std::string move)
+{
+	if (move.compare("Up") == 0) {
+        if (this->_ghost4_pos.second <= 0) {
+            this->_ghost4_pos.second = this->_ghost4_pos.second;
+        } else {
+            this->_ghost4_pos.second--;
+        }
+
+	} else if (move.compare("Down") == 0) {
+        if (this->_ghost4_pos.second >= this->_bg_size.second) {
+            this->_ghost4_pos.second = this->_ghost4_pos.second;
+
+        } else {
+            this->_ghost4_pos.second++;
+
+        }
+	} else if (move.compare("Left") == 0) {
+        if (this->_ghost4_pos.first <= 0) {
+            this->_ghost4_pos.first = 0;
+        } else {
+            this->_ghost4_pos.first--;
+        }
+
+	} else if (move.compare("Right") == 0) {
+        if (this->_ghost4_pos.first >= this->_bg_size.first) {
+            this->_ghost4_pos.first = this->_ghost4_pos.first;
+        } else {
+            this->_ghost4_pos.first++;
+        }
+	}
+}
+
+void Pacman::move_ghost(std::string move, int nb)
+{
+	if (nb == 0)
+		moving_ghost1(move);
+	else if (nb == 1)
+		moving_ghost2(move);
+	else if (nb == 2)
+		moving_ghost3(move);
+	else if (nb == 3)
+		moving_ghost4(move);
+	return ;
 }
 
 void Pacman::move_ghost()
@@ -96,38 +211,38 @@ void Pacman::move_ghost()
 	k = rand()%(4 - 0 + 1) + 1;
 	l = rand()%(4 - 0 + 1) + 1;
 
-if ( i == 1)
-		this->moving_ghost("Up", 0);
+    if ( i == 1)
+		this->move_ghost("Up", 0);
 	else if (i == 2)
-		this->moving_ghost("Down", 0);
+		this->move_ghost("Down", 0);
 	else if (i == 3)
-		this->moving_ghost("Left", 0);
+		this->move_ghost("Left", 0);
 	else if (i == 4)
-		this->moving_ghost("Right", 0);
+		this->move_ghost("Right", 0);
 	if ( j == 1)
-		this->moving_ghost("Up", 1);
+		this->move_ghost("Up", 1);
 	else if (j == 2)
-		this->moving_ghost("Down", 1);
+		this->move_ghost("Down", 1);
 	else if (j == 3)
-		this->moving_ghost("Left", 1);
+		this->move_ghost("Left", 1);
 	else if (j == 4)
-		this->moving_ghost("Right", 1);
+		this->move_ghost("Right", 1);
 	if ( k == 1)
-		this->moving_ghost("Up", 2);
+		this->move_ghost("Up", 2);
 	else if (k == 2)
-		this->moving_ghost("Down", 2);
+		this->move_ghost("Down", 2);
 	else if (k == 3)
-		this->moving_ghost("Left", 2);
+		this->move_ghost("Left", 2);
 	else if (k == 4)
-		this->moving_ghost("Right", 2);
+		this->move_ghost("Right", 2);
 	if (l == 1)
-		this->moving_ghost("Up", 3);
+		this->move_ghost("Up", 3);
 	else if (l == 2)
-		this->moving_ghost("Down", 3);
+		this->move_ghost("Down", 3);
 	else if (l == 3)
-		this->moving_ghost("Left", 3);
+		this->move_ghost("Left", 3);
 	else if (l == 4)
-		this->moving_ghost("Right", 3);
+		this->move_ghost("Right", 3);
 }
 
 void Pacman::getInput(MonEnum Input)
@@ -183,9 +298,18 @@ Pixel Pacman::getSprite()
 
 std::vector<Pixel> Pacman::getSprites()
 {
+    _mobs.clear();
+
     Pixel mob;
 	_mobs.emplace_back(mob);
-    
+	mob = {_ghost1_pos.first, _ghost1_pos.second, "./assets/Pacman/blinky"};
+	_mobs.emplace_back(mob);
+	mob = {_ghost2_pos.first, _ghost2_pos.second, "./assets/Pacman/clyde"};
+	_mobs.emplace_back(mob);
+	mob = {_ghost3_pos.first, _ghost3_pos.second, "./assets/Pacman/inky"};
+	_mobs.emplace_back(mob);
+	mob = {_ghost4_pos.first, _ghost4_pos.second, "./assets/Pacman/pinky"};
+	_mobs.emplace_back(mob);
     return _mobs;
 }
 
@@ -199,7 +323,6 @@ void Pacman::setFruit()
 
 void Pacman::updateGame()
 {
-
     if (_start_game) {
         move_ghost();
     }
@@ -214,6 +337,7 @@ void Pacman::bgSize(std::pair<int, int> size)
 bool Pacman::isGameOver()
 {
     if (_game_over) {
+        _game_over = false;
         return true;
     }
     return false;
@@ -222,11 +346,6 @@ bool Pacman::isGameOver()
 bool Pacman::isGameStart()
 {
     return _start_game;
-}
-
-
-void Pacman::initsnake()
-{
 }
 
 void Pacman::reset()
@@ -250,16 +369,38 @@ int Pacman::getScore()
 void Pacman::eatFruit(std::vector<Pixel>::iterator it)
 {
     if (_libname == "SFML" || _libname == "SDL") {
-        if ((it->x > this->_pos_fruit.first - 25 && it->x < this->_pos_fruit.first + 25) &&
-        (it->y > this->_pos_fruit.second - 25 && it->y < this->_pos_fruit.second + 25)) {
+        if ((it->x > this->_ghost1_pos.first - 25 && it->x < this->_ghost1_pos.first + 25) &&
+        (it->y > this->_ghost1_pos.second - 25 && it->y < this->_ghost1_pos.second + 25)) {
+            _game_over = true;
+        }
+        if ((it->x > this->_ghost2_pos.first - 25 && it->x < this->_ghost2_pos.first + 25) &&
+        (it->y > this->_ghost2_pos.second - 25 && it->y < this->_ghost2_pos.second + 25)) {
+            _game_over = true;
+        }
+        if ((it->x > this->_ghost3_pos.first - 25 && it->x < this->_ghost3_pos.first + 25) &&
+        (it->y > this->_ghost3_pos.second - 25 && it->y < this->_ghost3_pos.second + 25)) {
+            _game_over = true;
+        }
+        if ((it->x > this->_ghost4_pos.first - 25 && it->x < this->_ghost4_pos.first + 25) &&
+        (it->y > this->_ghost4_pos.second - 25 && it->y < this->_ghost4_pos.second + 25)) {
             _game_over = true;
         }
     } else if (_libname == "NCURSES") {
-            if ((it->x > this->_pos_fruit.first - 2 && it->x < this->_pos_fruit.first + 2) &&
-            (it->y > this->_pos_fruit.second - 2 && it->y < this->_pos_fruit.second + 2)) {
-            this->_pos_fruit = std::make_pair(0, 0);
-                _game_over = true;
-
+        if ((it->x > this->_pos_fruit.first - 2 && it->x < this->_pos_fruit.first + 2) &&
+        (it->y > this->_pos_fruit.second - 2 && it->y < this->_pos_fruit.second + 2)) {
+            _game_over = true;
+        }
+        if ((it->x > this->_ghost2_pos.first - 2 && it->x < this->_ghost2_pos.first + 2) &&
+        (it->y > this->_ghost2_pos.second - 2 && it->y < this->_ghost2_pos.second + 2)) {
+            _game_over = true;
+        }
+        if ((it->x > this->_ghost3_pos.first - 2 && it->x < this->_ghost3_pos.first + 2) &&
+        (it->y > this->_ghost3_pos.second - 2 && it->y < this->_ghost3_pos.second + 2)) {
+            _game_over = true;
+        }
+        if ((it->x > this->_ghost4_pos.first - 2 && it->x < this->_ghost4_pos.first + 2) &&
+        (it->y > this->_ghost4_pos.second - 2 && it->y < this->_ghost4_pos.second + 2)) {
+            _game_over = true;
         }
     }
 }

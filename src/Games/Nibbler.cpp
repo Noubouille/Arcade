@@ -16,8 +16,8 @@ Nibbler::Nibbler(std::pair<int, int> bgSize)
 {
     this->_bg_size = bgSize;
     srand(time(NULL));
-    this->_pos_fruit.first = rand()%(this->_bg_size.first);
-    this->_pos_fruit.second = rand()%(this->_bg_size.second);
+    // this->_pos_fruit.first = rand()%(this->_bg_size.first);
+    // this->_pos_fruit.second = rand()%(this->_bg_size.second);
     this->pos_x = _bg_size.first / 2;
     this->pos_y = _bg_size.second / 2;
 	_nextMove = Orientation::UP;
@@ -35,6 +35,20 @@ Nibbler::Nibbler(std::pair<int, int> bgSize)
 	// pixel = {pos_x + 32.f, pos_y, "./assets/Nibbler/body.png"};
 	// _players.emplace_back(pixel);
     _score = 0;
+
+    _pos_fruit = std::make_pair(rand()%(this->_bg_size.first), rand()%(this->_bg_size.second));
+    _pos_fruit2 = std::make_pair(rand()%(this->_bg_size.first), rand()%(this->_bg_size.second));
+    _pos_fruit3 = std::make_pair(rand()%(this->_bg_size.first), rand()%(this->_bg_size.second));
+
+    Pixel fruit;
+	_fruit.emplace_back(fruit);
+	fruit = {_pos_fruit.first, _pos_fruit.second, "./assets/Nibbler/fruit"};
+	_fruit.emplace_back(fruit);
+	fruit = {_pos_fruit2.first, _pos_fruit2.second, "./assets/Nibbler/fruit"};
+	_fruit.emplace_back(fruit);
+	fruit = {_pos_fruit3.first, _pos_fruit3.second, "./assets/Nibbler/fruit"};
+	_fruit.emplace_back(fruit);
+
 }
 
 void Nibbler::getInput(MonEnum Input)
@@ -90,17 +104,33 @@ Pixel Nibbler::getSprite()
 
 std::vector<Pixel> Nibbler::getSprites()
 {
-
+    _fruit.clear();
+    Pixel fruit;
+	_fruit.emplace_back(fruit);
+	fruit = {_pos_fruit.first, _pos_fruit.second, "./assets/Nibbler/fruit"};
+	_fruit.emplace_back(fruit);
+	fruit = {_pos_fruit2.first, _pos_fruit2.second, "./assets/Nibbler/fruit"};
+	_fruit.emplace_back(fruit);
+	fruit = {_pos_fruit3.first, _pos_fruit3.second, "./assets/Nibbler/fruit"};
+	_fruit.emplace_back(fruit);
+    return _fruit;
 }
 
 
 void Nibbler::setFruit()
 {
     srand(time(NULL));
-    this->_pos_fruit = std::make_pair(0, 0);
 	if (this->foodCheck() == false) {
-		this->_pos_fruit.first = rand()%(this->_bg_size.first);
-		this->_pos_fruit.second = rand()%(this->_bg_size.second);
+		this->_pos_fruit.first = rand()%(this->_bg_size.first) + 5;
+	    this->_pos_fruit.second = rand()%(this->_bg_size.second) + 5;
+	}
+	if (this->foodCheck2() == false) {
+		this->_pos_fruit2.first = rand()%(this->_bg_size.first) + 5;
+		this->_pos_fruit2.second = rand()%(this->_bg_size.second) + 5;
+	}
+	if (this->foodCheck3() == false) {
+		this->_pos_fruit3.first = rand()%(this->_bg_size.first) + 5;
+		this->_pos_fruit3.second = rand()%(this->_bg_size.second) + 5;
 	}
 }
 
@@ -113,18 +143,32 @@ bool Nibbler::foodCheck()
     }
 }
 
+bool Nibbler::foodCheck2()
+{
+    if (this->_pos_fruit2.first != 0 && this->_pos_fruit2.second != 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool Nibbler::foodCheck3()
+{
+    if (this->_pos_fruit3.first != 0 && this->_pos_fruit3.second != 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 void Nibbler::updateGame()
 {
-    if (foodCheck() == false) {
-        this->_fruit.clear();
+    if (foodCheck() == false || foodCheck2() == false || foodCheck3() == false) {
         setFruit();
-        //std::cout << "je mets un new fruit" << std::endl;
     }
     if (speed_snake > 10) {
         speed_snake = 10;
     }
-
-
 }
 
 void Nibbler::bgSize(std::pair<int, int> size)
@@ -138,6 +182,10 @@ Nibbler::~Nibbler()
 
 bool Nibbler::isGameOver()
 {
+    if (_game_over) {
+        _game_over = false;
+        return true;
+    }
     return false;
 }
 
@@ -171,13 +219,36 @@ void Nibbler::eatFruit(std::vector<Pixel>::iterator it)
             _score++;
             speed_snake++;
         }
-        } else if (_libname == "NCURSES") {
-            if ((it->x > this->_pos_fruit.first - 2 && it->x < this->_pos_fruit.first + 2) &&
-            (it->y > this->_pos_fruit.second - 2 && it->y < this->_pos_fruit.second + 2)) {
-            this->_pos_fruit = std::make_pair(0, 0);
-                _score++;
-                if (speed_snake != 2) speed_snake++;
-
+        if ((it->x > this->_pos_fruit2.first - 25 && it->x < this->_pos_fruit2.first + 25) &&
+        (it->y > this->_pos_fruit2.second - 25 && it->y < this->_pos_fruit2.second + 25)) {
+            this->_pos_fruit2 = std::make_pair(0, 0);
+            _score++;
+            speed_snake++;
+        }
+        if ((it->x > this->_pos_fruit3.first - 25 && it->x < this->_pos_fruit3.first + 25) &&
+        (it->y > this->_pos_fruit3.second - 25 && it->y < this->_pos_fruit3.second + 25)) {
+            this->_pos_fruit3 = std::make_pair(0, 0);
+            _score++;
+            speed_snake++;
+        }
+    } else if (_libname == "NCURSES") {
+        if ((it->x > this->_pos_fruit.first - 2 && it->x < this->_pos_fruit.first + 2) &&
+        (it->y > this->_pos_fruit.second - 2 && it->y < this->_pos_fruit.second + 2)) {
+        this->_pos_fruit = std::make_pair(0, 0);
+            _score++;
+            if (speed_snake != 2) speed_snake++;
+        }
+        if ((it->x > this->_pos_fruit2.first - 2 && it->x < this->_pos_fruit2.first + 2) &&
+        (it->y > this->_pos_fruit2.second - 2 && it->y < this->_pos_fruit2.second + 2)) {
+            this->_pos_fruit2 = std::make_pair(0, 0);
+            _score++;
+            if (speed_snake != 2) speed_snake++;
+        }
+        if ((it->x > this->_pos_fruit3.first - 2 && it->x < this->_pos_fruit3.first + 2) &&
+        (it->y > this->_pos_fruit3.second - 2 && it->y < this->_pos_fruit3.second + 2)) {
+            this->_pos_fruit3 = std::make_pair(0, 0);
+            _score++;
+            if (speed_snake != 2) speed_snake++;
         }
     }
 }
@@ -187,12 +258,13 @@ bool Nibbler::checkMoveSnake_up(std::vector<Pixel>::iterator it)
     eatFruit(it);
     if (_libname == "SFML" || _libname == "SDL") {
         if (it->y - 30 <= 0) {
-            //std::cout << "je suis false it->y > bg!" << std::endl;
+            _game_over = true;
             return false;
         }
     }
 
     if (it->y <= 0) {
+
         return false;
     }
 
@@ -206,6 +278,7 @@ bool Nibbler::checkMoveSnake_down(std::vector<Pixel>::iterator it)
 
     }
     if (it->y >= _bg_size.second) {
+        _game_over = true;
         return false;
     }
 
@@ -218,6 +291,8 @@ bool Nibbler::checkMoveSnake_right(std::vector<Pixel>::iterator it)
     if (_libname == "SFML" || _libname == "SDL") {
     }
     if (it->x >= _bg_size.first) {
+        _game_over = true;
+
         return false;
     }
 
@@ -229,11 +304,15 @@ bool Nibbler::checkMoveSnake_left(std::vector<Pixel>::iterator it)
         eatFruit(it);
     if (_libname == "SFML" || _libname == "SDL") {
         if (it->x - 30 <= 0) {
+            _game_over = true;
+
             return false;
         }
     }
 
     if (it->x <= 1) {
+        _game_over = true;
+
         return false;
     }
     return true;
