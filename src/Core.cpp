@@ -359,7 +359,9 @@ void Core::getScores()
     if (!scores) {
         std::cout << "Scores file not found" << std::endl;
     } else {
-        scores << username << score;
+        std::cout << "le username:" << username << std::endl;
+        std::cout << "le score:" << score << std::endl;
+        scores << username + " = " + score;
         scores.close();
     }
 
