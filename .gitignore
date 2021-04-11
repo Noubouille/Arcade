@@ -4,3 +4,4 @@ src/**/*.o
 nibbler/
 .vscode
 .DS_Store
+scores.txt
