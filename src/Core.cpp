@@ -332,21 +332,30 @@ void Core::loopGame(MonEnum Input)
 void Core::printScores()
 {
     int y = 8;
+    int y_sfml = 70;
+    int i = 0;
     std::fstream scores;
     scores.open("scores.txt",std::ios::in);
     if (scores.is_open()) {
         std::string line;
 
-        this->_IGraphicLib->putText({90, 6, "Scoreboard"});
-        while(getline(scores, line)){
+        if (this->_IGraphicLib->getLibName() == "NCURSES") {
+            this->_IGraphicLib->putText({90, 6, "Scoreboard"});
+        } else {
+            this->_IGraphicLib->putText({20, 20, "Scoreboard"});
+
+        }
+        while(getline(scores, line)) {
             if (this->_IGraphicLib->getLibName() == "NCURSES") {
                 this->_IGraphicLib->putText({90, y, line});
                 y += 2;
             } else {
-                this->_IGraphicLib->putText({100, 60, line});
+                this->_IGraphicLib->putText({20, y_sfml, line});
+                y_sfml += 35;
             }
-    }
-      scores.close();
+            i++;
+        }
+        scores.close();
     }
 }
 
