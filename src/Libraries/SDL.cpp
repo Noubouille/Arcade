@@ -91,7 +91,6 @@ void SDL::drawMenu()
 
 bool SDL::getUsernameloop()
 {
-    int i = 0;
     _input.clear();
     SDL_Event event;
     for (int i = 0; _getInputUser; i++) {
