@@ -385,7 +385,9 @@ void Ncurses::drawSprite(Pixel sprite)
 
 void Ncurses::drawSprites(std::vector<Pixel> sprites)
 {
-    
+    for (auto it = std::next(sprites.begin()); it != sprites.end(); it++) {
+        mvprintw(it->y, it->x, "o");
+    }
 }
 
 

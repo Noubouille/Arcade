@@ -216,8 +216,6 @@ void Core::mainLoop()
             this->_IGraphicLib->destroyWindow();
 
             getNextGameLib(true);
-        // this->_IGraphicLib->clearWindow();
-
 
         }
         if (Input == MonEnum::F4) {
