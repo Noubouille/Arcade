@@ -31,8 +31,6 @@ Core::Core(const std::string &lib_name)
         perror(lib_name.c_str());
         exit(84);
     }
-
-    std::cout << "lib name :" << lib_name << std::endl;
     _Timer = new Timer();
 
     this->getGraphicLib();
@@ -56,7 +54,6 @@ void Core::getGraphicLib()
 
 void Core::getFirstGameLib()
 {
-    std::cout << "La premiere game :" << this->_listGames.front() << std::endl;
     this->_currentPathGame = this->_listGames.front();
     std::pair<int ,int> pair_ = this->_IGraphicLib->sendBgSize();
 
@@ -102,7 +99,6 @@ void Core::getNextGameLib(bool loop)
     }
 
     if (loop == true) {
-    std::cout << "je getNextGameLib la fin dans le loop" << std::endl;
         this->_stateMenu = false;
         mainLoop();
 
@@ -152,11 +148,11 @@ void Core::getAllLibs()
         exit(84);
     }
 
-    for (std::string str: this->_listLib)
-        std::cout << "les libs graphiques : " << str << std::endl;
-    for (std::string str: this->_listGames) {
-        std::cout << "les libs games : " << str << std::endl;
-    }
+    // for (std::string str: this->_listLib)
+    //     std::cout << "les libs graphiques : " << str << std::endl;
+    // for (std::string str: this->_listGames) {
+    //     std::cout << "les libs games : " << str << std::endl;
+    // }
 }
 
 void Core::nextLibrary()
@@ -199,17 +195,14 @@ void Core::mainLoop()
 
         this->_IGraphicLib->clearWindow();
         if (Input == MonEnum::F1) {
-            std::cout << "MonEnum::F1 next lib" << std::endl;
             this->_IGraphicLib->destroyWindow();
             nextLibrary();
         }
         if (Input == MonEnum::F2) {
             this->_IGraphicLib->destroyWindow();
-            std::cout << "MonEnum::F2 prev lib" << std::endl;
             prevLibrary();
         }
         if (Input == MonEnum::F3) {
-            std::cout << "MonEnum::F3 next game" << std::endl;
             this->_IGraphicLib->destroyWindow();
 
             getNextGameLib(true);
@@ -219,7 +212,6 @@ void Core::mainLoop()
             this->_IGraphicLib->destroyWindow();
 
             getPrevGameLib();
-            std::cout << "MonEnum::F4 prev game" << std::endl;
         }
 
         if (Input == MonEnum::ENTER) {
