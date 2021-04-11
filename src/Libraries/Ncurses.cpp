@@ -355,6 +355,12 @@ void Ncurses::drawSprite(Pixel sprite)
     // le fruit
 }
 
+void Ncurses::drawSprites(std::vector<Pixel> sprites)
+{
+    
+}
+
+
 void Ncurses::drawMain(std::vector<Pixel> snake)
 {
     for (auto it = std::next(snake.begin()); it != snake.end(); it++) {

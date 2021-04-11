@@ -33,6 +33,10 @@ class Ncurses : public IGraphic
         void drawBackground(const std::string &Background) override;
         void drawMain(std::vector<Pixel> snake) override;
         void drawSprite(Pixel sprite) override;
+        void drawSprites(std::vector<Pixel> sprites) override;
+
+
+
         std::string getLibName() override;
 		void clearWindow() override;
 		void updateWindow() override;

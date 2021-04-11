@@ -42,9 +42,10 @@ class Core {
         void getGameLib();
         void nextLibrary();
         void prevLibrary();
-        void getNextGameLib();
+        void getNextGameLib(bool);
         void getPrevGameLib();
         int returnSecondsLeft(double);
+        int ifGamePausedInt(double);
 
         // struct Lib {
         std::string _currentPath;
@@ -64,6 +65,7 @@ class Core {
         bool m_bRunning = false;
         bool _EndGame = true;
         double _time = 5;
+        double _timeLeftIsPaused = 0;
 
 };
 

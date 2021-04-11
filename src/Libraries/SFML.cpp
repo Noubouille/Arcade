@@ -283,6 +283,11 @@ void SFML::drawSprite(Pixel sprite) {
     _window.draw(Sprite);
 }
 
+void SFML::drawSprites(std::vector<Pixel> sprites)
+{
+    
+}
+
 void SFML::getMusic(const std::string &music)
 {
     if (music_game_on == false) {

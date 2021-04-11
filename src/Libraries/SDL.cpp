@@ -138,12 +138,23 @@ MonEnum SDL::getEvent()
             case SDLK_F2:
                 return MonEnum::F2;
                 break;
+            case SDLK_F3:
+                return MonEnum::F3;
+                break;
+            case SDLK_F4:
+                return MonEnum::F4;
+                break;
             case SDLK_RETURN:
                 return MonEnum::ENTER;
                 break;
             case SDLK_p:
-            std::cout << "je suis p" << std::endl;
                 return MonEnum::P_KEY;
+                break;
+            case SDLK_r:
+                return MonEnum::R_KEY;
+                break;
+            case SDLK_m:
+                return MonEnum::M_KEY;
                 break;
             default :
                 return MonEnum::NO_INPUT;
@@ -240,6 +251,11 @@ void SDL::drawSprite(Pixel sprite) {
     SDL_Rect Sprite_rect = {sprite.x, sprite.y, sprite_surf->w, sprite_surf->h};
     SDL_RenderCopy(this->_renderer, Sprite_text, NULL, &Sprite_rect);
     SDL_FreeSurface(sprite_surf);
+}
+
+void SDL::drawSprites(std::vector<Pixel> sprites)
+{
+    
 }
 
 std::pair<int, int> SDL::sendBgSize()

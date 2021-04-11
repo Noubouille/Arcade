@@ -14,7 +14,6 @@ Nibbler::Nibbler()
 
 Nibbler::Nibbler(std::pair<int, int> bgSize)
 {
-    std::cout << "je suis dans l'autre constructeur ! bb" <<std::endl;
     this->_bg_size = bgSize;
     srand(time(NULL));
     this->_pos_fruit.first = rand()%(this->_bg_size.first);
@@ -89,6 +88,12 @@ Pixel Nibbler::getSprite()
     return fruit;
 }
 
+std::vector<Pixel> Nibbler::getSprites()
+{
+
+}
+
+
 void Nibbler::setFruit()
 {
     srand(time(NULL));
@@ -138,7 +143,6 @@ bool Nibbler::isGameOver()
 
 void Nibbler::initsnake()
 {
-    
 }
 
 void Nibbler::reset()
@@ -150,6 +154,7 @@ void Nibbler::reset()
         it->y =_bg_size.second / 2;
     }
     this->_pos_fruit = std::make_pair(0, 0);
+    _nextMove = Orientation::UP;
 }
 
 int Nibbler::getScore()

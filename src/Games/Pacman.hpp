@@ -26,6 +26,7 @@ class Pacman : public IGames {
         void getInput(MonEnum);
         std::vector<Pixel> getMain() override;
         Pixel getSprite() override;
+        std::vector<Pixel> getSprites() override;
         // bool foodCheck();
         void setFruit();
         void updateGame() override;
@@ -49,7 +50,7 @@ class Pacman : public IGames {
         };
     // std::vector<std::vector<Pixel>> _players;
         std::vector<Pixel> _players;
-        std::vector<Pixel> _fruit;
+        std::vector<Pixel> _mobs;
 
         Orientation _nextMove;
         std::pair<int, int> _pos_fruit;

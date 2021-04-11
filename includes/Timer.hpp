@@ -13,17 +13,17 @@ public:
         m_StartTime = std::chrono::system_clock::now();
         m_bRunning = true;
     }
-    
+
     void stop()
     {
         m_EndTime = std::chrono::system_clock::now();
         m_bRunning = false;
     }
-    
+
     double elapsedMilliseconds()
     {
         std::chrono::time_point<std::chrono::system_clock> endTime;
-        
+
         if(m_bRunning)
         {
             endTime = std::chrono::system_clock::now();

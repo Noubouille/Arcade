@@ -36,6 +36,9 @@ class SDL : public IGraphic {
         void updateWindow();
         void drawMain(std::vector<Pixel>);
         void drawSprite(Pixel sprite);
+        void drawSprites(std::vector<Pixel> sprites) override;
+
+
         void getMusic(const std::string &Background) override;
         void reset() override;
 

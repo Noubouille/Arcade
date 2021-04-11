@@ -38,7 +38,6 @@ Pacman::Pacman(std::pair<int, int> bgSize)
 
 void Pacman::moving_ghost(std::string move, int i)
 {
-
     i = i;
 	if (move.compare("Up") == 0)
 	{
@@ -64,7 +63,7 @@ void Pacman::moving_ghost(std::string move, int i)
 	else if (move.compare("Left") == 0) {
         if (this->_pos_fruit.first <= 0) {
             this->_pos_fruit.first = 0;
-            std::cout << "this->_pos_fruit.first <= 0 left" << this->_pos_fruit.first << std::endl;
+            // std::cout << "this->_pos_fruit.first <= 0 left" << this->_pos_fruit.first << std::endl;
 
         } else {
 
@@ -74,7 +73,7 @@ void Pacman::moving_ghost(std::string move, int i)
 	}
 	else if (move.compare("Right") == 0) {
         if (this->_pos_fruit.first >= this->_bg_size.first) {
-            std::cout << "this->_pos_fruit.first > = bg right" << this->_pos_fruit.first << std::endl;
+            // std::cout << "this->_pos_fruit.first > = bg right" << this->_pos_fruit.first << std::endl;
             this->_pos_fruit.first = this->_pos_fruit.first;
 
         } else {
@@ -176,11 +175,18 @@ void Pacman::getInput(MonEnum Input)
 
 Pixel Pacman::getSprite()
 {
-    move_ghost();
     Pixel fruit;
 	fruit = {this->_pos_fruit.first, this->_pos_fruit.second, "./assets/Pacman/blinky"};
-    std::cout << "pos du fruit x = " << this->_pos_fruit.first << std::endl;
+    // std::cout << "pos du fruit x = " << this->_pos_fruit.first << std::endl;
     return fruit;
+}
+
+std::vector<Pixel> Pacman::getSprites()
+{
+    Pixel mob;
+	_mobs.emplace_back(mob);
+    
+    return _mobs;
 }
 
 void Pacman::setFruit()
@@ -193,13 +199,10 @@ void Pacman::setFruit()
 
 void Pacman::updateGame()
 {
-    // if (foodCheck() == false) {
-    //     this->_fruit.clear();
-    //     setFruit();
-    // }
-    // if (speed_snake > 10) {
-    //     speed_snake = 10;
-    // }
+
+    if (_start_game) {
+        move_ghost();
+    }
 
 }
 
@@ -236,6 +239,7 @@ void Pacman::reset()
     }
     this->_pos_fruit = std::make_pair(0, 0);
     this->_game_over = false;
+    _nextMove = Orientation::RIGHT;
 }
 
 int Pacman::getScore()
@@ -378,7 +382,6 @@ std::vector<Pixel> Pacman::getMain()
             }
         }
     }
-    //std::cout << "speed_snake :" << speed_snake << std::endl;
     return this->_players;
 }
 
