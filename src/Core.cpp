@@ -37,7 +37,7 @@ Core::Core(const std::string &lib_name)
 
     this->getGraphicLib();
     this->getAllLibs();
-    this->getFristGameLib();
+    this->getFirstGameLib();
     this->mainLoop();
 }
 
@@ -54,7 +54,7 @@ void Core::getGraphicLib()
     }
 }
 
-void Core::getFristGameLib()
+void Core::getFirstGameLib()
 {
     std::cout << "La premiere game :" << this->_listGames.front() << std::endl;
     this->_currentPathGame = this->_listGames.front();
@@ -313,6 +313,7 @@ void Core::loopGame(MonEnum Input)
     }
 
     if ( _Timer->elapsedSeconds() > _time && this->_IGamesLib->getName() == "NIBBLER") {
+        this->getScores();
         this->_IGamesLib->reset();
         this->_IGraphicLib->reset();
         this->_stateMenu = true;
@@ -321,6 +322,7 @@ void Core::loopGame(MonEnum Input)
     }
 
     if (this->_IGamesLib->isGameOver() || Input == MonEnum::M_KEY) {
+        this->getScores();
         this->_IGamesLib->reset();
         this->_IGraphicLib->reset();
         this->_stateMenu = true;
@@ -345,6 +347,7 @@ int Core::ifGamePausedInt(double time)
 void Core::getScores()
 {
     std::string score = std::to_string(this->_IGamesLib->getScore());
+    std::string username = this->_IGraphicLib->getUsername();
     if (!score.empty()) {
         score.insert(score.length() - 1, "\n");
     }
@@ -355,7 +358,7 @@ void Core::getScores()
     if (!scores) {
         std::cout << "Scores file not found" << std::endl;
     } else {
-        scores << score;
+        scores << username << score;
         scores.close();
     }
 

@@ -27,6 +27,7 @@ class SDL : public IGraphic {
         void drawMenu();
         void utilityGame();
         std::string getNameGame();
+        std::string getUsername() override;
         void destroyWindow();
         std::string getLibName();
         void drawBackground(const std::string &Background);
@@ -67,6 +68,7 @@ class SDL : public IGraphic {
     int bar_nb = 1;
     bool music_on = false;
     bool music_game_on = false;
+    std::string _input;
 
 };
 

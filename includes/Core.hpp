@@ -38,7 +38,7 @@ class Core {
         void getAllLibs();
         void getScores();
         void getGraphicLib();
-        void getFristGameLib();
+        void getFirstGameLib();
         void getGameLib();
         void nextLibrary();
         void prevLibrary();

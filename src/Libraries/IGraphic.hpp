@@ -80,6 +80,7 @@ class IGraphic
 		virtual void updateWindow() = 0;
 		virtual void reset() = 0;
         virtual std::string getNameGame() = 0;
+		virtual std::string getUsername() = 0;
         virtual std::string getLibName() = 0;
         virtual void drawBackground(const std::string &Background) = 0;
         virtual void getMusic(const std::string &Music) = 0;

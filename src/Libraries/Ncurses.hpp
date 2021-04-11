@@ -29,6 +29,7 @@ class Ncurses : public IGraphic
         void drawMenu();
         void utilityGame();
         std::string getNameGame();
+        std::string getUsername() override;
         void destroyWindow();
         void drawBackground(const std::string &Background) override;
         void drawMain(std::vector<Pixel> snake) override;
@@ -52,11 +53,12 @@ class Ncurses : public IGraphic
         int _win_x = 0;
         private:
         char** _tab;
-        char* _input;
+        std::string _input;
         std::pair<int, int> _bgSize;
         bool _nibbler_selected = true;
         bool _pacman_selected;
         void selectedGame(bool _nibber_selected, bool _pacman_selected);
+        void chooseUsername();
         //etc
 };
 extern "C" IGraphic *createLibrary();

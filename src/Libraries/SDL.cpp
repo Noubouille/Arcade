@@ -15,6 +15,7 @@ SDL::SDL()
         exit(84);
     }
     this->_gameName = "NIBBLER";
+    _input = (char *)malloc(32);
     this->_bgSize = std::make_pair(600, 600);
     this->_font = TTF_OpenFont("./assets/Arcade.ttf", 35);
     if ( !_font ) {
@@ -203,6 +204,11 @@ void SDL::updateWindow()
 std::string SDL::getLibName()
 {
     return "SDL";
+}
+
+std::string SDL::getUsername()
+{
+    return _input;
 }
 
 void SDL::drawBackground(const std::string &Background)

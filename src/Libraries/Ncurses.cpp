@@ -78,7 +78,6 @@ void Ncurses::startWindow()
     initscr();
     curs_set(FALSE);
     keypad(stdscr, TRUE);
-    //noecho();
     timeout(10);
 }
 
@@ -87,16 +86,9 @@ void Ncurses::drawMenu()
     wborder(window, 0, 0, 0, 0, 0, 0, 0, 0);
 
     WINDOW *win = newwin(4, 15, 1, 1);
-    //refresh();
 
-    mvprintw(5, 4, "Username : ");
-    //noecho();                               // suppress character echoing
-    wgetnstr(stdscr, _input, sizeof(_input));
-
-    //clear();
-    refresh();
-    printf("je boucle\n");
-    getch();
+    mvprintw(5, 4, "Username : ");                             // suppress character echoing
+    mvprintw(5, 15, _input.c_str());
 
     box(win, 0, 0);
     wrefresh(win);
@@ -150,6 +142,8 @@ MonEnum Ncurses::getEvent()
         return MonEnum::ENTER;
         break;
     case KEY_BACKSPACE:
+        printf("j'efface\n");
+        _input = _input.substr(0, _input.size()-1);
         return MonEnum::BACKSPACE;
         break;
     case 27:
@@ -196,81 +190,107 @@ MonEnum Ncurses::getEvent()
         return MonEnum::F12;
         break;
     case 'a':
+        _input.append("a");
         return MonEnum::A_KEY;
         break;
     case 'b':
+        _input.append("b");
         return MonEnum::B_KEY;
         break;
     case 'c':
+        _input.append("c");
         return MonEnum::C_KEY;
         break;
     case 'd':
+        _input.append("d");
         return MonEnum::D_KEY;
         break;
     case 'e':
+        _input.append("e");
         return MonEnum::E_KEY;
         break;
     case 'f':
+        _input.append("f");
         return MonEnum::F_KEY;
         break;
     case 'g':
+        _input.append("g");
         return MonEnum::G_KEY;
         break;
     case 'h':
+        _input.append("h");
         return MonEnum::H_KEY;
         break;
     case 'i':
+        _input.append("i");
         return MonEnum::I_KEY;
         break;
     case 'j':
+        _input.append("j");
         return MonEnum::J_KEY;
         break;
     case 'k':
+        _input.append("k");
         return MonEnum::K_KEY;
         break;
     case 'l':
+        _input.append("l");
         return MonEnum::L_KEY;
         break;
     case 'm':
+        _input.append("m");
         return MonEnum::M_KEY;
         break;
     case 'n':
+        _input.append("n");
         return MonEnum::N_KEY;
         break;
     case 'o':
+        _input.append("o");
         return MonEnum::O_KEY;
         break;
     case 'p':
+        _input.append("p");
         return MonEnum::P_KEY;
         break;
     case 'q':
+        _input.append("q");
         return MonEnum::Q_KEY;
         break;
     case 'r':
+        _input.append("r");
         return MonEnum::R_KEY;
         break;
     case 's':
+        _input.append("s");
         return MonEnum::S_KEY;
         break;
     case 't':
+        _input.append("t");
         return MonEnum::T_KEY;
         break;
     case 'u':
+        _input.append("u");
         return MonEnum::U_KEY;
         break;
     case 'v':
+        _input.append("v");
         return MonEnum::V_KEY;
         break;
     case 'w':
+        _input.append("w");
         return MonEnum::W_KEY;
         break;
     case 'x':
+        _input.append("x");
         return MonEnum::X_KEY;
         break;
     case 'y':
+        _input.append("y");
         return MonEnum::Y_KEY;
         break;
     case 'z':
+        _input.append("z");
         return MonEnum::Z_KEY;
         break;
     default:
@@ -317,6 +337,11 @@ std::string Ncurses::getNameGame()
     return _gameName;
 }
 
+std::string Ncurses::getUsername()
+{
+    return _input;
+}
+
 void Ncurses::drawBackground(const std::string &Background)
 {
     std::string tmp = Background;
@@ -337,8 +362,8 @@ void Ncurses::destroyWindow()
 
 void Ncurses::clearWindow()
 {
-    printf("zbi\n");
-    //erase();
+    //printf("zbi\n");
+    erase();
 }
 
 void Ncurses::updateWindow()

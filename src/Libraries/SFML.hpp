@@ -30,6 +30,7 @@ public:
     std::string getNameGame();
     void destroyWindow();
     std::string getLibName() override;
+    std::string getUsername() override;
     void drawBackground(const std::string &Background);
 	std::pair<int, int> sendBgSize() override;
 
@@ -52,6 +53,7 @@ public:
     sf::Texture _bgTexture;
     sf::Sprite _bgSprite;
     std::string _gameName;
+    std::string _input;
     std::pair<int, int> _bgSize = std::make_pair(600, 600);
 
 private:

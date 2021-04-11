@@ -19,6 +19,7 @@ SFML::SFML(): m_elapsedTime(sf::Time::Zero)
         return;
     _musicMenu.play();
     _musicMenu.setVolume(30);
+    _input = (char *)malloc(32);
 }
 
 SFML::~SFML()
@@ -228,6 +229,11 @@ void SFML::updateWindow()
 std::string SFML::getLibName()
 {
     return "SFML";
+}
+
+std::string SFML::getUsername()
+{
+    return _input;
 }
 
 void SFML::drawBackground(const std::string &Background)
