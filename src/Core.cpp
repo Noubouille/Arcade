@@ -89,7 +89,7 @@ void Core::getGameLib()
 void Core::getNextGameLib(bool loop)
 {
     if (this->_listGames.size() <= 1) return; //si 1 seule lib dispo
-    // std::cout << "je getNextGameLib" << std::endl;
+
 
     auto iterator = std::find(this->_listGames.begin(), this->_listGames.end(), this->_currentPathGame);
 
@@ -123,17 +123,13 @@ void Core::getPrevGameLib()
         getGameLib();
     }
 
-    // if (loop == true) {
-    // std::cout << "je getNextGameLib la fin dans le loop" << std::endl;
         this->_stateMenu = false;
         mainLoop();
-
-    // }
 }
 
 void Core::getAllLibs()
 {
-    // recuperer les libs dans ./lib
+
 	std::regex r("/arcade_(.+)\\.so$");
 	std::smatch m;
 
@@ -155,7 +151,7 @@ void Core::getAllLibs()
         std::cout << "No lib games inside ./lib" << std::endl;
         exit(84);
     }
-    // affiches toutes les libs
+
     for (std::string str: this->_listLib)
         std::cout << "les libs graphiques : " << str << std::endl;
     for (std::string str: this->_listGames) {
@@ -227,15 +223,10 @@ void Core::mainLoop()
         }
 
         if (Input == MonEnum::ENTER) {
-            // std::cout << "le getName" << this->_IGamesLib->getName() << std::endl;
-            // std::cout << "le this->_IGraphicLib->getNameGame()" << this->_IGraphicLib->getNameGame() << std::endl;
             if (this->_IGraphicLib->getNameGame() == this->_IGamesLib->getName()) {
                 this->_stateMenu = false;
             } else {
-                // std::cout << "je suis dans le else " << std::endl;
                 getNextGameLib(false);
-                // std::cout << "le getName apres" << this->_IGamesLib->getName() << std::endl;
-                // std::cout << "le this->_IGraphicLib->getNameGame() apres" << this->_IGraphicLib->getNameGame() << std::endl;
                 this->_stateMenu = false;
             }
         }
@@ -246,16 +237,15 @@ void Core::mainLoop()
             loopGame(Input);
         }
     }
-    // this->_IGraphicLib->destroyWindow();
-    // exit(0);
-
 }
 
 void Core::loopMenu(MonEnum Input)
 {
     Input = Input;
-    this->_IGraphicLib->drawMenu();
 
+    this->_IGraphicLib->drawMenu();
+    printScores();
+    this->_IGraphicLib->updateWindow();
 }
 
 void Core::loopGame(MonEnum Input)
@@ -269,10 +259,21 @@ void Core::loopGame(MonEnum Input)
     this->_IGraphicLib->getMusic(this->_IGamesLib->sendMusic());
     this->_IGraphicLib->drawBackground(this->_IGamesLib->getBg());
 
-    this->_IGraphicLib->putText({320, 800, std::string("You are playing at ") + this->_IGamesLib->getName()});
-    this->_IGraphicLib->putText({800, 20, std::string("Score : ") + std::to_string(this->_IGamesLib->getScore())});
+    if (this->_IGraphicLib->getLibName() == "NCURSES")
+    {
+        this->_IGraphicLib->putText({120, 20, std::string("You are playing at ") + this->_IGamesLib->getName()});
+        this->_IGraphicLib->putText({120, 22, std::string("Score : ") + std::to_string(this->_IGamesLib->getScore())});
+    } else {
+        this->_IGraphicLib->putText({320, 800, std::string("You are playing at ") + this->_IGamesLib->getName()});
+        this->_IGraphicLib->putText({800, 20, std::string("Score : ") + std::to_string(this->_IGamesLib->getScore())});
+    }
+
     if (this->_IGamesLib->getName() == "NIBBLER") {
-        this->_IGraphicLib->putText({705, 80, std::string("Time : ") + std::to_string(returnSecondsLeft(_Timer->elapsedSeconds()))+ " Seconds"});
+        if (this->_IGraphicLib->getLibName() == "NCURSES") {
+            this->_IGraphicLib->putText({120, 18, std::string("Time : ") + std::to_string(returnSecondsLeft(_Timer->elapsedSeconds()))+ " Seconds"});
+        } else {
+            this->_IGraphicLib->putText({705, 80, std::string("Time : ") + std::to_string(returnSecondsLeft(_Timer->elapsedSeconds()))+ " Seconds"});
+        }
     }
 
     this->_IGamesLib->getLibName(this->_IGraphicLib->getLibName());
@@ -291,7 +292,6 @@ void Core::loopGame(MonEnum Input)
     }
 
     this->_IGraphicLib->utilityGame();
-    // this->_IGraphicLib->drawSprite(this->_IGamesLib->getSprite());
     this->_IGraphicLib->drawSprites(this->_IGamesLib->getSprites());
 
     this->_IGraphicLib->drawMain(this->_IGamesLib->getMain());
@@ -329,6 +329,27 @@ void Core::loopGame(MonEnum Input)
     this->_IGamesLib->updateGame();
 }
 
+void Core::printScores()
+{
+    int y = 8;
+    std::fstream scores;
+    scores.open("scores.txt",std::ios::in);
+    if (scores.is_open()) {
+        std::string line;
+
+        this->_IGraphicLib->putText({90, 6, "Scoreboard"});
+        while(getline(scores, line)){
+            if (this->_IGraphicLib->getLibName() == "NCURSES") {
+                this->_IGraphicLib->putText({90, y, line});
+                y += 2;
+            } else {
+                this->_IGraphicLib->putText({100, 60, line});
+            }
+    }
+      scores.close();
+    }
+}
+
 int Core::returnSecondsLeft(double time)
 {
     return _time - (int)round(time);
@@ -343,13 +364,8 @@ int Core::ifGamePausedInt(double time)
 
 void Core::getScores()
 {
-    int y = 8;
     std::string score = std::to_string(this->_IGamesLib->getScore());
     std::string username = this->_IGraphicLib->getUsername();
-
-    // if (!score.empty()) {
-    //     score.insert(score.length() - 1, "\n");
-    // }
 
     if (username.empty()) {
         username = "Player";
@@ -364,19 +380,6 @@ void Core::getScores()
         scores << username + " = " + score;
         scores << "\n";
         scores.close();
-    }
-
-	scores.open("scores.txt",std::ios::in);
-    if (scores.is_open()) {
-        std::string line;
-        while(getline(scores, line)){
-            if (this->_IGraphicLib->getLibName() == "NCURSES") {
-                this->_IGraphicLib->putText({y, 30, line});
-            } 
-            y += 5;  
-        std::cout << line << "\n";
-    }
-      scores.close();
     }
 }
 

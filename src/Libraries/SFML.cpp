@@ -85,11 +85,6 @@ bool SFML::getUsernameloop()
 void SFML::utilityGame()
 {
     _musicMenu.stop();
-    // if (music_on == false) {
-    //     music_on = true;
-    //     _musicGame.play();
-    //     _musicGame.setVolume(40);
-    // }
 }
 
 void SFML::drawPause(const std::string &Background)
@@ -267,7 +262,7 @@ std::string SFML::getLibName()
 
 std::string SFML::getUsername()
 {
-    // _input = _playerInput;
+
     return _input;
 }
 
@@ -304,8 +299,6 @@ void SFML::drawMain(std::vector<Pixel> snake)
             sprite.setTexture(texture);
             sprite.setPosition(sf::Vector2f(it->x, it->y));
             _window.draw(sprite);
-            // std::cout << "le snake pos x : " << it->x << std::endl;
-            // std::cout << "le snake pos y : " << it->y << std::endl;
         }
     if (m_elapsedTime.asSeconds() > 0.1) {
         m_elapsedTime = sf::Time::Zero;

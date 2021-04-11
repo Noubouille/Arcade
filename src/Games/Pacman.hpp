@@ -26,7 +26,7 @@ class Pacman : public IGames {
         std::vector<Pixel> getMain() override;
         Pixel getSprite() override;
         std::vector<Pixel> getSprites() override;
-        // bool foodCheck();
+
         void setFruit();
         void updateGame() override;
         bool checkMoveSnake_right(std::vector<Pixel>::iterator it);
@@ -54,7 +54,7 @@ class Pacman : public IGames {
             DOWN,
             LEFT,
         };
-    // std::vector<std::vector<Pixel>> _players;
+
         std::vector<Pixel> _players;
         std::vector<Pixel> _mobs;
 
@@ -79,15 +79,5 @@ class Pacman : public IGames {
 };
 
 extern "C" IGames *createGame(std::pair<int, int> jesuisjesus);
-
-
-// class Pacman {
-//     public:
-//         Pacman();
-//         ~Pacman();
-
-//     protected:
-//     private:
-// };
 
 #endif /* !PACMAN_HPP_ */

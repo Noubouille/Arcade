@@ -16,8 +16,6 @@ Nibbler::Nibbler(std::pair<int, int> bgSize)
 {
     this->_bg_size = bgSize;
     srand(time(NULL));
-    // this->_pos_fruit.first = rand()%(this->_bg_size.first);
-    // this->_pos_fruit.second = rand()%(this->_bg_size.second);
     this->pos_x = _bg_size.first / 2;
     this->pos_y = _bg_size.second / 2;
 	_nextMove = Orientation::UP;
@@ -30,10 +28,6 @@ Nibbler::Nibbler(std::pair<int, int> bgSize)
 	    pixel = {pos_x, pos_y, "^"};
     }
 	_players.emplace_back(pixel);
-	// pixel = {pos_x + 16.f, pos_y, "./assets/Nibbler/body.png"};
-	// _players.emplace_back(pixel);
-	// pixel = {pos_x + 32.f, pos_y, "./assets/Nibbler/body.png"};
-	// _players.emplace_back(pixel);
     _score = 0;
 
     _pos_fruit = std::make_pair(rand()%(this->_bg_size.first), rand()%(this->_bg_size.second));
@@ -98,7 +92,7 @@ Pixel Nibbler::getSprite()
 {
     Pixel fruit;
 	fruit = {this->_pos_fruit.first, this->_pos_fruit.second, "./assets/Nibbler/fruit"};
-	// _fruit.push_back(fruit);
+
     return fruit;
 }
 
@@ -121,16 +115,16 @@ void Nibbler::setFruit()
 {
     srand(time(NULL));
 	if (this->foodCheck() == false) {
-		this->_pos_fruit.first = rand()%(this->_bg_size.first) + 5;
-	    this->_pos_fruit.second = rand()%(this->_bg_size.second) + 5;
+		this->_pos_fruit.first = rand()%(this->_bg_size.first);
+	    this->_pos_fruit.second = rand()%(this->_bg_size.second);
 	}
 	if (this->foodCheck2() == false) {
-		this->_pos_fruit2.first = rand()%(this->_bg_size.first) + 5;
-		this->_pos_fruit2.second = rand()%(this->_bg_size.second) + 5;
+		this->_pos_fruit2.first = rand()%(this->_bg_size.first);
+		this->_pos_fruit2.second = rand()%(this->_bg_size.second);
 	}
 	if (this->foodCheck3() == false) {
-		this->_pos_fruit3.first = rand()%(this->_bg_size.first) + 5;
-		this->_pos_fruit3.second = rand()%(this->_bg_size.second) + 5;
+		this->_pos_fruit3.first = rand()%(this->_bg_size.first);
+		this->_pos_fruit3.second = rand()%(this->_bg_size.second);
 	}
 }
 
@@ -331,8 +325,6 @@ std::vector<Pixel> Nibbler::getMain()
                     }
 
                     it->y -= speed_snake;
-                } else {
-                    // it->y -= 0;
                 }
             }
         } else if (_nextMove == Orientation::DOWN) {
@@ -345,8 +337,6 @@ std::vector<Pixel> Nibbler::getMain()
                     }
 
                     it->y += speed_snake;
-                } else {
-                    // it->y += 0;
                 }
             }
         } else if (_nextMove == Orientation::RIGHT) {
@@ -359,8 +349,6 @@ std::vector<Pixel> Nibbler::getMain()
                     }
 
                     it->x += speed_snake;
-                } else {
-                    // it->x += 0;
                 }
             }
         } else if (_nextMove == Orientation::LEFT) {
@@ -374,8 +362,6 @@ std::vector<Pixel> Nibbler::getMain()
 
                     it->x -= speed_snake;
 
-                } else {
-                    // it->x -= 0;
                 }
             }
         }

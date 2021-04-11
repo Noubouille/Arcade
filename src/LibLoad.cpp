@@ -17,7 +17,7 @@ LibLoad::~LibLoad()
 
 void *LibLoad::loadlibrary(std::string librarypath)
 {
-	// std::cout << "le libpath inside loadlib :" << librarypath.c_str() << std::endl;
+
     void *handle = dlopen(librarypath.c_str(), RTLD_NOW);
 	if (handle == nullptr) {
 		std::cerr << dlerror() << std::endl;

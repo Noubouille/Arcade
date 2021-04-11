@@ -59,13 +59,9 @@ Ncurses::Ncurses()
     }
 
     _tab = tab;
-
-    //this->_bgSize = std::make_pair(lines, strlen(buffer) / lines);
     this->_bgSize = std::make_pair((strlen(buffer) / lines) - 6, lines - 1);
 
     wborder(window, 0, 0, 0, 0, 0, 0, 0, 0);
-
-    //this->_bgSize = std::make_pair(99, 34);
 }
 
 Ncurses::~Ncurses()
@@ -87,7 +83,7 @@ void Ncurses::drawMenu()
 
     WINDOW *win = newwin(4, 15, 1, 1);
 
-    mvprintw(5, 4, "Username : ");                             // suppress character echoing
+    mvprintw(5, 4, "Username : ");
     mvprintw(5, 15, _input.c_str());
 
     box(win, 0, 0);
@@ -143,7 +139,6 @@ MonEnum Ncurses::getEvent()
         return MonEnum::ENTER;
         break;
     case KEY_BACKSPACE:
-        printf("j'efface\n");
         _input = _input.substr(0, _input.size()-1);
         return MonEnum::BACKSPACE;
         break;
@@ -402,8 +397,6 @@ void Ncurses::drawBackground(const std::string &Background)
     {
         mvprintw(y, x, _tab[y]);
     }
-
-    // map et bordure
 }
 
 
@@ -415,7 +408,6 @@ void Ncurses::destroyWindow()
 
 void Ncurses::clearWindow()
 {
-    //printf("zbi\n");
     erase();
 }
 
@@ -470,20 +462,6 @@ void Ncurses::putText(const Text &text)
     int tmp_y = text.y;
     int tmp_x = text.x;
     getmaxyx(window, _win_y, _win_x);
-
-    for (; tmp_y >= _win_y; tmp_y = tmp_y / 2) {}
-    for (; tmp_x >= _win_x; tmp_x = tmp_x / 2) {}
-
-    // int tmp_y = text.y / 6;
-    // if (tmp_y > 50) {
-    //     tmp_y = text.y / 16;
-    // std::cout << "le y :" << tmp_y << std::endl;
-
-    // }
-    // std::cout << "le y :" << tmp_y << std::endl;
-    // std::cout << "le x :" << tmp_x << std::endl;
-
-    // mvprintw(tmp_y, text.x / 6, text.text.c_str());
     mvprintw(tmp_y, tmp_x, text.text.c_str());
 }
 
