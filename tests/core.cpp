@@ -9,7 +9,7 @@ TEST_CASE("Core", "core")
 {
     Core *core = new Core("SFML");
 
-    SECTION("Core getName()")
+    SECTION("Core _stateMenu")
     {
         std::cout << core->_stateMenu << std::endl;
     }

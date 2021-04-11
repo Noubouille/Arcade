@@ -1,2 +1,0 @@
-zefokz = 1 in NIBBLER
-zefokz = 0 in PACMAN
