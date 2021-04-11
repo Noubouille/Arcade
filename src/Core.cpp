@@ -364,6 +364,7 @@ void Core::getScores()
 {
     std::string score = std::to_string(this->_IGamesLib->getScore());
     std::string username = this->_IGraphicLib->getUsername();
+    std::string game = this->_IGamesLib->getName();
 
     if (username.empty()) {
         username = "Player";
@@ -375,7 +376,7 @@ void Core::getScores()
     if (!scores) {
         std::cout << "Scores file not found" << std::endl;
     } else {
-        scores << username + " = " + score;
+        scores << username + " = " + score + " in " + game;
         scores << "\n";
         scores.close();
     }
