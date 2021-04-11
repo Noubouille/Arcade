@@ -341,10 +341,16 @@ int Core::ifGamePausedInt(double time)
 
 void Core::getScores()
 {
+    int y = 8;
     std::string score = std::to_string(this->_IGamesLib->getScore());
     std::string username = this->_IGraphicLib->getUsername();
-    if (!score.empty()) {
-        score.insert(score.length() - 1, "\n");
+
+    // if (!score.empty()) {
+    //     score.insert(score.length() - 1, "\n");
+    // }
+
+    if (username.empty()) {
+        username = "Player";
     }
 
     std::fstream scores;
@@ -353,7 +359,8 @@ void Core::getScores()
     if (!scores) {
         std::cout << "Scores file not found" << std::endl;
     } else {
-        scores << username << score;
+        scores << username + " = " + score;
+        scores << "\n";
         scores.close();
     }
 
@@ -361,6 +368,10 @@ void Core::getScores()
     if (scores.is_open()) {
         std::string line;
         while(getline(scores, line)){
+            if (this->_IGraphicLib->getLibName() == "NCURSES") {
+                this->_IGraphicLib->putText({y, 30, line});
+            } 
+            y += 5;  
         std::cout << line << "\n";
     }
       scores.close();

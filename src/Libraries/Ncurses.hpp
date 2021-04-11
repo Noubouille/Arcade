@@ -57,6 +57,7 @@ class Ncurses : public IGraphic
         std::pair<int, int> _bgSize;
         bool _nibbler_selected = true;
         bool _pacman_selected;
+        bool _state_ncurses_menu = true;
         void selectedGame(bool _nibber_selected, bool _pacman_selected);
         void chooseUsername();
         //etc

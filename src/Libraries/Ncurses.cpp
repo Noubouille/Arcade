@@ -139,6 +139,7 @@ MonEnum Ncurses::getEvent()
         return MonEnum::RIGHT_ARROW;
         break;
     case 10:
+        _state_ncurses_menu = false;
         return MonEnum::ENTER;
         break;
     case KEY_BACKSPACE:
@@ -190,107 +191,159 @@ MonEnum Ncurses::getEvent()
         return MonEnum::F12;
         break;
     case 'a':
+    if (_state_ncurses_menu == true) {
         _input.append("a");
+    }
         return MonEnum::A_KEY;
         break;
     case 'b':
+        if (_state_ncurses_menu == true) {
         _input.append("b");
+    }
         return MonEnum::B_KEY;
         break;
     case 'c':
+        if (_state_ncurses_menu == true) {
         _input.append("c");
+    }
         return MonEnum::C_KEY;
         break;
     case 'd':
+        if (_state_ncurses_menu == true) {
         _input.append("d");
+    }
         return MonEnum::D_KEY;
         break;
     case 'e':
+        if (_state_ncurses_menu == true) {
         _input.append("e");
+    }
         return MonEnum::E_KEY;
         break;
     case 'f':
+        if (_state_ncurses_menu == true) {
         _input.append("f");
+    }
         return MonEnum::F_KEY;
         break;
     case 'g':
+        if (_state_ncurses_menu == true) {
         _input.append("g");
+    }
         return MonEnum::G_KEY;
         break;
     case 'h':
+        if (_state_ncurses_menu == true) {
         _input.append("h");
+    }
         return MonEnum::H_KEY;
         break;
     case 'i':
+        if (_state_ncurses_menu == true) {
         _input.append("i");
+    }
         return MonEnum::I_KEY;
         break;
     case 'j':
+        if (_state_ncurses_menu == true) {
         _input.append("j");
+    }
         return MonEnum::J_KEY;
         break;
     case 'k':
+        if (_state_ncurses_menu == true) {
         _input.append("k");
+    }
         return MonEnum::K_KEY;
         break;
     case 'l':
+        if (_state_ncurses_menu == true) {
         _input.append("l");
+    }
         return MonEnum::L_KEY;
         break;
     case 'm':
+        if (_state_ncurses_menu == true) {
         _input.append("m");
+    }
         return MonEnum::M_KEY;
         break;
     case 'n':
+        if (_state_ncurses_menu == true) {
         _input.append("n");
+    }
         return MonEnum::N_KEY;
         break;
     case 'o':
+        if (_state_ncurses_menu == true) {
         _input.append("o");
+    }
         return MonEnum::O_KEY;
         break;
     case 'p':
+        if (_state_ncurses_menu == true) {
         _input.append("p");
+    }
         return MonEnum::P_KEY;
         break;
     case 'q':
+        if (_state_ncurses_menu == true) {
         _input.append("q");
+    }
         return MonEnum::Q_KEY;
         break;
     case 'r':
+        if (_state_ncurses_menu == true) {
         _input.append("r");
+    }
         return MonEnum::R_KEY;
         break;
     case 's':
+        if (_state_ncurses_menu == true) {
         _input.append("s");
+    }
         return MonEnum::S_KEY;
         break;
     case 't':
+        if (_state_ncurses_menu == true) {
         _input.append("t");
+    }
         return MonEnum::T_KEY;
         break;
     case 'u':
+        if (_state_ncurses_menu == true) {
         _input.append("u");
+    }
         return MonEnum::U_KEY;
         break;
     case 'v':
+        if (_state_ncurses_menu == true) {
         _input.append("v");
+    }
         return MonEnum::V_KEY;
         break;
     case 'w':
+        if (_state_ncurses_menu == true) {
         _input.append("w");
+    }
         return MonEnum::W_KEY;
         break;
     case 'x':
+    if (_state_ncurses_menu == true) {
         _input.append("x");
+    }
         return MonEnum::X_KEY;
         break;
     case 'y':
+        if (_state_ncurses_menu == true) {
         _input.append("y");
+    }
         return MonEnum::Y_KEY;
         break;
     case 'z':
+        if (_state_ncurses_menu == true) {
         _input.append("z");
+    }
         return MonEnum::Z_KEY;
         break;
     default:
@@ -328,7 +381,7 @@ void Ncurses::getMusic(const std::string &music)
 
 void Ncurses::reset()
 {
-
+    _state_ncurses_menu = true;
 }
 
 
