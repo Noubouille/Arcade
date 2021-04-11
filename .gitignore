@@ -7,3 +7,4 @@ nibbler/
 scores.txt
 a.out
 tests/*.o
+run_tests
