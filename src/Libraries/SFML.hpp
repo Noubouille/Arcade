@@ -44,6 +44,8 @@ public:
 
     void putText(const Text &text) override;
     void reset() override;
+	bool getUsernameloop() override;
+    void drawPause(const std::string &Background) override;
 
 
     sf::RenderWindow _window;

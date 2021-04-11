@@ -46,6 +46,7 @@ class Pacman : public IGames {
         void moving_ghost4(std::string);
 		std::string sendMusic() override;
         bool isGameStart() override;
+		std::string sendPauseSprite() override;
 
         enum Orientation {
             UP,

@@ -389,6 +389,12 @@ std::string Nibbler::sendMusic()
     return "assets/Nibbler/nibbler_song.ogg";
 }
 
+std::string Nibbler::sendPauseSprite()
+{
+    return "assets/pause_bg";
+}
+
+
 std::string Nibbler::getName()
 {
     return "NIBBLER";

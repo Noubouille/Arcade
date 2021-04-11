@@ -525,6 +525,11 @@ std::vector<Pixel> Pacman::getMain()
     return this->_players;
 }
 
+std::string Pacman::sendPauseSprite()
+{
+    return "assets/pause_bg";
+}
+
 std::string Pacman::getName()
 {
     return "PACMAN";

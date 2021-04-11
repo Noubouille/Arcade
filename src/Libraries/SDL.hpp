@@ -38,8 +38,9 @@ class SDL : public IGraphic {
         void drawMain(std::vector<Pixel>);
         void drawSprite(Pixel sprite);
         void drawSprites(std::vector<Pixel> sprites) override;
+        void drawPause(const std::string &Background) override;
 
-
+        bool getUsernameloop();
         void getMusic(const std::string &Background) override;
         void reset() override;
 
@@ -48,6 +49,7 @@ class SDL : public IGraphic {
     protected:
     private:
     TTF_Font *_font = NULL;
+    TTF_Font *_font_smaller = NULL;
     SDL_Surface *_image;
     SDL_Texture *_texture;
     SDL_Window *_window;
@@ -58,7 +60,7 @@ class SDL : public IGraphic {
     Uint32 _endTime = 0;
     short _fps = 0;
     Uint32 _delta = 0;
-
+    char *_username;
     Mix_Music *_menuMusic;
     Mix_Music *_musicGame;
 
@@ -68,7 +70,8 @@ class SDL : public IGraphic {
     int bar_nb = 1;
     bool music_on = false;
     bool music_game_on = false;
-    std::string _input;
+    std::string _input = "";
+    bool _getInputUser = true;
 
 };
 
