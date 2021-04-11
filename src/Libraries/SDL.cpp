@@ -100,7 +100,6 @@ bool SDL::getUsernameloop()
             SDL_WaitEvent(&event);
             switch (event.key.keysym.sym) {
                 case SDLK_RSHIFT: {
-                    std::cout << "lshift" << " Input :" << _input << std::endl;
                     _getInputUser = false;
                     return true;
                     break;
@@ -154,7 +153,6 @@ MonEnum SDL::getEvent()
 
         switch (event.type) {
             case SDL_QUIT:
-                std::cout << "sf::Event::CLOSE sdl" << std::endl;
                 exit(0);
                 break;
             default :
@@ -162,7 +160,6 @@ MonEnum SDL::getEvent()
         }
         switch (event.key.keysym.sym) {
             case SDLK_q:
-                std::cout << "sf::Event::CLOSE sdl" << std::endl;
                 exit(0);
                 break;
             case SDLK_LEFT:

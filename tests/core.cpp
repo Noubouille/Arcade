@@ -1,5 +1,9 @@
 #include "include/catch.hpp"
 #include "../includes/Core.hpp"
+//#include <filesystem>
+#include <experimental/filesystem>
+
+namespace fs = std::experimental::filesystem;
 
 TEST_CASE("Core", "core")
 {
