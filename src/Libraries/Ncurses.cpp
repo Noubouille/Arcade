@@ -441,10 +441,14 @@ void Ncurses::drawMain(std::vector<Pixel> snake)
 
 bool Ncurses::getUsernameloop()
 {
+    return true;
 }
 
 void Ncurses::drawPause(const std::string &Background)
 {
+    if (Background.empty()) {
+        return;
+    }
 }
 
 
