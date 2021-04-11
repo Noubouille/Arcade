@@ -56,6 +56,17 @@ void SFML::drawMenu()
 
     bg_sprite.setTexture(bg);
 
+    // sf::String playerInput;
+    // sf::Text playerText;
+
+    // if (event.type == sf::Event::TextEntered)
+    // {
+    //     playerInput +=event.text.unicode;
+    //     playerText.setString(playerInput);
+    // }
+
+    // window.draw(playerText);
+
     this->_window.clear(sf::Color(0, 0, 0));
     this->_window.draw(this->_bgSprite);
     this->_window.draw(Pacman_font);
@@ -294,9 +305,7 @@ void SFML::drawSprites(std::vector<Pixel> sprites)
     for (auto it = std::next(sprites.begin()); it != sprites.end(); it++) {
         if (it->pathSprite.empty()) return;
         std::string tmp = it->pathSprite + ".png";
-        // std::cout << "it->pathSprite.png" << tmp << std::endl;
-        // std::cout << "it->x" << it->x << std::endl;
-        // std::cout << "it->y" << it->y << std::endl;
+
         sf::Texture texture;
         if (!texture.loadFromFile(tmp)) {
             return ;
