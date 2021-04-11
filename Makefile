@@ -128,7 +128,9 @@ test: ## Run tests
 	[[ ! -f tests/test.o ]] && g++ $(FLGS) $(LDFLAGS) -c tests/test.cpp -o tests/test.o || echo "Already compiled Catch2."
 	g++ $(FLGS) $(LDFLAGS) -o run_tests \
 		tests/test.o \
-		tests/test.cpp
+		tests/core.cpp \
+		src/Core.cpp \
+		src/LibLoad.cpp
 	@printf "\033[0;32m==========[TESTS]==========\033[0m\n"
 	@./run_tests --list-test-names-only || true
 	@printf "\033[0;32m==========[TESTS]==========\033[0m\n"

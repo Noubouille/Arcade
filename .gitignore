@@ -5,3 +5,5 @@ nibbler/
 .vscode
 .DS_Store
 scores.txt
+a.out
+tests/*.o
