@@ -89,19 +89,21 @@ void Ncurses::drawMenu()
     WINDOW *win = newwin(4, 15, 1, 1);
     //refresh();
 
+    mvprintw(5, 4, "Username : ");
+    //noecho();                               // suppress character echoing
+    wgetnstr(stdscr, _input, sizeof(_input));
+
+    //clear();
+    refresh();
+    printf("je boucle\n");
+    getch();
+
     box(win, 0, 0);
     wrefresh(win);
 
     selectedGame(_pacman_selected, _nibbler_selected);
 
     mvprintw(3, 4, "ARCADE");
-
-    mvprintw(5, 4, "Player name :");
-    getnstr(_input, 10);
-    wgetnstr(stdscr, _input, sizeof(_input));
-    //refresh();
-    mvprintw(5, 20, _input);
-    printf("%s\n", _input);
 
     mvprintw(8, 3, "Nibbler");
     printw("\n");
@@ -335,7 +337,8 @@ void Ncurses::destroyWindow()
 
 void Ncurses::clearWindow()
 {
-    erase();
+    printf("zbi\n");
+    //erase();
 }
 
 void Ncurses::updateWindow()

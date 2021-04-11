@@ -121,5 +121,18 @@ re:			fclean all ## Recompile program
 
 .PHONY:			clean fclean re all
 
+test-clean: ## Clean tests folder
+	rm -rf tests/test.o
+
+test: ## Run tests
+	[[ ! -f tests/test.o ]] && g++ $(FLGS) $(LDFLAGS) -c tests/test.cpp -o tests/test.o || echo "Already compiled Catch2."
+	g++ $(FLGS) $(LDFLAGS) -o run_tests \
+		tests/test.o \
+		tests/test.cpp
+	@printf "\033[0;32m==========[TESTS]==========\033[0m\n"
+	@./run_tests --list-test-names-only || true
+	@printf "\033[0;32m==========[TESTS]==========\033[0m\n"
+	./run_tests
+
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
